@@ -12,7 +12,7 @@ MiniProject 1: COMP 551 (001/002), Applied Machine Learning, Winter 2020, McGill
 7. [Evaluation](#evaluation)
 8. [Final remarks](#final_remarks)
 
-[Assignment PDF](#)
+[Assignment description (PDF)](https://github.com/ramonfigueiredopessoa/comp551-2020-p1-logistic_regression_and_naive_bayes/blob/master/assignment/p1.pdf)
 
 # Preamble
 
