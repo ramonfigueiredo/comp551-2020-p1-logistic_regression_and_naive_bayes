@@ -34,7 +34,16 @@ The first task is to acquire the data, analyze it, and clean it (if necessary). 
 * **Dataset 1 (Ionosphere):** this is a dataset where the goal is to predict whether a radar return from ionosphere is 'good' or 'bad'. This radar data was collected by a system in Goose Bay, Labrador. Get it from: https://archive.ics.uci.edu/ml/datasets/ionosphere
 * **Dataset 2 (Adult Data Set):** also known as "Census Income" dataset, this is a dataset where the goal is to predict the whether income exceeds $50K/yr based on census data. Get it from: https://archive.ics.uci.edu/ml/datasets/Adult
 
-* **[TODO] Dataset 3 and 4**: pick two additional datasets for classification from the UCI datasets at: https://archive.ics.uci.edu/ml/datasets.php
+* **Dataset 3 and 4**: We choose the following additional datasets for classification from the UCI datasets at: https://archive.ics.uci.edu/ml/datasets.php
+	* Dataset 3 (Wine Quality):
+		- Link: https://archive.ics.uci.edu/ml/datasets/Wine+Quality
+		- This is a dataset where the goal is to predict the quality of wine based on its chemical properties.
+		- Note: We will only be using the *red wine* subset of the data.
+		- Note: This data contains quality ratings from 0-10. We will convert this task to a binary classification by defining the ratings of {6,7,8,9,10} as positive (i.e., 1) and all other ratings as negative (i.e., 0).
+	* Dataset 4 (Breast Cancer Diagnosis):
+		- Link: https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+(Diagnostic)
+		- This is a dataset where the goal is to predict whether a tumour is malignant or benign based on various properties.
+		- Note: We will use the data folder titles **breast-cancer-wisconsin.data** for this project.
 
 The essential subtasks for this part of the project are:
 
