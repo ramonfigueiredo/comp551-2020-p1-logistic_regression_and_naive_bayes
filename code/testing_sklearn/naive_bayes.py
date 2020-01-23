@@ -30,10 +30,41 @@ classifier.fit(X_train, y_train)
 y_pred = classifier.predict(X_test)
 print("Predicting the Test set results\n", y_pred)
 
-# Making the Confusion Matrix
+# Creating the Confusion Matrix
 from sklearn.metrics import confusion_matrix
 cm = confusion_matrix(y_test, y_pred)
-print("confusion_matrix:\n", cm)
+
+print("\n")
+
+cm = confusion_matrix(y_test, y_pred)
+print("Confusion Matrix\n", cm)
+
+# Calculating metrics using the confusion matrix
+
+print("\n")
+
+TP = cm[0][0]
+FN = cm[0][1]
+TN = cm[1][0]
+FP = cm[1][1]
+print("True Positive (TP):", TP)
+print("False Negative (FN):", FN)
+print("True Negative (TN):", TN)
+print("False Positive (FP):", FP)
+
+print("\n")
+
+accuracy = (TP + TN) / (TP + TN + FP + FN)
+print("Accuracy = (TP + TN) / (TP + TN + FP + FN): %.2f %%" %(accuracy*100))
+
+recall = TP / (TP + FN)
+print("Recall = TP / (TP + FN): %.2f %%" %(recall*100) )
+
+precision = TP / (TP + FP)
+print("Precision = TP / (TP + FP): %.2f %%" %(precision*100) )
+
+Fmeasure = (2 * recall * precision) / (recall + precision)
+print("Fmeasure = (2 * recall * precision) / (recall + precision): %.2f %%" %(Fmeasure*100) )
 
 # Visualising the Training set results
 from matplotlib.colors import ListedColormap
