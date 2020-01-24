@@ -11,6 +11,7 @@ MiniProject 1: COMP 551 (001/002), Applied Machine Learning, Winter 2020, McGill
 6. [Deliverables](#deliverables)
 7. [Evaluation](#evaluation)
 8. [Final remarks](#final_remarks)
+9. [How to run the Python program](#how-to-run-the-python-program)
 
 [Assignment description (PDF)](https://github.com/ramonfigueiredopessoa/comp551-2020-p1-logistic_regression_and_naive_bayes/blob/master/assignment/p1.pdf)
 
@@ -142,3 +143,31 @@ The mini-project is out of 100 points, and the evaluation breakdown is as follow
 # Final remarks
 
 * You are expected to display initiative, creativity, scientific rigour, critical thinking, and good communication skills. You don't need to restrict yourself to the requirements listed above - feel free to go beyond, and explore further. You can discuss methods and technical issues with members of other teams, but *you cannot share any code or data with other teams*.
+
+## How to run the Python program?
+
+1. Install [virtualenv](https://virtualenv.pypa.io/en/latest/)
+	* To activate the virtualenv on Linux or MacOS: ```source venv/bin/activate```
+	* To activate the virtualenv on Windows: ```\venv\Script\activate.bat```
+
+2. Run the program
+
+```sh
+cd <folder_name>/
+
+virtualenv venv
+
+source venv/bin/activate
+
+pip install -r requirements.txt
+
+python <name_of_python_program>.py
+```
+
+**Note**: To desactivate the virtual environment
+
+```sh
+deactivate
+```
+
+Go to [Contents](#contents)
