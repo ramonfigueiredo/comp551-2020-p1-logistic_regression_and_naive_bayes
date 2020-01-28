@@ -84,6 +84,11 @@ plt.ylabel('Estimated Salary')
 plt.legend()
 plt.show()
 
+# K-fold cross validation
+from sklearn.model_selection import cross_val_score
+scores = cross_val_score(classifier, X, y, cv=5)
+print("K-fold cross validation (k=5). Scores: ", scores)
+
 # Visualising the Test set results
 from matplotlib.colors import ListedColormap
 X_set, y_set = X_test, y_test

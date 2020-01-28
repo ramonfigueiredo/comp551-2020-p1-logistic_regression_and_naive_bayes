@@ -66,6 +66,11 @@ print("Precision = TP / (TP + FP): %.2f %%" %(precision*100) )
 Fmeasure = (2 * recall * precision) / (recall + precision)
 print("Fmeasure = (2 * recall * precision) / (recall + precision): %.2f %%" %(Fmeasure*100) )
 
+# K-fold cross validation
+from sklearn.model_selection import cross_val_score
+scores = cross_val_score(classifier, X, y, cv=5)
+print("K-fold cross validation (k=5). Scores: ", scores)
+
 # Visualising the Training set results
 from matplotlib.colors import ListedColormap
 X_set, y_set = X_train, y_train
