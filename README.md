@@ -49,8 +49,7 @@ The first task is to acquire the data, analyze it, and clean it (if necessary). 
 The essential subtasks for this part of the project are:
 
 1. Download the datasets (noting the correct subsets to use, as discussed above).
-2. Load the datasets into NumPy objects (i.e., arrays or matrices) in Python. Remember to convert the wine dataset
-to a binary task, as discussed above.
+2. Load the datasets into NumPy objects (i.e., arrays or matrices) in Python.
 3. Clean the data. Are there any missing or malformed features? Are there are other data oddities that need to be dealt with? You should remove any examples with missing or malformed features and note this in your report. For categorical variables you can use one-hot encoding.
 4. Compute basic statistics on the data to understand it better. E.g., what are the distributions of the positive vs. negative classes, what are the distributions of some of the numerical features? what are the correlations between the features? how does the scatter plots of pair-wise features look-like for some subset of features?
 
