@@ -71,6 +71,11 @@ from sklearn.model_selection import cross_val_score
 scores = cross_val_score(classifier, X, y, cv=5)
 print("K-fold cross validation (k=5). Scores: ", scores)
 
+# Model accuracy
+from sklearn.metrics import accuracy_score
+model_accuracy = accuracy_score(y_test, y_pred)
+print("Model accuracy (accuracy score): ", model_accuracy)
+
 # Visualising the Training set results
 from matplotlib.colors import ListedColormap
 X_set, y_set = X_train, y_train
