@@ -1,39 +1,26 @@
-import pandas as pd
+from datasets.load_dataset import get_dataset, Datasets
 
-
-def load_dataset(path, header=True, x_col_indices=slice(-1), y_col_indices=-1):
-    dataset = pd.read_csv(path, header=header)
-    X = dataset.iloc[:, x_col_indices].values
-    y = dataset.iloc[:, y_col_indices].values
-    return X, y
-
-
-def load_ionosphere():
-    return load_dataset('datasets/data/adult/adult.data', None)
-
-
-def load_adult():
-    return load_dataset('datasets/data/ionosphere/ionosphere.data', None)
-
-
-def load_wine():
-    return load_dataset('datasets/data/wine-quality/winequality-red.csv')
-
-
-def load_cancer():
-    return load_dataset('datasets/data/breast-cancer-wisconsin/breast-cancer-wisconsin.data', None)
-
-
-def run_logistic_regression():
-    X, y = load_adult()
+def run_logistic_regression(dataset):
+    print('Dataset: {}'.format(dataset.name))
+    X, y = get_dataset(dataset)
     print(X, y)
 
 
-def run_naive_bayes():
-    pass
+def run_naive_bayes(dataset):
+    print('Dataset: {}'.format(dataset.name))
+    X, y = get_dataset(dataset)
+    print(X, y)
 
 
-if __name__ == "__main__":
-    run_logistic_regression()
-    run_naive_bayes()
+if __name__ == '__main__':
+    print('\n\n==> Logistic Regression')
+    run_logistic_regression(Datasets.IONOSPHERE)
+    run_logistic_regression(Datasets.ADULT)
+    run_logistic_regression(Datasets.WINE_QUALITY)
+    run_logistic_regression(Datasets.BREAST_CANCER_DIAGNOSIS)
 
+    print('\n\n==> Naive Bayes')
+    run_naive_bayes(Datasets.IONOSPHERE)
+    run_naive_bayes(Datasets.ADULT)
+    run_naive_bayes(Datasets.WINE_QUALITY)
+    run_naive_bayes(Datasets.BREAST_CANCER_DIAGNOSIS)
