@@ -1,0 +1,9 @@
+Wolberg, William H., and Olvi L. Mangasarian. "Multisurface method of pattern separation for medical diagnosis applied to breast cytology." Proceedings of the national academy of sciences 87.23 (1990): 9193-9196.
+
+Wolberg, W. H., & Mangasarian, O. L. (1990). Multisurface method of pattern separation for medical diagnosis applied to breast cytology. Proceedings of the national academy of sciences, 87(23), 9193-9196.
+
+Wolberg, William H., and Olvi L. Mangasarian. "Multisurface method of pattern separation for medical diagnosis applied to breast cytology." Proceedings of the national academy of sciences 87, no. 23 (1990): 9193-9196.
+
+Wolberg, W.H. and Mangasarian, O.L., 1990. Multisurface method of pattern separation for medical diagnosis applied to breast cytology. Proceedings of the national academy of sciences, 87(23), pp.9193-9196.
+
+Wolberg WH, Mangasarian OL. Multisurface method of pattern separation for medical diagnosis applied to breast cytology. Proceedings of the national academy of sciences. 1990 Dec 1;87(23):9193-6.

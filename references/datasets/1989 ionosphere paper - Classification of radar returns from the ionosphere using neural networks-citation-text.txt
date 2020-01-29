@@ -1,0 +1,9 @@
+Sigillito, Vincent G., et al. "Classification of radar returns from the ionosphere using neural networks." Johns Hopkins APL Technical Digest 10.3 (1989): 262-266.
+
+Sigillito, V. G., Wing, S. P., Hutton, L. V., & Baker, K. B. (1989). Classification of radar returns from the ionosphere using neural networks. Johns Hopkins APL Technical Digest, 10(3), 262-266.
+
+Sigillito, Vincent G., Simon P. Wing, Larrie V. Hutton, and Kile B. Baker. "Classification of radar returns from the ionosphere using neural networks." Johns Hopkins APL Technical Digest 10, no. 3 (1989): 262-266.
+
+Sigillito, V.G., Wing, S.P., Hutton, L.V. and Baker, K.B., 1989. Classification of radar returns from the ionosphere using neural networks. Johns Hopkins APL Technical Digest, 10(3), pp.262-266.
+
+Sigillito VG, Wing SP, Hutton LV, Baker KB. Classification of radar returns from the ionosphere using neural networks. Johns Hopkins APL Technical Digest. 1989 Jul 1;10(3):262-6.

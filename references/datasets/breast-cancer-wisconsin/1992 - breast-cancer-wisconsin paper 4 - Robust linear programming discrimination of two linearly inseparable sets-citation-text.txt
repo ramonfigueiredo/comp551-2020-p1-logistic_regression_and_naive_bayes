@@ -1,0 +1,9 @@
+Bennett, Kristin P., and Olvi L. Mangasarian. "Robust linear programming discrimination of two linearly inseparable sets." Optimization methods and software 1.1 (1992): 23-34.
+Bennett, K. P., & Mangasarian, O. L. (1992). Robust linear programming discrimination of two linearly inseparable sets. Optimization methods and software, 1(1),
+ 23-34.
+
+Bennett, Kristin P., and Olvi L. Mangasarian. "Robust linear programming discrimination of two linearly inseparable sets." Optimization methods and software 1, no. 1 (1992): 23-34.
+
+Bennett, K.P. and Mangasarian, O.L., 1992. Robust linear programming discrimination of two linearly inseparable sets. Optimization methods and software, 1(1), pp.23-34.
+
+Bennett KP, Mangasarian OL. Robust linear programming discrimination of two linearly inseparable sets. Optimization methods and software. 1992 Jan 1;1(1):23-34.

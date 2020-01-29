@@ -1,0 +1,9 @@
+Mangasarian, Olvi L., and William H. Wolberg. Cancer diagnosis via linear programming. University of Wisconsin-Madison Department of Computer Sciences, 1990.
+
+Mangasarian, O. L., & Wolberg, W. H. (1990). Cancer diagnosis via linear programming. University of Wisconsin-Madison Department of Computer Sciences.
+
+Mangasarian, Olvi L., and William H. Wolberg. Cancer diagnosis via linear programming. University of Wisconsin-Madison Department of Computer Sciences, 1990.
+
+Mangasarian, O.L. and Wolberg, W.H., 1990. Cancer diagnosis via linear programming. University of Wisconsin-Madison Department of Computer Sciences.
+
+Mangasarian OL, Wolberg WH. Cancer diagnosis via linear programming. University of Wisconsin-Madison Department of Computer Sciences; 1990.
