@@ -1,4 +1,12 @@
-# TODO: import datasets
+def run_logistic_regression():
+    pass
+
+
+def run_naive_bayes():
+    pass
+
 
 if __name__ == "__main__":
-    print("DONE!")
+    run_logistic_regression()
+    run_naive_bayes()
+
