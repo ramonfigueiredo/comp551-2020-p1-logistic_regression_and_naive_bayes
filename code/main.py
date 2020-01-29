@@ -24,3 +24,5 @@ if __name__ == '__main__':
     run_naive_bayes(Datasets.ADULT)
     run_naive_bayes(Datasets.WINE_QUALITY)
     run_naive_bayes(Datasets.BREAST_CANCER_DIAGNOSIS)
+
+    print('DONE!')
