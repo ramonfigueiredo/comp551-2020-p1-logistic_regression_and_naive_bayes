@@ -26,6 +26,10 @@ def get_dataset(dataset):
 
 def load_dataset(path, header='infer', sep=',', x_col_indices=slice(-1), y_col_indices=-1):
     dataset = pd.read_csv(path, header=header, sep=sep)
+    # There are 16 instances in Groups 1 to 6 that contain a single missing (i.e., unavailable) attribute value,
+    # denoted by "?". Replacing '?' values with the most frequent value (mode).
+    dataset = dataset.replace('?', str(dataset[6].mode().values[0]))
+
     X = dataset.iloc[:, x_col_indices].values
     y = dataset.iloc[:, y_col_indices].values
     return X, y
