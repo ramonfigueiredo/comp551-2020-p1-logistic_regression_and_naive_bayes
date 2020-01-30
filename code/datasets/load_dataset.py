@@ -25,39 +25,74 @@ def get_dataset(dataset):
         raise Exception("Dataset does not exist")
 
 
-def load_dataset(path, header='infer', sep=',', x_col_indices=slice(-1), y_col_indices=-1):
+def load_dataset(path, header='infer', sep=',', replace_question_mark=False, x_col_indices=slice(-1), y_col_indices=-1):
     dataset = pd.read_csv(path, header=header, sep=sep)
-    # There are 16 instances in Groups 1 to 6 that contain a single missing (i.e., unavailable) attribute value,
-    # denoted by "?". Replacing '?' values with the most frequent value (mode).
-    dataset = dataset.replace('?', str(dataset[6].mode().values[0]))
+
+    if replace_question_mark:
+        dataset = dataset.replace('?', str(dataset[6].mode().values[0]))
 
     X = dataset.iloc[:, x_col_indices].values
     y = dataset.iloc[:, y_col_indices].values
     return X, y
 
 
+# -------------------------
+#   IONOSPHERE DATASET
+# -------------------------
+# - Number of Instances: 351
+# - Number of Attributes: 34 plus the class attribute
+#    -- All 34 predictor attributes are continuous
+# - Attribute Information:
+#    -- All 34 are continuous, as described above
+#    -- The 35th attribute is either "good" or "bad"
+# - Missing Values: None
+#
 def load_ionosphere():
-    path = os.path.join( os.getcwd(), 'datasets/data/ionosphere/ionosphere.data')
+    path = os.path.join(os.getcwd(), 'datasets/data/ionosphere/ionosphere.data')
     X, y = load_dataset(path, header=None)
 
-    # For this dataset, the last column (the output) is categorical, with 2 categories.
-    # So we are goint to use label encoder to change it to 0 or 1
+    # Only the last column is categorical, with 2 categories.
+    # Using label encoder to change it to 0 or 1
     labelencoder_X = LabelEncoder()
     y = labelencoder_X.fit_transform(y)
 
     return X, y
 
 
+# -------------------------
+#   ADULT DATASET
+# -------------------------
+# - Number of Instances: 351
+# - Number of Attributes: 34 plus the class attribute
+#    -- All 34 predictor attributes are continuous
+# - Attribute Information:
+#    -- All 34 are continuous, as described above
+#    -- The 35th attribute is either "good" or "bad"
+# - Missing Values: None
+#
 def load_adult():
     path = os.path.join(os.getcwd(), 'datasets/data/adult/adult.data')
-    return load_dataset(path, header=None)
+
+    X, y = load_dataset(path, header=None, replace_question_mark=True)
+
+    return X,y
 
 
 def load_wine_quality():
     path = os.path.join(os.getcwd(), 'datasets/data/wine-quality/winequality-red.csv')
-    return load_dataset(path, sep=';')
+    X, y = load_dataset(path, sep=';')
+
+    mask = y >= 5
+    y = mask.astype(int)
+
+    return X, y
 
 
 def load_breast_cancer_diagnosis():
     path = os.path.join(os.getcwd(), 'datasets/data/breast-cancer-wisconsin/breast-cancer-wisconsin.data')
-    return load_dataset(path, header=None)
+
+    # There are 16 instances in Groups 1 to 6 that contain a single missing (i.e., unavailable) attribute value,
+    # denoted by "?". Replacing '?' values with the most frequent value (mode).
+    X, y = load_dataset(path, header=None, replace_question_mark=True)
+
+    return X, y
