@@ -1,6 +1,7 @@
 from datasets.load_dataset import get_dataset, Datasets
 import numpy as np
 
+
 def run_logistic_regression(dataset):
     print('Dataset: {}'.format(dataset.name))
     X, y = get_dataset(dataset)

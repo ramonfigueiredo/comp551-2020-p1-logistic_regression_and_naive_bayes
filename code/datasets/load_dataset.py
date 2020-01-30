@@ -1,6 +1,7 @@
 import os
 from enum import Enum, unique
 import pandas as pd
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 
 
 @unique
@@ -37,7 +38,14 @@ def load_dataset(path, header='infer', sep=',', x_col_indices=slice(-1), y_col_i
 
 def load_ionosphere():
     path = os.path.join( os.getcwd(), 'datasets/data/ionosphere/ionosphere.data')
-    return load_dataset(path, header=None)
+    X, y = load_dataset(path, header=None)
+
+    # For this dataset, the last column (the output) is categorical, with 2 categories.
+    # So we are goint to use label encoder to change it to 0 or 1
+    labelencoder_X = LabelEncoder()
+    y = labelencoder_X.fit_transform(y)
+
+    return X, y
 
 
 def load_adult():
