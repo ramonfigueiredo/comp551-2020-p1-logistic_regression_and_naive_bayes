@@ -8,7 +8,7 @@ def plot_error_vs_averagesplit():
 plt.figure()
 
 
-#for ind, column in enumerate(getfile.columns) :
+for ind, column in enumerate(getfile.columns) :
 
 
 
