@@ -59,8 +59,9 @@ def run_logistic_regression(dataset):
     precision = TP / (TP + FP)
     print("Precision = TP / (TP + FP): %.2f %%" % (precision * 100))
 
-    Fmeasure = (2 * recall * precision) / (recall + precision)
-    print("Fmeasure = (2 * recall * precision) / (recall + precision): %.2f %%" % (Fmeasure * 100))
+    if (recall + precision) > 0:
+        Fmeasure = (2 * recall * precision) / (recall + precision)
+        print("Fmeasure = (2 * recall * precision) / (recall + precision): %.2f %%" % (Fmeasure * 100))
 
     # TODO: Do without use scikit-learn
     # K-fold cross validation
@@ -132,8 +133,9 @@ def run_naive_bayes(dataset):
     precision = TP / (TP + FP)
     print("Precision = TP / (TP + FP): %.2f %%" % (precision * 100))
 
-    Fmeasure = (2 * recall * precision) / (recall + precision)
-    print("Fmeasure = (2 * recall * precision) / (recall + precision): %.2f %%" % (Fmeasure * 100))
+    if (recall + precision) > 0:
+        Fmeasure = (2 * recall * precision) / (recall + precision)
+        print("Fmeasure = (2 * recall * precision) / (recall + precision): %.2f %%" % (Fmeasure * 100))
 
     # TODO: Do without use scikit-learn
     # K-fold cross validation
@@ -152,13 +154,13 @@ if __name__ == '__main__':
     print('\n\n==> Logistic Regression')
     # run_logistic_regression(Datasets.IONOSPHERE)
     # run_logistic_regression(Datasets.ADULT)
-    # run_logistic_regression(Datasets.WINE_QUALITY)
-    run_logistic_regression(Datasets.BREAST_CANCER_DIAGNOSIS)
+    run_logistic_regression(Datasets.WINE_QUALITY)
+    # run_logistic_regression(Datasets.BREAST_CANCER_DIAGNOSIS)
 
     print('\n\n==> Naive Bayes')
     # run_naive_bayes(Datasets.IONOSPHERE)
     # run_naive_bayes(Datasets.ADULT)
-    # run_naive_bayes(Datasets.WINE_QUALITY)
-    run_naive_bayes(Datasets.BREAST_CANCER_DIAGNOSIS)
+    run_naive_bayes(Datasets.WINE_QUALITY)
+    # run_naive_bayes(Datasets.BREAST_CANCER_DIAGNOSIS)
 
     print('DONE!')
