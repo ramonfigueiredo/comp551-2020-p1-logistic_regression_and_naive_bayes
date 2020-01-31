@@ -23,7 +23,9 @@ def run_logistic_regression(dataset):
     # TODO: Do without use scikit-learn
     # Fitting Logistic Regression to the Training set
     from sklearn.linear_model import LogisticRegression
-    classifier = LogisticRegression(random_state=0)
+    # How to fix non-convergence in LogisticRegressionCV
+    # https://stats.stackexchange.com/questions/184017/how-to-fix-non-convergence-in-logisticregressioncv
+    classifier = LogisticRegression(random_state=0, max_iter=1000)
     classifier.fit(X_train, y_train)
 
     # TODO: Do without use scikit-learn
@@ -152,15 +154,15 @@ def run_naive_bayes(dataset):
 
 if __name__ == '__main__':
     print('\n\n==> Logistic Regression')
-    # run_logistic_regression(Datasets.IONOSPHERE)
+    run_logistic_regression(Datasets.IONOSPHERE)
     # run_logistic_regression(Datasets.ADULT)
     run_logistic_regression(Datasets.WINE_QUALITY)
-    # run_logistic_regression(Datasets.BREAST_CANCER_DIAGNOSIS)
+    run_logistic_regression(Datasets.BREAST_CANCER_DIAGNOSIS)
 
     print('\n\n==> Naive Bayes')
-    # run_naive_bayes(Datasets.IONOSPHERE)
+    run_naive_bayes(Datasets.IONOSPHERE)
     # run_naive_bayes(Datasets.ADULT)
     run_naive_bayes(Datasets.WINE_QUALITY)
-    # run_naive_bayes(Datasets.BREAST_CANCER_DIAGNOSIS)
+    run_naive_bayes(Datasets.BREAST_CANCER_DIAGNOSIS)
 
     print('DONE!')
