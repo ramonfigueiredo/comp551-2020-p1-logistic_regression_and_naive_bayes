@@ -25,11 +25,12 @@ def get_dataset(dataset):
         raise Exception("Dataset does not exist")
 
 
-def load_dataset(path, header='infer', sep=',', replace_question_mark=False, x_col_indices=slice(-1), y_col_indices=-1):
+def load_dataset(path, header='infer', sep=',', remove_question_mark=False, x_col_indices=slice(-1), y_col_indices=-1):
     dataset = pd.read_csv(path, header=header, sep=sep)
 
-    if replace_question_mark:
-        dataset = dataset.replace('?', str(dataset[6].mode().values[0]))
+    if remove_question_mark:
+        # https://stackoverflow.com/questions/11453141/how-to-remove-all-rows-in-a-numpy-ndarray-that-contain-non-numeric-values
+        dataset = dataset[~(dataset == '?').any(axis=1)]
 
     X = dataset.iloc[:, x_col_indices].values
     y = dataset.iloc[:, y_col_indices].values
@@ -73,7 +74,7 @@ def load_ionosphere():
 def load_adult():
     path = os.path.join(os.getcwd(), 'datasets/data/adult/adult.data')
 
-    X, y = load_dataset(path, header=None, replace_question_mark=True)
+    X, y = load_dataset(path, header=None, remove_question_mark=True)
 
     return X,y
 
@@ -82,8 +83,7 @@ def load_wine_quality():
     path = os.path.join(os.getcwd(), 'datasets/data/wine-quality/winequality-red.csv')
     X, y = load_dataset(path, sep=';')
 
-    mask = y >= 5
-    y = mask.astype(int)
+    y = (y >= 5).astype(int)
 
     return X, y
 
@@ -93,6 +93,6 @@ def load_breast_cancer_diagnosis():
 
     # There are 16 instances in Groups 1 to 6 that contain a single missing (i.e., unavailable) attribute value,
     # denoted by "?". Replacing '?' values with the most frequent value (mode).
-    X, y = load_dataset(path, header=None, replace_question_mark=True)
+    X, y = load_dataset(path, header=None, remove_question_mark=True)
 
     return X, y
