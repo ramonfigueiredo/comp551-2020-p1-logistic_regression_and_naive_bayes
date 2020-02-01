@@ -1,4 +1,5 @@
 from datasets.load_dataset import get_dataset, Datasets
+import numpy as np
 
 
 def run_logistic_regression(dataset):
@@ -44,6 +45,20 @@ def run_naive_bayes(dataset):
 
     calculate_model_accuracy(y_pred, y_test)
 
+def split_data(datasetX,datasetY, trainRatio):
+    lengthDataset = len(datasetX)
+    lengthTrain = int(lengthDataset * trainRatio)
+
+#Shuffle dataset x and y in the same way .
+    combine = np.arrange(datasetX.shape[0])
+    np.random.shuffle(combine)
+    tempx = datasetX[combine]
+    tempy = datasetY[combine]
+    #Seperate as training and test
+    x_train = tempx[:lengthTrain, :]
+    x_test = tempx[lengthTrain:, :]
+    y_train = tempy[:lengthTrain, :]
+    y_test = tempy[:lengthTrain, :]
 
 def split_dataset(X, y):
     # TODO: Do without use scikit-learn
