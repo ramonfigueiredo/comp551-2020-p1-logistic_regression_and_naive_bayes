@@ -61,7 +61,7 @@ def run_naive_bayes(dataset):
 #     y_train = tempy[:lengthTrain, :]
 #     y_test = tempy[:lengthTrain, :]
 
-def split_dataset(datasetX, datasetY, trainRatio ):
+def split_dataset(datasetX, datasetY, trainRatio):
     # TODO: Do without use scikit-learn
     # Splitting the dataset into the Training set and Test set
     # from sklearn.model_selection import train_test_split
@@ -74,14 +74,16 @@ def split_dataset(datasetX, datasetY, trainRatio ):
     # Shuffle dataset x and y in the same way .
     combine = np.arange(datasetX.shape[0])
     np.random.shuffle(combine)
-    tempx = datasetX[combine]
-    tempy = datasetY[combine]
-    # Seperate as training and test
-    x_train = tempx[:lengthTrain, :]
-    x_test = tempx[lengthTrain:, :]
-    y_train = tempy[:lengthTrain]
-    y_test = tempy[lengthTrain:]
-    return x_test, x_train, y_test, y_train
+    temp_X = datasetX[combine]
+    temp_y = datasetY[combine]
+
+    # Split as training and test
+    X_train = temp_X[:lengthTrain, :]
+    X_test = temp_X[lengthTrain:, :]
+    y_train = temp_y[:lengthTrain]
+    y_test = temp_y[lengthTrain:]
+
+    return X_test, X_train, y_test, y_train
 
 def feature_scaling(X_test, X_train):
     # TODO: Do without use scikit-learn
