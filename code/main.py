@@ -3,13 +3,21 @@ import numpy as np
 
 
 def run_logistic_regression(dataset):
-    print('Dataset: {}'.format(dataset.name))
+    print('\n\nDataset: {}'.format(dataset.name))
     X, y = get_dataset(dataset)
-    print(X, y)
+    print("\nX:", X)
+    print("\ny:", y)
 
-    X_test, X_train, y_test, y_train = split_dataset(X, y, 0.8)
+    X_train, X_test, y_train, y_test = split_dataset(X, y, 0.8)
+    print("\nX_train:", X_train)
+    print("\nX_test:", X_test)
+    print("\ny_train:", y_train)
+    print("\ny_test:", y_test)
 
+    print("\n\nFeature scaling:")
     X_test, X_train = feature_scaling(X_test, X_train)
+    print("\nX_train:", X_train)
+    print("\nX_test:", X_test)
 
     classifier = fit_logistic_regression(X_train, y_train)
 
@@ -17,21 +25,31 @@ def run_logistic_regression(dataset):
 
     cm = create_confusion_matrix(y_pred, y_test)
 
-    calculate_metrics(cm)
+    confusion_matrix(cm)
 
     k_fold_cross_validation(X, classifier, y, k=5)
 
-    calculate_model_accuracy(y_pred, y_test)
+    classification_report(y_pred, y_test)
+
+    classification_metrics(y_pred, y_test)
 
 
 def run_naive_bayes(dataset):
-    print('Dataset: {}'.format(dataset.name))
+    print('\n\nDataset: {}'.format(dataset.name))
     X, y = get_dataset(dataset)
-    print(X, y)
+    print("\nX:", X)
+    print("\ny:", y)
 
-    X_test, X_train, y_test, y_train = split_dataset(X, y, 0.8)
+    X_train, X_test, y_train, y_test = split_dataset(X, y, 0.8)
+    print("\nX_train:", X_train)
+    print("\nX_test:", X_test)
+    print("\ny_train:", y_train)
+    print("\ny_test:", y_test)
 
+    print("\n\nFeature scaling")
     X_test, X_train = feature_scaling(X_test, X_train)
+    print("\nX_train:", X_train)
+    print("\nX_test:", X_test)
 
     classifier = fit_naive_bayes(X_train, y_train)
 
@@ -39,11 +57,13 @@ def run_naive_bayes(dataset):
 
     cm = create_confusion_matrix(y_pred, y_test)
 
-    calculate_metrics(cm)
+    confusion_matrix(cm)
 
     k_fold_cross_validation(X, classifier, y, k=5)
 
-    calculate_model_accuracy(y_pred, y_test)
+    classification_report(y_pred, y_test)
+
+    classification_metrics(y_pred, y_test)
 
 
 def split_dataset(datasetX, datasetY, trainRatio):
@@ -68,7 +88,7 @@ def split_dataset(datasetX, datasetY, trainRatio):
     y_train = temp_y[:lengthTrain]
     y_test = temp_y[lengthTrain:]
 
-    return X_test, X_train, y_test, y_train
+    return X_train, X_test, y_train, y_test
 
 def feature_scaling(X_test, X_train):
     # TODO: Do without use scikit-learn
@@ -105,7 +125,7 @@ def predict(X_test, classifier):
     # TODO: Do without use scikit-learn
     # Predicting the Test set results
     y_pred = classifier.predict(X_test)
-    print("Predicting the Test set results\n", y_pred)
+    print("\n\nPredicting the Test set results:\n", y_pred)
     return y_pred
 
 
@@ -117,8 +137,8 @@ def create_confusion_matrix(y_pred, y_test):
     return cm
 
 
-def calculate_metrics(cm):
-    print("Confusion Matrix\n", cm)
+def confusion_matrix(cm):
+    print("\n\nConfusion Matrix:\n", cm)
 
     # TODO: Do without use scikit-learn
     # Calculating metrics using the confusion matrix
@@ -126,27 +146,10 @@ def calculate_metrics(cm):
     FN = cm[0][1]
     TN = cm[1][0]
     FP = cm[1][1]
-    print("True Positive (TP):", TP)
+    print("\nTrue Positive (TP):", TP)
     print("False Negative (FN):", FN)
     print("True Negative (TN):", TN)
     print("False Positive (FP):", FP)
-    print("\n")
-
-    if (TP + TN + FP + FN) > 0:
-        accuracy = (TP + TN) / (TP + TN + FP + FN)
-        print("Accuracy = (TP + TN) / (TP + TN + FP + FN): %.2f %%" % (accuracy * 100))
-
-    if (TP + FN) > 0:
-        recall = TP / (TP + FN)
-        print("Recall = TP / (TP + FN): %.2f %%" % (recall * 100))
-
-    if (TP + FP) > 0:
-        precision = TP / (TP + FP)
-        print("Precision = TP / (TP + FP): %.2f %%" % (precision * 100))
-
-    if (recall + precision) > 0:
-        Fmeasure = (2 * recall * precision) / (recall + precision)
-        print("Fmeasure = (2 * recall * precision) / (recall + precision): %.2f %%" % (Fmeasure * 100))
 
 
 def k_fold_cross_validation(X, classifier, y, k):
@@ -154,28 +157,56 @@ def k_fold_cross_validation(X, classifier, y, k):
     # K-fold cross validation
     from sklearn.model_selection import cross_val_score
     scores = cross_val_score(classifier, X, y, cv=k)
-    print("K-fold cross validation (k=5). Scores: ", scores)
+    print("\n\nK-fold cross validation (k=5). Scores: ", scores)
 
 
-def calculate_model_accuracy(y_pred, y_test):
+def classification_report(y_pred, y_test):
     # TODO: Do without use scikit-learn
-    # Model accuracy
+    print('\n\nClassification report:')
+    from sklearn.metrics import classification_report
+    print(classification_report(y_test, y_pred))
+
+
+def classification_metrics(y_pred, y_test):
+    # TODO: Do without use scikit-learn
+    print("\n\n>>> Classification metrics:")
     from sklearn.metrics import accuracy_score
-    model_accuracy = accuracy_score(y_test, y_pred)
-    print("Model accuracy (accuracy score): ", model_accuracy)
+    print("\n> Accuracy score:", accuracy_score(y_test, y_pred))
+    from sklearn.metrics import roc_auc_score
+    print("\n> Area Under the Receiver Operating Characteristic Curve (ROC AUC) = ROC AUC Score:",
+          roc_auc_score(y_test, y_pred))
+    from sklearn.metrics import precision_score
+    print("\n> Precision score (average='macro'):", precision_score(y_test, y_pred, average='macro'))
+    print("> Precision score (average='micro'):", precision_score(y_test, y_pred, average='micro'))
+    print("> Precision score (average='weighted'):", precision_score(y_test, y_pred, average='weighted'))
+    print("> Precision score (average=None):", precision_score(y_test, y_pred, average=None))
+    from sklearn.metrics import recall_score
+    print("\n> Recall score (average='macro'):", recall_score(y_test, y_pred, average='macro'))
+    print("> Recall score (average='micro'):", recall_score(y_test, y_pred, average='micro'))
+    print("> Recall score (average='weighted'):", recall_score(y_test, y_pred, average='weighted'))
+    print("> Recall score (average=None):", recall_score(y_test, y_pred, average=None))
+    from sklearn.metrics import f1_score
+    print("\n> F1 score (average='macro'):", f1_score(y_test, y_pred, average='macro'))
+    print("> F1 score (average='micro'):", f1_score(y_test, y_pred, average='micro'))
+    print("> F1 score (average='weighted'):", f1_score(y_test, y_pred, average='weighted'))
+    print("> F1 score (average=None):", f1_score(y_test, y_pred, average=None))
 
 
 if __name__ == '__main__':
-    print('\n\n==> Logistic Regression')
+    print('\n\n\n==========================')
+    print(' Logistic Regression')
+    print('==========================')
     run_logistic_regression(Datasets.IONOSPHERE)
     run_logistic_regression(Datasets.ADULT)
     run_logistic_regression(Datasets.WINE_QUALITY)
     run_logistic_regression(Datasets.BREAST_CANCER_DIAGNOSIS)
 
-    print('\n\n==> Naive Bayes')
+    print('\n\n\n==========================')
+    print(' Naive Bayes')
+    print('==========================')
     run_naive_bayes(Datasets.IONOSPHERE)
     run_naive_bayes(Datasets.ADULT)
     run_naive_bayes(Datasets.WINE_QUALITY)
     run_naive_bayes(Datasets.BREAST_CANCER_DIAGNOSIS)
 
-    print('DONE!')
+    print('\n\nDONE!')
