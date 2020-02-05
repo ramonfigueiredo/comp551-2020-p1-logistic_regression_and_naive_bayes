@@ -32,8 +32,9 @@ def load_dataset(path, header='infer', sep=',', remove_question_mark=False, x_co
     # dataset = genfromtxt(path, skip_header=header, delimiter=sep)
 
     if remove_question_mark:
-        # https://stackoverflow.com/questions/11453141/how-to-remove-all-rows-in-a-numpy-ndarray-that-contain-non-numeric-values
-        dataset = dataset[~(dataset == '?').any(axis=1)]
+        # Delete all rows from a dataframe containing question marks (?)
+        # https://stackoverflow.com/questions/46269915/delete-all-rows-from-a-dataframe-containing-question-marks?rq=1
+        dataset = dataset.replace({'?': np.nan}).dropna()
 
     X = dataset.iloc[:, x_col_indices].values
     y = dataset.iloc[:, y_col_indices].values
