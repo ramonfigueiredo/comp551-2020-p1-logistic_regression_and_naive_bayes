@@ -71,27 +71,87 @@ def load_ionosphere():
 # - Number of Attributes: 14 plus the class attribute
 # - Attribute Information:
 #    -- Attributes 0, 2, 4, 10, 11, 12 are continuous
-#    -- Attributes 1, 3, 5, 6, 7, 8, 13 are categorical
-#    -- Attribute 9 (sex) is either "Male" or "Female"
-#    -- Attribute 14 (output) is either ">50K" or "<=50K"
+#    -- Attributes 1, 3, 5, 6, 7, 8, 9, 13 are categorical
+#    -- Attribute 14 (output) is either ">50K" or "<=50K" (categorical)
 # - 3620 rows have missing values, that were replaced by '?'
 #
 def load_adult():
-    path = os.path.join(os.getcwd(), 'datasets/data/adult/adult.data')
-    X, y = load_dataset(path, header=None, remove_question_mark=True)
 
-    # Apply label encoder to columns 9 and 14
-    label_encoder = LabelEncoder()
-    X[:, 9] = label_encoder.fit_transform(X[:, 9])
-    y = label_encoder.fit_transform(y)
+    with open("datasets/data/adult/adult.data", "r") as f:
+        lines = f.readlines()
+    with open("datasets/data/adult/adult2.data", "w") as f:
+        for line in lines:
+            if '?' not in line:
+                f.write(line)
 
-    # Apply one-hot encode to columns 1, 3, 5, 6, 7, 8, 13
-    # The drop parameter makes it so the first category in each feature is dropped to avoid the dummy variable trap
+    path = os.path.join(os.getcwd(), 'datasets/data/adult/adult2.data')
+    X, y = load_dataset(path, header=None, remove_question_mark=False)
+
+    # Apply One Hot Encoder
+    '''
+    0 age: continuous.
+    OHE > 1 workclass: Private, Self-emp-not-inc, Self-emp-inc, Federal-gov, Local-gov, State-gov, Without-pay, Never-worked.
+    2 fnlwgt: continuous.
+    OHE >3 education: Bachelors, Some-college, 11th, HS-grad, Prof-school, Assoc-acdm, Assoc-voc, 9th, 7th-8th, 12th, Masters, 1st-4th, 10th, Doctorate, 5th-6th, Preschool.
+    4 education-num: continuous.
+    OHE >5 marital-status: Married-civ-spouse, Divorced, Never-married, Separated, Widowed, Married-spouse-absent, Married-AF-spouse.
+    OHE >6 occupation: Tech-support, Craft-repair, Other-service, Sales, Exec-managerial, Prof-specialty, Handlers-cleaners, Machine-op-inspct, Adm-clerical, Farming-fishing, Transport-moving, Priv-house-serv, Protective-serv, Armed-Forces.
+    OHE >7 relationship: Wife, Own-child, Husband, Not-in-family, Other-relative, Unmarried.
+    OHE >8 race: White, Asian-Pac-Islander, Amer-Indian-Eskimo, Other, Black.
+    OHE >9 sex: Female, Male.
+    10 capital-gain: continuous.
+    11 capital-loss: continuous.
+    12 hours-per-week: continuous.
+    OHE >13 native-country: United-States, Cambodia, England, Puerto-Rico, Canada, Germany, Outlying-US(Guam-USVI-etc), India, Japan, Greece, South, China, Cuba, Iran, Honduras, Philippines, Italy, Poland, Jamaica, Vietnam, Mexico, Portugal, Ireland, France, Dominican-Republic, Laos, Ecuador, Taiwan, Haiti, Columbia, Hungary, Guatemala, Nicaragua, Scotland, Thailand, Yugoslavia, El-Salvador, Trinadad&Tobago, Peru, Hong, Holand-Netherlands.
+    '''
+
+    label_encoder_workclass = LabelEncoder()
+    X[:, 1] = label_encoder_workclass.fit_transform(X[:, 1])
+
+    label_encoder_education = LabelEncoder()
+    X[:, 3] = label_encoder_education.fit_transform(X[:, 3])
+
+    label_encoder_maritalstatus = LabelEncoder()
+    X[:, 5] = label_encoder_maritalstatus.fit_transform(X[:, 5])
+
+    label_encoder_occupation = LabelEncoder()
+    X[:, 6] = label_encoder_occupation.fit_transform(X[:, 6])
+
+    label_encoder_relationship = LabelEncoder()
+    X[:, 7] = label_encoder_relationship.fit_transform(X[:, 7])
+
+    label_encoder_race = LabelEncoder()
+    X[:, 8] = label_encoder_race.fit_transform(X[:, 8])
+
+    label_encoder_sex = LabelEncoder()
+    X[:, 9] = label_encoder_sex.fit_transform(X[:, 9])
+
+    label_encoder_native_country = LabelEncoder()
+    X[:, 13] = label_encoder_native_country.fit_transform(X[:, 13])
+
     ct = ColumnTransformer(
-        [('one_hot_encoder', OneHotEncoder(categories='auto', drop='first'), [1, 3, 5, 6, 7, 8, 13])],
-        remainder='passthrough'
+        [('one_hot_encoder', OneHotEncoder(categories='auto'), [1, 3])],
+        # The column numbers to be transformed
+        remainder='passthrough'  # Leave the rest of the columns untouched
     )
     X = np.array(ct.fit_transform(X), dtype=np.float)
+
+    ct = ColumnTransformer(
+        [('one_hot_encoder', OneHotEncoder(categories='auto'), [5, 6, 7, 8, 9])],
+        # The column numbers to be transformed
+        remainder='passthrough'  # Leave the rest of the columns untouched
+    )
+    X = np.array(ct.fit_transform(X), dtype=np.float)
+
+    ct = ColumnTransformer(
+        [('one_hot_encoder', OneHotEncoder(categories='auto'), [13])],
+        # The column numbers to be transformed
+        remainder='passthrough'  # Leave the rest of the columns untouched
+    )
+    X = np.array(ct.fit_transform(X), dtype=np.float)
+
+    label_encoder_Y = LabelEncoder()
+    y = label_encoder_Y.fit_transform(y)
 
     return X, y
 

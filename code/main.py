@@ -183,13 +183,13 @@ def calculate_model_accuracy(y_pred, y_test):
 if __name__ == '__main__':
     print('\n\n==> Logistic Regression')
     run_logistic_regression(Datasets.IONOSPHERE)
-    # run_logistic_regression(Datasets.ADULT)
+    run_logistic_regression(Datasets.ADULT)
     run_logistic_regression(Datasets.WINE_QUALITY)
     run_logistic_regression(Datasets.BREAST_CANCER_DIAGNOSIS)
 
     print('\n\n==> Naive Bayes')
     run_naive_bayes(Datasets.IONOSPHERE)
-    # run_naive_bayes(Datasets.ADULT)
+    run_naive_bayes(Datasets.ADULT)
     run_naive_bayes(Datasets.WINE_QUALITY)
     run_naive_bayes(Datasets.BREAST_CANCER_DIAGNOSIS)
 
