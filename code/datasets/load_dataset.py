@@ -29,6 +29,7 @@ def get_dataset(dataset):
 
 def load_dataset(path, header='infer', sep=',', remove_question_mark=False, x_col_indices=slice(-1), y_col_indices=-1):
     dataset = pd.read_csv(path, header=header, sep=sep)
+    # dataset = genfromtxt(path, skip_header=header, delimiter=sep)
 
     if remove_question_mark:
         # https://stackoverflow.com/questions/11453141/how-to-remove-all-rows-in-a-numpy-ndarray-that-contain-non-numeric-values
@@ -94,6 +95,16 @@ def load_adult():
     return X, y
 
 
+# -------------------------
+#   WINE QUALITY DATASET
+# -------------------------
+# - Number of Instances: 1599
+# - Number of Attributes: 11 plus the output attribute
+# - Attribute Information:
+#    -- All attributes are continuous
+#    -- Output attribute is a score between 0 and 10 - must be converted to a binary class
+# TODO: several of the attributes may be correlated, thus it makes sense to apply some sort of feature selection.
+#
 def load_wine_quality():
     path = os.path.join(os.getcwd(), 'datasets/data/wine-quality/winequality-red.csv')
     X, y = load_dataset(path, sep=';')
@@ -103,11 +114,21 @@ def load_wine_quality():
     return X, y
 
 
+# -------------------------
+#   BREAST CANCER DATASET
+# -------------------------
+# - Number of Instances: 699
+# - Number of Attributes: 10 plus the class attribute
+# - Attribute Information:
+#    -- Attribute 0 is the sample code number, which is irrelevant
+#    -- Attributes 1 to 9 are continuous from 1 to 10
+#    -- Attribute 10 (class attribute) is 2 for benign, 4 for malignant
+#  - There are 16 instances in Groups 1 to 6 that contain a single missing attribute value, denoted by "?".
+#
 def load_breast_cancer_diagnosis():
     path = os.path.join(os.getcwd(), 'datasets/data/breast-cancer-wisconsin/breast-cancer-wisconsin.data')
 
-    # There are 16 instances in Groups 1 to 6 that contain a single missing (i.e., unavailable) attribute value,
-    # denoted by "?". Replacing '?' values with the most frequent value (mode).
+    # Replacing '?' values with the most frequent value (mode).
     X, y = load_dataset(path, header=None, remove_question_mark=True)
 
     return X, y
