@@ -8,8 +8,7 @@ def run_logistic_regression(dataset):
     print(X, y)
 
     X_test, X_train, y_test, y_train = split_dataset(X, y, 0.8)
-    print(X_test)
-    print(X_train)
+
     X_test, X_train = feature_scaling(X_test, X_train)
 
     classifier = fit_logistic_regression(X_train, y_train)
@@ -45,24 +44,10 @@ def run_naive_bayes(dataset):
     k_fold_cross_validation(X, classifier, y, k=5)
 
     calculate_model_accuracy(y_pred, y_test)
-#
-# def split_data(datasetX,datasetY, trainRatio):
-#     lengthDataset = len(datasetX)
-#     lengthTrain = int(lengthDataset * trainRatio)
-#
-# #Shuffle dataset x and y in the same way .
-#     combine = np.arrange(datasetX.shape[0])
-#     np.random.shuffle(combine)
-#     tempx = datasetX[combine]
-#     tempy = datasetY[combine]
-#     #Seperate as training and test
-#     x_train = tempx[:lengthTrain, :]
-#     x_test = tempx[lengthTrain:, :]
-#     y_train = tempy[:lengthTrain, :]
-#     y_test = tempy[:lengthTrain, :]
+
 
 def split_dataset(datasetX, datasetY, trainRatio):
-    # TODO: Do without use scikit-learn
+    # Split using scikit-learn
     # Splitting the dataset into the Training set and Test set
     # from sklearn.model_selection import train_test_split
     # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0)
