@@ -1,25 +1,31 @@
-from datasets.load_dataset import get_dataset, Datasets
+from datasets.load_dataset import get_dataset, load_adult
+from utils.ml_classifiers_enum import Classifier
+from utils.datasets_enum import Datasets
 import numpy as np
 
 
-def run_logistic_regression(dataset):
+def run_classifier(classifier, dataset):
     print('\n\nDataset: {}'.format(dataset.name))
-    X, y = get_dataset(dataset)
-    print("\nX:", X)
-    print("\ny:", y)
+    if dataset == Datasets.ADULT:
+        X_train, X_test, y_train, y_test = load_adult(load_test_data=True)
+        print_data(X_test, X_train, y_test, y_train)
+    else:
+        X, y = get_dataset(dataset)
+        print("\nX:", X)
+        print("\ny:", y)
 
-    X_train, X_test, y_train, y_test = split_dataset(X, y, 0.8)
-    print("\nX_train:", X_train)
-    print("\nX_test:", X_test)
-    print("\ny_train:", y_train)
-    print("\ny_test:", y_test)
+        X_train, X_test, y_train, y_test = split_dataset(X, y, 0.8)
+        print_data(X_test, X_train, y_test, y_train)
 
     print("\n\nFeature scaling:")
-    X_test, X_train = feature_scaling(X_test, X_train)
+    X_train, X_test = feature_scaling(X_test, X_train)
     print("\nX_train:", X_train)
     print("\nX_test:", X_test)
 
-    classifier = fit_logistic_regression(X_train, y_train)
+    if classifier == Classifier.LOGISTIC_REGRESSION:
+        classifier = fit_logistic_regression(X_train, y_train)
+    if classifier == Classifier.NAIVE_BAYES:
+        classifier = fit_naive_bayes(X_train, y_train)
 
     y_pred = predict(X_test, classifier)
 
@@ -27,43 +33,23 @@ def run_logistic_regression(dataset):
 
     confusion_matrix(cm)
 
-    k_fold_cross_validation(X, classifier, y, k=5)
+    if dataset == Datasets.ADULT:
+        X = np.concatenate((X_train, X_test), axis=0)
+        y = np.concatenate((y_train, y_test), axis=0)
+        k_fold_cross_validation(X, classifier, y, k=5)
+    else:
+        k_fold_cross_validation(X, classifier, y, k=5)
 
     classification_report(y_pred, y_test)
 
     classification_metrics(y_pred, y_test)
 
 
-def run_naive_bayes(dataset):
-    print('\n\nDataset: {}'.format(dataset.name))
-    X, y = get_dataset(dataset)
-    print("\nX:", X)
-    print("\ny:", y)
-
-    X_train, X_test, y_train, y_test = split_dataset(X, y, 0.8)
+def print_data(X_test, X_train, y_test, y_train):
     print("\nX_train:", X_train)
     print("\nX_test:", X_test)
     print("\ny_train:", y_train)
     print("\ny_test:", y_test)
-
-    print("\n\nFeature scaling")
-    X_test, X_train = feature_scaling(X_test, X_train)
-    print("\nX_train:", X_train)
-    print("\nX_test:", X_test)
-
-    classifier = fit_naive_bayes(X_train, y_train)
-
-    y_pred = predict(X_test, classifier)
-
-    cm = create_confusion_matrix(y_pred, y_test)
-
-    confusion_matrix(cm)
-
-    k_fold_cross_validation(X, classifier, y, k=5)
-
-    classification_report(y_pred, y_test)
-
-    classification_metrics(y_pred, y_test)
 
 
 def split_dataset(datasetX, datasetY, trainRatio):
@@ -98,7 +84,8 @@ def feature_scaling(X_test, X_train):
     sc = StandardScaler()
     X_train = sc.fit_transform(X_train)
     X_test = sc.transform(X_test)
-    return X_test, X_train
+
+    return X_train, X_test
 
 
 def fit_logistic_regression(X_train, y_train):
@@ -194,19 +181,19 @@ def classification_metrics(y_pred, y_test):
 
 if __name__ == '__main__':
     print('\n\n\n==========================')
-    print(' Logistic Regression')
+    print(Classifier.LOGISTIC_REGRESSION.name)
     print('==========================')
-    run_logistic_regression(Datasets.IONOSPHERE)
-    run_logistic_regression(Datasets.ADULT)
-    run_logistic_regression(Datasets.WINE_QUALITY)
-    run_logistic_regression(Datasets.BREAST_CANCER_DIAGNOSIS)
+    run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.IONOSPHERE)
+    run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.ADULT)
+    run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.WINE_QUALITY)
+    run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.BREAST_CANCER_DIAGNOSIS)
 
     print('\n\n\n==========================')
-    print(' Naive Bayes')
+    print(Classifier.NAIVE_BAYES.name)
     print('==========================')
-    run_naive_bayes(Datasets.IONOSPHERE)
-    run_naive_bayes(Datasets.ADULT)
-    run_naive_bayes(Datasets.WINE_QUALITY)
-    run_naive_bayes(Datasets.BREAST_CANCER_DIAGNOSIS)
+    run_classifier(Classifier.NAIVE_BAYES, Datasets.IONOSPHERE)
+    run_classifier(Classifier.NAIVE_BAYES, Datasets.ADULT)
+    run_classifier(Classifier.NAIVE_BAYES, Datasets.WINE_QUALITY)
+    run_classifier(Classifier.NAIVE_BAYES, Datasets.BREAST_CANCER_DIAGNOSIS)
 
     print('\n\nDONE!')
