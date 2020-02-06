@@ -76,16 +76,31 @@ def split_dataset(datasetX, datasetY, trainRatio):
 
     return X_train, X_test, y_train, y_test
 
+
 def feature_scaling(X_test, X_train):
     # TODO: Do without use scikit-learn
     # TODO: Change according selected dataset
     # Feature Scaling
-    from sklearn.preprocessing import StandardScaler
-    sc = StandardScaler()
-    X_train = sc.fit_transform(X_train)
-    X_test = sc.transform(X_test)
+    # from sklearn.preprocessing import StandardScaler
+    # sc = StandardScaler()
+    # X_train = sc.fit_transform(X_train)
+    # X_test = sc.transform(X_test)
+    #
+    # return X_train, X_test
+    for column in X_test:
+        X_test[column] = standard_normalize(X_test[column])
 
-    return X_train, X_test
+    for column in X_train:
+        X_train[column] = standard_normalize(X_train[column])
+
+    return X_test, X_train
+
+
+def standard_normalize(column):
+    mean = column.mean()
+    standard_dev = column.std()
+    output = column.apply(lambda x: (x - mean) / standard_dev, axis=1)
+    return output
 
 
 def fit_logistic_regression(X_train, y_train):
