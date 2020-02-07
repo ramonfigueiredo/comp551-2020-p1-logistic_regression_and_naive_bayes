@@ -40,22 +40,16 @@ def run_classifier(classifier, dataset):
     # Fit the model to the dataset
     classifier.fit(X_train, y_train)
 
+    # k-fold cross validation
+    k_fold_cross_validation(X_train, classifier, y_train, k=5)
+
     # Predict the labels
-    # TODO: Should be after cross validation
     y_pred = classifier.predict(X_test)
     print("\n\nPredicting the Test set results:\n", y_pred)
 
     cm = create_confusion_matrix(y_pred, y_test)
 
     print_confusion_matrix(cm)
-
-    # TODO: Cross validation should use just X_train and y_train
-    if dataset == Datasets.ADULT:
-        X = np.concatenate((X_train, X_test), axis=0)
-        y = np.concatenate((y_train, y_test), axis=0)
-        k_fold_cross_validation(X, classifier, y, k=5)
-    else:
-        k_fold_cross_validation(X, classifier, y, k=5)
 
     classification_report(y_pred, y_test)
 
