@@ -11,6 +11,11 @@ class LogisticRegression:
 
     # Logistic function (sigmoid)
     def logistic(self, z):
+
+        # Hack for the training to work without regularization
+        z[z > 100] = 100
+        z[z < -100] = -100
+
         return 1 / (1 + np.exp(-z))
 
     # Calculates de gradient over the whole dataset (full-batch)
