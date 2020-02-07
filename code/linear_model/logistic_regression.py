@@ -3,25 +3,23 @@ import numpy as np
 
 # TODO: Add regularization
 class LogisticRegression:
-    def __init__(self, lr=.01, eps=1e-2, max_iter=5000):
+    def __init__(self, lr=.01, eps=1e-2, max_iter=10000, lambdaa=.1):
         self.lr = lr
         self.eps = eps
         self.max_iter = max_iter
+        self.lambdaa = lambdaa
         self.w = np.zeros(0)
 
     # Logistic function (sigmoid)
     def logistic(self, z):
-
-        # Hack for the training to work without regularization
-        z[z > 100] = 100
-        z[z < -100] = -100
-
         return 1 / (1 + np.exp(-z))
 
-    # Calculates de gradient over the whole dataset (full-batch)
+    # Calculates the gradient over the whole dataset (full-batch)
     def gradient(self, X, y):
+        N, D = X.shape
         yh = self.logistic(np.dot(X, self.w))
-        grad = np.dot(X.T, yh - y)
+        grad = np.dot(X.T, yh - y) / N
+        grad[1:] += self.lambdaa * self.w[1:]  # Regularization
         return grad
 
     # Uses full-batch gradient descent to fit the model to the data provided
@@ -46,7 +44,8 @@ class LogisticRegression:
 
     def cost(self, X, y):
         z = np.dot(X, self.w)
-        J = np.mean(y * np.log1p(np.exp(-z)) + (1 - y) * np.log1p(np.exp(z)))
+        J = np.mean(y * np.log1p(np.exp(-z)) + (1 - y) * np.log1p(np.exp(z))
+                    + (self.lambdaa / 2) * np.dot(self.w[1:].T, self.w[1:]))  # Regularization
         return J
 
     def score(self, X, y_true):
