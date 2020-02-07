@@ -123,18 +123,18 @@ def create_confusion_matrix(y_pred, y_test):
 
 
 def print_confusion_matrix(cm):
+    # https://en.wikipedia.org/wiki/Confusion_matrix
     print("\n\nConfusion Matrix:\n", cm)
 
-    # TODO: Do without use scikit-learn
-    # Calculating metrics using the confusion matrix
+    # TP, FP, FN, TN
     TP = cm[0][0]
-    FN = cm[0][1]
-    TN = cm[1][0]
-    FP = cm[1][1]
+    FP = cm[0][1]
+    FN = cm[1][0]
+    TN = cm[1][1]
     print("\nTrue Positive (TP):", TP)
+    print("False Positive (FP):", FP)
     print("False Negative (FN):", FN)
     print("True Negative (TN):", TN)
-    print("False Positive (FP):", FP)
 
 
 def k_fold_cross_validation(X, classifier, y, k):
