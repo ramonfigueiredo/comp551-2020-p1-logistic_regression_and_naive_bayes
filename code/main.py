@@ -9,7 +9,7 @@ from linear_model.logistic_regression import LogisticRegression
 import numpy as np
 
 
-def run_classifier(classifier, dataset):
+def run_classifier(classifier_name, dataset):
     print('\n\nDataset: {}'.format(dataset.name))
     if dataset == Datasets.ADULT:
         X_train, X_test, y_train, y_test = load_adult(load_test_data=True)
@@ -27,13 +27,13 @@ def run_classifier(classifier, dataset):
     print("\nX_train:", X_train)
     print("\nX_test:", X_test)
 
-    if classifier == Classifier.LOGISTIC_REGRESSION_SKLEARN:
+    if classifier_name == Classifier.LOGISTIC_REGRESSION_SKLEARN:
         # How to fix non-convergence in LogisticRegressionCV
         # https://stats.stackexchange.com/questions/184017/how-to-fix-non-convergence-in-logisticregressioncv
         classifier = LR_SkLearn(random_state=0, max_iter=1000)
-    if classifier == Classifier.LOGISTIC_REGRESSION:
+    if classifier_name == Classifier.LOGISTIC_REGRESSION:
         classifier = LogisticRegression()
-    if classifier == Classifier.NAIVE_BAYES:
+    if classifier_name == Classifier.NAIVE_BAYES:
         # TODO: Do without use scikit-learn
         classifier = NB_SkLearn()
 
@@ -41,7 +41,8 @@ def run_classifier(classifier, dataset):
     classifier.fit(X_train, y_train)
 
     # k-fold cross validation
-    k_fold_cross_validation(X_train, classifier, y_train, k=5)
+    if not(classifier_name == Classifier.LOGISTIC_REGRESSION):
+        k_fold_cross_validation(X_train, classifier, y_train, k=5)
 
     # Predict the labels
     y_pred = classifier.predict(X_test)
@@ -186,13 +187,13 @@ if __name__ == '__main__':
     run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.WINE_QUALITY)
     run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.BREAST_CANCER_DIAGNOSIS)
 
-    # print('\n\n\n==========================')
-    # print(Classifier.LOGISTIC_REGRESSION.name)
-    # print('==========================')
-    # run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.IONOSPHERE)
-    # run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.ADULT)
-    # run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.WINE_QUALITY)
-    # run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.BREAST_CANCER_DIAGNOSIS)
+    print('\n\n\n==========================')
+    print(Classifier.LOGISTIC_REGRESSION.name)
+    print('==========================')
+    run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.IONOSPHERE)
+    run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.ADULT)
+    run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.WINE_QUALITY)
+    run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.BREAST_CANCER_DIAGNOSIS)
 
     print('\n\n\n==========================')
     print(Classifier.NAIVE_BAYES.name)

@@ -29,9 +29,14 @@ class LogisticRegression:
 
     # Returns the model prediction over a set of data points
     def predict(self, x_test):
-        return self.logistic(np.dot(x_test, self.w))
+        yh = self.logistic(np.dot(x_test, self.w))
+        return (yh > 0.5).astype(int)
 
     def cost(self, X, y):
         z = np.dot(X, self.w)
         J = np.mean(y * np.log1p(np.exp(-z)) + (1 - y) * np.log1p(np.exp(z)))
         return J
+
+    def score(self, X, y_true):
+        y_pred = self.predict(X)
+        return np.average(y_true == y_pred)
