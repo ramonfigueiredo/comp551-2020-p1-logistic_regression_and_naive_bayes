@@ -7,6 +7,7 @@ from sklearn.naive_bayes import GaussianNB as NB_SkLearn
 from linear_model.logistic_regression import LogisticRegression
 
 import numpy as np
+import time
 
 
 def run_classifier(classifier_name, dataset):
@@ -144,6 +145,7 @@ def k_fold_cross_validation(X, classifier, y, k):
     from sklearn.model_selection import cross_val_score
     scores = cross_val_score(classifier, X, y, cv=k)
     print("\n\nK-fold cross validation (k=5). Scores: ", scores)
+    print("Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
 
 
 def classification_report(y_pred, y_test):
@@ -179,6 +181,8 @@ def classification_metrics(y_pred, y_test):
 
 
 if __name__ == '__main__':
+    start = time.time()
+
     print('\n\n\n==========================')
     print(Classifier.LOGISTIC_REGRESSION_SKLEARN.name)
     print('==========================')
@@ -204,3 +208,5 @@ if __name__ == '__main__':
     run_classifier(Classifier.NAIVE_BAYES, Datasets.BREAST_CANCER_DIAGNOSIS)
 
     print('\n\nDONE!')
+    toc = time.clock()
+    print('It took', time.time()-start, 'seconds.')
