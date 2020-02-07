@@ -5,3 +5,4 @@ from enum import Enum, unique
 class Classifier(Enum):
     LOGISTIC_REGRESSION = 1
     NAIVE_BAYES = 2
+    LOGISTIC_REGRESSION_SKLEARN = 3

@@ -1,6 +1,11 @@
 from datasets.load_dataset import get_dataset, load_adult
 from utils.ml_classifiers_enum import Classifier
 from utils.datasets_enum import Datasets
+
+from sklearn.linear_model import LogisticRegression as LR_SkLearn
+from sklearn.naive_bayes import GaussianNB as NB_SkLearn
+from linear_model.logistic_regression import LogisticRegression
+
 import numpy as np
 
 
@@ -22,17 +27,29 @@ def run_classifier(classifier, dataset):
     print("\nX_train:", X_train)
     print("\nX_test:", X_test)
 
+    if classifier == Classifier.LOGISTIC_REGRESSION_SKLEARN:
+        # How to fix non-convergence in LogisticRegressionCV
+        # https://stats.stackexchange.com/questions/184017/how-to-fix-non-convergence-in-logisticregressioncv
+        classifier = LR_SkLearn(random_state=0, max_iter=1000)
     if classifier == Classifier.LOGISTIC_REGRESSION:
-        classifier = fit_logistic_regression(X_train, y_train)
+        classifier = LogisticRegression()
     if classifier == Classifier.NAIVE_BAYES:
-        classifier = fit_naive_bayes(X_train, y_train)
+        # TODO: Do without use scikit-learn
+        classifier = NB_SkLearn()
 
-    y_pred = predict(X_test, classifier)
+    # Fit the model to the dataset
+    classifier.fit(X_train, y_train)
+
+    # Predict the labels
+    # TODO: Should be after cross validation
+    y_pred = classifier.predict(X_test)
+    print("\n\nPredicting the Test set results:\n", y_pred)
 
     cm = create_confusion_matrix(y_pred, y_test)
 
-    confusion_matrix(cm)
+    print_confusion_matrix(cm)
 
+    # TODO: Cross validation should use just X_train and y_train
     if dataset == Datasets.ADULT:
         X = np.concatenate((X_train, X_test), axis=0)
         y = np.concatenate((y_train, y_test), axis=0)
@@ -81,19 +98,19 @@ def feature_scaling(X_test, X_train):
     # TODO: Do without use scikit-learn
     # TODO: Change according selected dataset
     # Feature Scaling
-    # from sklearn.preprocessing import StandardScaler
-    # sc = StandardScaler()
-    # X_train = sc.fit_transform(X_train)
-    # X_test = sc.transform(X_test)
+    from sklearn.preprocessing import StandardScaler
+    sc = StandardScaler()
+    X_train = sc.fit_transform(X_train)
+    X_test = sc.transform(X_test)
+
+    return X_train, X_test
+    # for column in X_test:
+    #     X_test[column] = standard_normalize(X_test[column])
     #
-    # return X_train, X_test
-    for column in X_test:
-        X_test[column] = standard_normalize(X_test[column])
-
-    for column in X_train:
-        X_train[column] = standard_normalize(X_train[column])
-
-    return X_test, X_train
+    # for column in X_train:
+    #     X_train[column] = standard_normalize(X_train[column])
+    #
+    # return X_test, X_train
 
 
 def standard_normalize(column):
@@ -101,34 +118,6 @@ def standard_normalize(column):
     standard_dev = column.std()
     output = column.apply(lambda x: (x - mean) / standard_dev, axis=1)
     return output
-
-
-def fit_logistic_regression(X_train, y_train):
-    # TODO: Do without use scikit-learn
-    # Fitting Logistic Regression to the Training set
-    from sklearn.linear_model import LogisticRegression
-    # How to fix non-convergence in LogisticRegressionCV
-    # https://stats.stackexchange.com/questions/184017/how-to-fix-non-convergence-in-logisticregressioncv
-    classifier = LogisticRegression(random_state=0, max_iter=1000)
-    classifier.fit(X_train, y_train)
-    return classifier
-
-
-def fit_naive_bayes(X_train, y_train):
-    # TODO: Do without use scikit-learn
-    # Fitting Naive Bayes to the Training set
-    from sklearn.naive_bayes import GaussianNB
-    classifier = GaussianNB()
-    classifier.fit(X_train, y_train)
-    return classifier
-
-
-def predict(X_test, classifier):
-    # TODO: Do without use scikit-learn
-    # Predicting the Test set results
-    y_pred = classifier.predict(X_test)
-    print("\n\nPredicting the Test set results:\n", y_pred)
-    return y_pred
 
 
 def create_confusion_matrix(y_pred, y_test):
@@ -139,7 +128,7 @@ def create_confusion_matrix(y_pred, y_test):
     return cm
 
 
-def confusion_matrix(cm):
+def print_confusion_matrix(cm):
     print("\n\nConfusion Matrix:\n", cm)
 
     # TODO: Do without use scikit-learn
@@ -196,12 +185,20 @@ def classification_metrics(y_pred, y_test):
 
 if __name__ == '__main__':
     print('\n\n\n==========================')
-    print(Classifier.LOGISTIC_REGRESSION.name)
+    print(Classifier.LOGISTIC_REGRESSION_SKLEARN.name)
     print('==========================')
-    run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.IONOSPHERE)
-    run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.ADULT)
-    run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.WINE_QUALITY)
-    run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.BREAST_CANCER_DIAGNOSIS)
+    run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.IONOSPHERE)
+    run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.ADULT)
+    run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.WINE_QUALITY)
+    run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.BREAST_CANCER_DIAGNOSIS)
+
+    # print('\n\n\n==========================')
+    # print(Classifier.LOGISTIC_REGRESSION.name)
+    # print('==========================')
+    # run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.IONOSPHERE)
+    # run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.ADULT)
+    # run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.WINE_QUALITY)
+    # run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.BREAST_CANCER_DIAGNOSIS)
 
     print('\n\n\n==========================')
     print(Classifier.NAIVE_BAYES.name)
