@@ -144,8 +144,8 @@ if __name__ == '__main__':
     print('\n\n\n==========================')
     print(Classifier.LOGISTIC_REGRESSION.name)
     print('==========================')
-    # run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.IONOSPHERE)
-    # run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.ADULT)
+    run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.IONOSPHERE)
+    run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.ADULT)
     run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.WINE_QUALITY)
     run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.BREAST_CANCER_DIAGNOSIS)
 
