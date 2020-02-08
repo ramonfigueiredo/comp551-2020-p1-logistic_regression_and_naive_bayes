@@ -26,7 +26,7 @@ def run_classifier(classifier_name, dataset):
         print_data(X_test, X_train, y_test, y_train)
 
     print("\n\nFeature scaling:")
-    X_train, X_test = feature_scaling(X_test, X_train)
+    X_train, X_test = feature_scaling(X_train, X_test)
     print("\nX_train:", X_train)
     print("\nX_test:", X_test)
 

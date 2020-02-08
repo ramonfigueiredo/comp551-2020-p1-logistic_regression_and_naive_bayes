@@ -35,7 +35,7 @@ def standardize_dataset(dataset):
     return dataset
 
 
-def feature_scaling(X_test, X_train):
+def feature_scaling(X_train, X_test):
     # TODO: Do without use scikit-learn
     # TODO: Change according selected dataset
     # Feature Scaling
@@ -46,10 +46,8 @@ def feature_scaling(X_test, X_train):
     #
     # return X_train, X_test
 
-    # standardize dataset
-    X_test = standardize_dataset(X_test.astype(float))
-
-    # standardize dataset
     X_train = standardize_dataset(X_train.astype(float))
+
+    X_test = standardize_dataset(X_test.astype(float))
 
     return X_train, X_test
