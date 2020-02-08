@@ -1,11 +1,5 @@
 import matplotlib.pyplot as plt
-import pandas as pd
-import plotly.express as px
-from utils.datasets_enum import Datasets
 
-from datasets.load_dataset import get_dataset, load_adult
-import numpy as np
-from scipy.stats import norm
 import seaborn as sns
 
 # settings for seaborn plotting style
@@ -56,18 +50,16 @@ from datasets.load_dataset import get_dataset, Datasets
 # (y=='b').sum()
 
 # Method gets
-def histogramfeature(data, index):
-    X = data.iloc[:, index].values
+def histogramfeature(X, index):
     f = plt.figure()
     plt.title('Thickness')
     plt.xlabel('Size')
-    plt.hist(X, alpha=1, facecolor='g')
+    plt.hist(X[:, index], alpha=1, facecolor='g')
     plt.show()
     f.savefig("fo3.pdf", bbox_inches='tight')
 
 
-def histogramfory(ydata):
-    y = ydata.iloc[:].values
+def histogramfory(y):
     f = plt.figure()
     plt.hist(y, alpha=1, facecolor='g')
     plt.show()
@@ -75,5 +67,5 @@ def histogramfory(ydata):
 
 
 X, y = get_dataset(Datasets.BREAST_CANCER_DIAGNOSIS)
-histogramfeature(X, 4)
-# histogramfory(y)
+histogramfeature(X.astype(float), 1)
+histogramfory(y.astype(int))

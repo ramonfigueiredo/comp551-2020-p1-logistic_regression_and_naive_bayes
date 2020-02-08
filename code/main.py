@@ -136,8 +136,8 @@ if __name__ == '__main__':
     print('\n\n\n==========================')
     print(Classifier.LOGISTIC_REGRESSION_SKLEARN.name)
     print('==========================')
-    # run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.IONOSPHERE)
-    # run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.ADULT)
+    run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.IONOSPHERE)
+    run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.ADULT)
     run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.WINE_QUALITY)
     run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.BREAST_CANCER_DIAGNOSIS)
 
@@ -152,8 +152,8 @@ if __name__ == '__main__':
     print('\n\n\n==========================')
     print(Classifier.NAIVE_BAYES.name)
     print('==========================')
-    # run_classifier(Classifier.NAIVE_BAYES, Datasets.IONOSPHERE)
-    # run_classifier(Classifier.NAIVE_BAYES, Datasets.ADULT)
+    run_classifier(Classifier.NAIVE_BAYES, Datasets.IONOSPHERE)
+    run_classifier(Classifier.NAIVE_BAYES, Datasets.ADULT)
     run_classifier(Classifier.NAIVE_BAYES, Datasets.WINE_QUALITY)
     run_classifier(Classifier.NAIVE_BAYES, Datasets.BREAST_CANCER_DIAGNOSIS)
 
