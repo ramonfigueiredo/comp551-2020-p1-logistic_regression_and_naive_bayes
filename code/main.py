@@ -42,7 +42,7 @@ def run_classifier(classifier_name, dataset):
     classifier.fit(X_train, y_train)
 
     # k-fold cross validation
-    if not(classifier_name == Classifier.LOGISTIC_REGRESSION):
+    if not (classifier_name == Classifier.LOGISTIC_REGRESSION):
         k_fold_cross_validation(X_train, classifier, y_train, k=5)
 
     # Predict the labels
@@ -114,6 +114,17 @@ def standard_normalize(column):
     standard_dev = column.std()
     output = column.apply(lambda x: (x - mean) / standard_dev, axis=1)
     return output
+
+
+def findaccuracy(y_correct, y_pred):
+    count = 0
+    for i in range(len(y_pred)):
+        if y_correct[i] == y_pred[i]:
+            count = count +1
+    totalaccuracy = count / len(y_correct)
+    return totalaccuracy
+
+
 
 
 def create_confusion_matrix(y_pred, y_test):
@@ -209,4 +220,4 @@ if __name__ == '__main__':
 
     print('\n\nDONE!')
     toc = time.clock()
-    print('It took', time.time()-start, 'seconds.')
+    print('It took', time.time() - start, 'seconds.')

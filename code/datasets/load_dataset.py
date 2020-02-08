@@ -28,6 +28,7 @@ def load_dataset(path, header='infer', sep=',', remove_question_mark=False, x_co
         # https://stackoverflow.com/questions/46269915/delete-all-rows-from-a-dataframe-containing-question-marks?rq=1
         dataset = dataset.replace({'?': np.nan}).dropna()
 
+
     X = dataset.iloc[:, x_col_indices].values
     y = dataset.iloc[:, y_col_indices].values
     return X, y
