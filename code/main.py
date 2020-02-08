@@ -5,7 +5,6 @@ from utils.datasets_enum import Datasets
 from sklearn.linear_model import LogisticRegression as LR_SkLearn
 from sklearn.naive_bayes import GaussianNB as NB_SkLearn
 from linear_model.logistic_regression import LogisticRegression
-
 import numpy as np
 import time
 
@@ -120,7 +119,7 @@ def findaccuracy(y_correct, y_pred):
     count = 0
     for i in range(len(y_pred)):
         if y_correct[i] == y_pred[i]:
-            count = count +1
+            count = count + 1
     totalaccuracy = count / len(y_correct)
     return totalaccuracy
 
@@ -170,7 +169,7 @@ def classification_metrics(y_pred, y_test):
     # TODO: Do without use scikit-learn
     print("\n\n>>> Classification metrics:")
     from sklearn.metrics import accuracy_score
-    print("\n> Accuracy score:", accuracy_score(y_test, y_pred))
+    print("\n> Accuracy score:", findaccuracy(y_test, y_pred))
     from sklearn.metrics import roc_auc_score
     print("\n> Area Under the Receiver Operating Characteristic Curve (ROC AUC) = ROC AUC Score:",
           roc_auc_score(y_test, y_pred))
@@ -219,5 +218,4 @@ if __name__ == '__main__':
     run_classifier(Classifier.NAIVE_BAYES, Datasets.BREAST_CANCER_DIAGNOSIS)
 
     print('\n\nDONE!')
-    toc = time.clock()
     print('It took', time.time() - start, 'seconds.')
