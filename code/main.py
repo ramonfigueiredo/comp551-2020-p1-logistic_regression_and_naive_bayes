@@ -1,13 +1,15 @@
-from datasets.load_dataset import get_dataset, load_adult
-from utils.ml_classifiers_enum import Classifier
-from utils.datasets_enum import Datasets
-from preprocessing.standard_scaler import feature_scaling
+import time
 
 from sklearn.linear_model import LogisticRegression as LR_SkLearn
 from sklearn.naive_bayes import GaussianNB as NB_SkLearn
+
+from datasets.load_dataset import get_dataset, load_adult
 from linear_model.logistic_regression import LogisticRegression
-import numpy as np
-import time
+from metrics.accuracy_score import accuracy_score
+from model_selection.train_test_split import split_dataset
+from preprocessing.standard_scaler import feature_scaling
+from utils.datasets_enum import Datasets
+from utils.ml_classifiers_enum import Classifier
 
 
 def run_classifier(classifier_name, dataset):
@@ -65,40 +67,6 @@ def print_data(X_test, X_train, y_test, y_train):
     print("\ny_test:", y_test)
 
 
-def split_dataset(datasetX, datasetY, trainRatio):
-    # Split using scikit-learn
-    # Splitting the dataset into the Training set and Test set
-    # from sklearn.model_selection import train_test_split
-    # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0)
-    # return X_test, X_train, y_test, y_train
-
-    lengthDataset = len(datasetX)
-    lengthTrain = int(lengthDataset * trainRatio)
-
-    # Shuffle dataset x and y in the same way .
-    combine = np.arange(datasetX.shape[0])
-    np.random.shuffle(combine)
-    temp_X = datasetX[combine]
-    temp_y = datasetY[combine]
-
-    # Split as training and test
-    X_train = temp_X[:lengthTrain, :]
-    X_test = temp_X[lengthTrain:, :]
-    y_train = temp_y[:lengthTrain]
-    y_test = temp_y[lengthTrain:]
-
-    return X_train, X_test, y_train, y_test
-
-
-def findaccuracy(y_correct, y_pred):
-    count = 0
-    for i in range(len(y_pred)):
-        if y_correct[i] == y_pred[i]:
-            count = count + 1
-    totalaccuracy = count / len(y_correct)
-    return totalaccuracy
-
-
 def create_confusion_matrix(y_pred, y_test):
     # TODO: Do without use scikit-learn
     # Creating the Confusion Matrix
@@ -141,8 +109,7 @@ def classification_report(y_pred, y_test):
 def classification_metrics(y_pred, y_test):
     # TODO: Do without use scikit-learn
     print("\n\n>>> Classification metrics:")
-    from sklearn.metrics import accuracy_score
-    print("\n> Accuracy score:", findaccuracy(y_test, y_pred))
+    print("\n> Accuracy score:", accuracy_score(y_test, y_pred))
     from sklearn.metrics import roc_auc_score
     print("\n> Area Under the Receiver Operating Characteristic Curve (ROC AUC) = ROC AUC Score:",
           roc_auc_score(y_test, y_pred))
