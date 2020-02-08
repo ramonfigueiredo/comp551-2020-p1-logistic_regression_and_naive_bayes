@@ -28,9 +28,9 @@ def load_dataset(path, header='infer', sep=',', remove_question_mark=False, x_co
         # https://stackoverflow.com/questions/46269915/delete-all-rows-from-a-dataframe-containing-question-marks?rq=1
         dataset = dataset.replace({'?': np.nan}).dropna()
 
-
     X = dataset.iloc[:, x_col_indices].values
     y = dataset.iloc[:, y_col_indices].values
+
     return X, y
 
 
@@ -200,5 +200,8 @@ def load_breast_cancer_diagnosis():
 
     # Replacing '?' values with the most frequent value (mode).
     X, y = load_dataset(path, header=None, remove_question_mark=True)
+
+    y[y == 2] = 0
+    y[y == 4] = 1
 
     return X, y
