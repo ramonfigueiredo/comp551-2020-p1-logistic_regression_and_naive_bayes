@@ -12,8 +12,8 @@ sns.set(rc={'figure.figsize': (5, 5)})
 from datasets.load_dataset import get_dataset, Datasets
 from datasets.load_dataset import open_adult_training_data, Datasets
 from datasets.load_dataset import load_adult
-
-
+from linear_model.logistic_regression import LogisticRegression
+from linear_model.naive_bayes import GaussianNaiveBayes
 # df = pd.read_csv("datasets/data/breast-cancer-wisconsin/breast-cancer-wisconsin.data")
 
 
@@ -61,10 +61,10 @@ def histogramfeature(X, index):
     plt.xlabel('Number')
     plt.ylabel('Number of Samples')
 
-    plt.xticks([0, 1,2,3,4,5,6,7,8,9,10])
+    # plt.xticks([0, 1,2,3,4,5,6,7,8,9,10])
     plt.hist(X[:, index], alpha=1, facecolor='g')
     plt.show()
-    f.savefig("Mitoses.pdf", bbox_inches='tight')
+    # f.savefig("Mitoses.pdf", bbox_inches='tight')
 
 
 # Draws histogram for y
@@ -72,7 +72,7 @@ def histogramfory(y):
     f = plt.figure()
     # sns.distplot(y, kde=False, rug=True ,bins=10);
 
-    plt.title('Good vs Bad Signals')
+    plt.title('Signals')
     plt.ylabel('Number of Signals')
     # plt.bar(width)
     plt.xticks([0,1], ['Bad', 'Good' ])
@@ -80,7 +80,7 @@ def histogramfory(y):
     plt.hist(y,bins=bins, alpha=1, facecolor='g', rwidth=1)
 
     plt.show()
-    f.savefig("GoodBadSignals.pdf", bbox_inches='tight')
+    f.savefig("GOOD,BADSignals.pdf", bbox_inches='tight')
 
 
 # Draws the scatterplot for two features in the index Xindex and yxindex
@@ -141,7 +141,7 @@ def scatterPlotwithY(X, Xindex, yx, yxindex, y):
     # f.savefig("fo5.pdf", bbox_inches='tight')
 
 
-X, y = get_dataset(Datasets.WINE_QUALITY)
+X, y = get_dataset(Datasets.IONOSPHERE)
 # histogramfeature(X.astype(float), 1)
 # histogramfory(y.astype(int))
 #
@@ -187,7 +187,7 @@ listtemp = [0.5970, 0.5029,0.6311,0.6154, 0.5866,0.5459,
 
 # 6,4 0.5970
 # 22,24 0.5029
-# 10,6 0.6311
+# # 10,6 0.6311
 # 14,6 0.6154
 # 20,6 0.5866
 # 32,6 0.5459
@@ -237,7 +237,7 @@ listtemp = [0.5970, 0.5029,0.6311,0.6154, 0.5866,0.5459,
 # 32,28 0.5797
 # 32,30 0.6924
 # 33,31 0.5150
-#
+
 
 
 
@@ -245,5 +245,14 @@ listtemp = [0.5970, 0.5029,0.6311,0.6154, 0.5866,0.5459,
 
 
 # scatterPlotwithY(X, 2, X, 0, y)
-scatterPlotwithY(X, 2, X, 0, y)
+# scatterPlotwithY(X, 2, X, 0, y)
+# scatterPlot(X,2,X,0)
+# histogramfeature(X,13 )
+# classifier = LogisticRegression()
+# classifier = GaussianNaiveBayes()
+#
+# for i in range(10):
+#     histogramfeature(X,i)
+histogramfory(y)
+
 
