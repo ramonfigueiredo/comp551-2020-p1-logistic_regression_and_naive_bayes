@@ -1,26 +1,23 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
+import os
 
-def heatmap_plotting(dataset):
+def heatmap_plotting(dataset, print_correlation_matrix=False, plot_heatmap_values=False, show_plotting=False, save_plotting=False, plotting_path='heatmap.png'):
     sns.set(style="white")
 
     # Compute the correlation matrix
     corr = dataset.corr()
-
-    # Generate a mask for the upper triangle
-    # mask = np.triu(np.ones_like(corr, dtype=np.bool))
-
-    # Set up the matplotlib figure
-    f, ax = plt.subplots(figsize=(11, 9))
+    if print_correlation_matrix:
+        print('Correlation matrix')
 
     # Generate a custom diverging colormap
     cmap = sns.diverging_palette(220, 10, as_cmap=True)
 
-    # Draw the heatmap with the mask and correct aspect ratio
-    # sns.heatmap(corr, mask=mask, cmap=cmap, vmax=.3, center=0,
-    #             square=True, linewidths=.5, cbar_kws={"shrink": .5})
-
-    sns.heatmap(corr, cmap=cmap, vmax=.3, center=0,
+    heatmap_plot = sns.heatmap(corr, annot=plot_heatmap_values, cmap=cmap, vmax=.3, center=0,
                 square=True, linewidths=.5, cbar_kws={"shrink": .5})
 
-    plt.show()
+    if show_plotting:
+        plt.show()
+    if save_plotting:
+        fig = heatmap_plot.get_figure()
+        fig.savefig(plotting_path)
