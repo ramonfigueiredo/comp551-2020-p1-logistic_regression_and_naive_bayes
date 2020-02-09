@@ -18,13 +18,13 @@ from plotting.scattergraph_plotting import scatterPlotwithY,scatterPlot
 
 
 
-def run_classifier(classifier_name, dataset):
-    print('\n\nDataset: {}'.format(dataset.name))
-    if dataset == Datasets.ADULT:
-        X_train, X_test, y_train, y_test = load_adult(load_test_data=True)
+def run_classifier(classifier_name, dataset_name):
+    print('\n\nDataset: {}'.format(dataset_name))
+    if dataset_name == Datasets.ADULT:
+        X_train, X_test, y_train, y_test = load_adult(dataset_name.name, load_test_data=True)
         print_data(X_test, X_train, y_test, y_train)
     else:
-        X, y = get_dataset(dataset)
+        X, y = get_dataset(dataset_name)
         print("\nX:", X)
         print("\ny:", y)
 
