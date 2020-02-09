@@ -5,6 +5,7 @@ from sklearn.naive_bayes import GaussianNB as NB_SkLearn
 
 from datasets.load_dataset import get_dataset, load_adult
 from linear_model.logistic_regression import LogisticRegression
+from linear_model.naive_bayes import GaussianNaiveBayes
 from metrics.accuracy_score import accuracy_score
 from model_selection.k_fold_cross_validation import cross_validation
 from model_selection.train_test_split import split_dataset
@@ -41,15 +42,17 @@ def run_classifier(classifier_name, dataset_name):
         classifier = LR_SkLearn(random_state=0, max_iter=1000)
     if classifier_name == Classifier.LOGISTIC_REGRESSION:
         classifier = LogisticRegression()
-    if classifier_name == Classifier.NAIVE_BAYES:
-        # TODO: Do without use scikit-learn
+    if classifier_name == Classifier.NAIVE_BAYES_SKLEARN:
         classifier = NB_SkLearn()
+    if classifier_name == Classifier.NAIVE_BAYES:
+        classifier = GaussianNaiveBayes()
 
     # Fit the model to the dataset
     classifier.fit(X_train, y_train)
 
     # k-fold cross validation
-    k_fold_cross_validation(X_train, classifier, y_train, k=5)
+    if not(classifier_name == Classifier.LOGISTIC_REGRESSION) and not(classifier_name == Classifier.NAIVE_BAYES):
+        k_fold_cross_validation(X_train, classifier, y_train, k=5)
 
     # Predict the labels
     y_pred = classifier.predict(X_test)
@@ -160,6 +163,14 @@ if __name__ == '__main__':
     run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.ADULT)
     run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.WINE_QUALITY)
     run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.BREAST_CANCER_DIAGNOSIS)
+
+    print('\n\n\n==========================')
+    print(Classifier.NAIVE_BAYES_SKLEARN.name)
+    print('==========================')
+    run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.IONOSPHERE)
+    run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.ADULT)
+    run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.WINE_QUALITY)
+    run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.BREAST_CANCER_DIAGNOSIS)
 
     print('\n\n\n==========================')
     print(Classifier.NAIVE_BAYES.name)
