@@ -6,7 +6,7 @@ from sklearn.naive_bayes import GaussianNB as NB_SkLearn
 from datasets.load_dataset import get_dataset, load_adult
 from linear_model.logistic_regression import LogisticRegression
 from linear_model.naive_bayes import GaussianNaiveBayes
-from metrics.accuracy_score import accuracy_score
+from metrics.accuracy_score import evaluate_acc
 from model_selection.k_fold_cross_validation import cross_validation
 from model_selection.train_test_split import split_dataset
 from preprocessing.standard_scaler import feature_scaling
@@ -124,7 +124,7 @@ def classification_report(y_pred, y_test):
 
 def classification_metrics(y_pred, y_test):
     print("\n\n>>> Classification metrics:")
-    print("\n> Accuracy score:", accuracy_score(y_test, y_pred))
+    print("\n> Accuracy score:", evaluate_acc(y_test, y_pred))
     from sklearn.metrics import roc_auc_score
     print("\n> Area Under the Receiver Operating Characteristic Curve (ROC AUC) = ROC AUC Score:",
           roc_auc_score(y_test, y_pred))

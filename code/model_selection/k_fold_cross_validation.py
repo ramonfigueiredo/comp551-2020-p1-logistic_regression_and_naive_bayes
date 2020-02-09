@@ -2,7 +2,7 @@ import time
 
 import numpy as np
 
-from metrics.accuracy_score import accuracy_score
+from metrics.accuracy_score import evaluate_acc
 
 
 def cross_validation(estimator, X, y, k, randomize=False, verbose=False):
@@ -59,7 +59,7 @@ def cross_validation(estimator, X, y, k, randomize=False, verbose=False):
 
         # Model accuracy
         start_model_accuracy = time.time()
-        model_accuracy = accuracy_score(y_test, y_pred)
+        model_accuracy = evaluate_acc(y_test, y_pred)
         model_accuracy_times.append(time.time() - start_model_accuracy)
 
         scores.append(model_accuracy)
