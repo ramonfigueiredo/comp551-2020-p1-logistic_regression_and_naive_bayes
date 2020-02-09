@@ -5,6 +5,7 @@ import pandas as pd
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 
+from plotting.heatmap_plotting import heatmap_plotting
 from utils.datasets_enum import Datasets
 
 
@@ -32,6 +33,8 @@ def load_dataset(path, header='infer', sep=',', remove_question_mark=False, x_co
 
     X = dataset.iloc[:, x_col_indices].values
     y = dataset.iloc[:, y_col_indices].values
+
+    heatmap_plotting(dataset.iloc[:, x_col_indices])
 
     return X, y
 
