@@ -1,13 +1,15 @@
 import matplotlib.pyplot as plt
 
 import seaborn as sns
-
+import plotly.express as px
+import numpy as np
 # settings for seaborn plotting style
 sns.set(color_codes=True)
 # settings for seaborn plot sizes
 sns.set(rc={'figure.figsize': (5, 5)})
 
 from datasets.load_dataset import get_dataset, Datasets
+
 
 # df = pd.read_csv("datasets/data/breast-cancer-wisconsin/breast-cancer-wisconsin.data")
 
@@ -66,6 +68,45 @@ def histogramfory(y):
     f.savefig("fo4.pdf", bbox_inches='tight')
 
 
-X, y = get_dataset(Datasets.BREAST_CANCER_DIAGNOSIS)
-histogramfeature(X.astype(float), 1)
-histogramfory(y.astype(int))
+def scatterPlot(X, Xindex, yx, yxindex):
+    f = plt.figure()
+    ax1 = f.add_subplot(111)
+    ax1.scatter(X[:, Xindex], yx[:, yxindex], c='r', marker='s', label='first')
+    plt.legend(loc='upper left');
+    plt.show()
+    f.savefig("fo5.pdf", bbox_inches='tight')
+
+
+def scatterPlotwithY(X, Xindex, yx, yxindex, y):
+    f = plt.figure()
+    ax1 = f.add_subplot(111)
+    tempzero = np.zeros(shape=(len(y), 2))
+    tempone = np.zeros(shape=(len(y), 2))
+    for i in range(len(y)):
+        if y[i] == 0:
+            tempzero[i,0] = X[i, Xindex]
+            tempzero[i,1] = yx[i, yxindex]
+        else :
+            tempone[i,0] = X[i, Xindex]
+            tempone[i,1] = yx[i, yxindex]
+
+    return tempone,tempzero
+
+
+
+
+    #
+    #
+    # ax1.scatter(X[:, Xindex], yx[:, yxindex], y, c='r', marker='s', label='first')
+    # # ax1.scatter(yx[:, yxindex], y, c='b', marker='s', label='second')
+    #
+    # plt.legend(loc='upper left');
+    # plt.show()
+    # f.savefig("fo5.pdf", bbox_inches='tight')
+
+
+X, y = get_dataset(Datasets.IONOSPHERE)
+# histogramfeature(X.astype(float), 1)
+# histogramfory(y.astype(int))
+
+a,b = scatterPlotwithY(X, 4, X, 5, y)
