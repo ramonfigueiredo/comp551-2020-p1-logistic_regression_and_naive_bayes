@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
 import numpy as np
+
 # settings for seaborn plotting style
 sns.set(color_codes=True)
 # settings for seaborn plot sizes
@@ -60,14 +61,16 @@ def histogramfeature(X, index):
     plt.show()
     f.savefig("fo3.pdf", bbox_inches='tight')
 
-#Draws histogram for y
+
+# Draws histogram for y
 def histogramfory(y):
     f = plt.figure()
     plt.hist(y, alpha=1, facecolor='g')
     plt.show()
     f.savefig("fo4.pdf", bbox_inches='tight')
 
-#Draws the scatterplot for two features in the index Xindex and yxindex
+
+# Draws the scatterplot for two features in the index Xindex and yxindex
 def scatterPlot(X, Xindex, yx, yxindex):
     f = plt.figure()
     ax1 = f.add_subplot(111)
@@ -76,7 +79,8 @@ def scatterPlot(X, Xindex, yx, yxindex):
     plt.show()
     f.savefig("fo5.pdf", bbox_inches='tight')
 
-#Draws scatterplot for two features by seperating them compared to y values being 0 or 1.
+
+# Draws scatterplot for two features by seperating them compared to y values being 0 or 1.
 def scatterPlotwithY(X, Xindex, yx, yxindex, y):
     f = plt.figure()
     ax1 = f.add_subplot(111)
@@ -97,14 +101,13 @@ def scatterPlotwithY(X, Xindex, yx, yxindex, y):
     listnegative1 = []
     listnegative2 = []
 
-
     for i in range(len(y)):
-         if y[i] == 1:
-             listpositivex1.append(X[i, Xindex])
-             listpositivex2.append(yx[i,yxindex])
-         else:
-             listnegative1.append(X[i, Xindex])
-             listnegative2.append(yx[i,yxindex])
+        if y[i] == 1:
+            listpositivex1.append(X[i, Xindex])
+            listpositivex2.append(yx[i, yxindex])
+        else:
+            listnegative1.append(X[i, Xindex])
+            listnegative2.append(yx[i, yxindex])
     # return listpositive, listnegative
     f = plt.figure()
     ax1 = f.add_subplot(111)
@@ -114,13 +117,6 @@ def scatterPlotwithY(X, Xindex, yx, yxindex, y):
     plt.legend(loc='upper left');
     plt.show()
     f.savefig("fo6.pdf", bbox_inches='tight')
-
-
-
-
-
-
-
 
     #
     #
@@ -132,7 +128,7 @@ def scatterPlotwithY(X, Xindex, yx, yxindex, y):
     # f.savefig("fo5.pdf", bbox_inches='tight')
 
 
-X, y = get_dataset(Datasets.IONOSPHERE)
+X, y = get_dataset(Datasets.BREAST_CANCER_DIAGNOSIS)
 # histogramfeature(X.astype(float), 1)
 # histogramfory(y.astype(int))
 

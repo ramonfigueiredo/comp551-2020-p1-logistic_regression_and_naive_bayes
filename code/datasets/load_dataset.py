@@ -7,6 +7,8 @@ from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 
 from plotting.heatmap_plotting import heatmap_plotting
 from utils.datasets_enum import Datasets
+from plotting.histogram_plotting import histogramfory,histogramfeature
+from plotting.scattergraph_plotting import scatterPlotwithY,scatterPlot
 
 
 def get_dataset(dataset):
