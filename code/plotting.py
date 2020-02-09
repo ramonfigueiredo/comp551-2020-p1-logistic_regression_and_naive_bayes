@@ -55,19 +55,31 @@ from datasets.load_dataset import get_dataset, Datasets
 # Method gets a numpy array and index number draws the histogram for all rows in that column index
 def histogramfeature(X, index):
     f = plt.figure()
-    plt.title('Thickness')
-    plt.xlabel('Size')
+    plt.title('Mitoses')
+    plt.xlabel('Number')
+    plt.ylabel('Number of Samples')
+
+    plt.xticks([0, 1,2,3,4,5,6,7,8,9,10])
     plt.hist(X[:, index], alpha=1, facecolor='g')
     plt.show()
-    f.savefig("fo3.pdf", bbox_inches='tight')
+    f.savefig("Mitoses.pdf", bbox_inches='tight')
 
 
 # Draws histogram for y
 def histogramfory(y):
     f = plt.figure()
-    plt.hist(y, alpha=1, facecolor='g')
+    # sns.distplot(y, kde=False, rug=True ,bins=10);
+
+    plt.title('Benign and Malignant Cells')
+    plt.ylabel('Number of Patients')
+    # plt.bar(width)
+    plt.xticks([0,1], ['Benign', 'Malignant' ])
+    bins = [-0.5 ,  0.5 ,1.5]
+    plt.hist(y,bins=bins, alpha=1, facecolor='g', rwidth=1)
+    plt.legend(loc='upper left');
+
     plt.show()
-    f.savefig("fo4.pdf", bbox_inches='tight')
+    f.savefig("cancerNumber.pdf", bbox_inches='tight')
 
 
 # Draws the scatterplot for two features in the index Xindex and yxindex
@@ -132,4 +144,7 @@ X, y = get_dataset(Datasets.BREAST_CANCER_DIAGNOSIS)
 # histogramfeature(X.astype(float), 1)
 # histogramfory(y.astype(int))
 
-scatterPlotwithY(X, 4, X, 5, y)
+# histogramfory(y)
+histogramfeature(X,8)
+
+# scatterPlotwithY(X, 4, X, 5, y)
