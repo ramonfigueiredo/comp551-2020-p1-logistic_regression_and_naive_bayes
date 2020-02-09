@@ -8,7 +8,7 @@ def heatmap_plotting(dataset, print_correlation_matrix=False, plot_heatmap_value
     # Compute the correlation matrix
     corr = dataset.corr()
     if print_correlation_matrix:
-        print('Correlation matrix')
+        print('\nCorrelation matrix:\n', corr)
 
     # Generate a custom diverging colormap
     cmap = sns.diverging_palette(220, 10, as_cmap=True)
