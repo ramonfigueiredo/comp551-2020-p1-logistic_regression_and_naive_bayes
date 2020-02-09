@@ -28,21 +28,21 @@ def cross_validation(estimator, X, y, k, randomize=False, verbose=False):
     processing_times_of_folds = []
     for i in range(k):
         start_fold = time.time()
-        test_indices = folds[i]
+        validation_indices = folds[i]
         training_indices = [item
-                    for s in folds if s is not test_indices
+                    for s in folds if s is not validation_indices
                     for item in s]
 
-        X_test = X[test_indices]
-        y_test = y[test_indices]
+        X_validation = X[validation_indices]
+        y_validation = y[validation_indices]
         X_train = X[training_indices]
         y_train = y[training_indices]
 
         if verbose:
             print('\n==> Fold {}:'.format(i + 1))
-            print('\nTest set indices', test_indices)
-            print('\nX_test', X_test)
-            print('\ny_test', y_test)
+            print('\nValidation set indices', validation_indices)
+            print('\nX_validation', X_validation)
+            print('\ny_validation', y_validation)
             print('\nTraining set indices', training_indices)
             print('\nX_train', X_train)
             print('\ny_train', y_train)
@@ -52,14 +52,14 @@ def cross_validation(estimator, X, y, k, randomize=False, verbose=False):
         estimator.fit(X_train, y_train)
         fit_times.append(time.time() - start_fit)
 
-        # Predicting the Test set results
+        # Predicting the Validation set results
         start_predict = time.time()
-        y_pred = estimator.predict(X_test)
+        y_pred = estimator.predict(X_validation)
         predict_times.append(time.time() - start_predict)
 
         # Model accuracy
         start_model_accuracy = time.time()
-        model_accuracy = evaluate_acc(y_test, y_pred)
+        model_accuracy = evaluate_acc(y_validation, y_pred)
         model_accuracy_times.append(time.time() - start_model_accuracy)
 
         scores.append(model_accuracy)
