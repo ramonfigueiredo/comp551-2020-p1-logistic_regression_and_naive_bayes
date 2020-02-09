@@ -11,6 +11,10 @@ from model_selection.train_test_split import split_dataset
 from preprocessing.standard_scaler import feature_scaling
 from utils.datasets_enum import Datasets
 from utils.ml_classifiers_enum import Classifier
+from plotting.heatmap_plotting import heatmap_plotting
+from plotting.histogram_plotting import histogramfory,histogramfeature
+from plotting.scattergraph_plotting import scatterPlotwithY,scatterPlot
+
 
 
 def run_classifier(classifier_name, dataset_name):
