@@ -51,7 +51,7 @@ from datasets.load_dataset import get_dataset, Datasets
 # (X =='g' ).sum()
 # (y=='b').sum()
 
-# Method gets
+# Method gets a numpy array and index number draws the histogram for all rows in that column index
 def histogramfeature(X, index):
     f = plt.figure()
     plt.title('Thickness')
@@ -60,14 +60,14 @@ def histogramfeature(X, index):
     plt.show()
     f.savefig("fo3.pdf", bbox_inches='tight')
 
-
+#Draws histogram for y
 def histogramfory(y):
     f = plt.figure()
     plt.hist(y, alpha=1, facecolor='g')
     plt.show()
     f.savefig("fo4.pdf", bbox_inches='tight')
 
-
+#Draws the scatterplot for two features in the index Xindex and yxindex
 def scatterPlot(X, Xindex, yx, yxindex):
     f = plt.figure()
     ax1 = f.add_subplot(111)
@@ -76,7 +76,7 @@ def scatterPlot(X, Xindex, yx, yxindex):
     plt.show()
     f.savefig("fo5.pdf", bbox_inches='tight')
 
-
+#Draws scatterplot for two features by seperating them compared to y values being 0 or 1.
 def scatterPlotwithY(X, Xindex, yx, yxindex, y):
     f = plt.figure()
     ax1 = f.add_subplot(111)
