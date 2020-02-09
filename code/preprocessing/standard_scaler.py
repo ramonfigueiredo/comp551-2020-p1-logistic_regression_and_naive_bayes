@@ -36,16 +36,6 @@ def standardize_dataset(dataset):
 
 
 def feature_scaling(X_train, X_test):
-    # TODO: Do without use scikit-learn
-    # TODO: Change according selected dataset
-    # Feature Scaling
-    # from sklearn.preprocessing import StandardScaler
-    # sc = StandardScaler()
-    # X_train = sc.fit_transform(X_train)
-    # X_test = sc.transform(X_test)
-    #
-    # return X_train, X_test
-
     X_train = standardize_dataset(X_train.astype(float))
 
     X_test = standardize_dataset(X_test.astype(float))

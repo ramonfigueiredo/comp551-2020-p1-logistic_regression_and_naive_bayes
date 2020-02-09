@@ -1,7 +1,6 @@
 import numpy as np
 
 
-# TODO: Add regularization
 class LogisticRegression:
     def __init__(self, lr=.01, eps=1e-2, max_iter=10000, lambdaa=.1):
         self.lr = lr

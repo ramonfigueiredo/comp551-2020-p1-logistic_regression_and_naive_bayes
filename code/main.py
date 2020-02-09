@@ -6,6 +6,7 @@ from sklearn.naive_bayes import GaussianNB as NB_SkLearn
 from datasets.load_dataset import get_dataset, load_adult
 from linear_model.logistic_regression import LogisticRegression
 from metrics.accuracy_score import accuracy_score
+from model_selection.k_fold_cross_validation import cross_validation
 from model_selection.train_test_split import split_dataset
 from preprocessing.standard_scaler import feature_scaling
 from utils.datasets_enum import Datasets
@@ -44,8 +45,7 @@ def run_classifier(classifier_name, dataset):
     classifier.fit(X_train, y_train)
 
     # k-fold cross validation
-    if not (classifier_name == Classifier.LOGISTIC_REGRESSION):
-        k_fold_cross_validation(X_train, classifier, y_train, k=5)
+    k_fold_cross_validation(X_train, classifier, y_train, k=5)
 
     # Predict the labels
     y_pred = classifier.predict(X_test)
@@ -68,7 +68,6 @@ def print_data(X_test, X_train, y_test, y_train):
 
 
 def create_confusion_matrix(y_pred, y_test):
-    # TODO: Do without use scikit-learn
     # Creating the Confusion Matrix
     from sklearn.metrics import confusion_matrix
     cm = confusion_matrix(y_test, y_pred)
@@ -91,23 +90,32 @@ def print_confusion_matrix(cm):
 
 
 def k_fold_cross_validation(X, classifier, y, k):
-    # TODO: Do without use scikit-learn
-    # K-fold cross validation
-    from sklearn.model_selection import cross_val_score
-    scores = cross_val_score(classifier, X, y, cv=k)
+    scores, fit_times, predict_times, model_accuracy_times, processing_times_of_folds = \
+        cross_validation(classifier, X, y, k, randomize=True, verbose=False)
+
     print("\n\nK-fold cross validation (k=5). Scores: ", scores)
     print("Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
 
+    print("\n\nK-fold cross validation (k=5). Fit times in seconds: ", fit_times)
+    print("Fit time (seconds): %0.2f (+/- %0.2f)" % (fit_times.mean(), fit_times.std() * 2))
+
+    print("\n\nK-fold cross validation (k=5). Predict times in seconds: ", predict_times)
+    print("Predict time (seconds): %0.2f (+/- %0.2f)" % (predict_times.mean(), predict_times.std() * 2))
+
+    print("\n\nK-fold cross validation (k=5). Model accuracy calculation times in seconds: ", model_accuracy_times)
+    print("Model accuracy calculation time (seconds): %0.2f (+/- %0.2f)" % (model_accuracy_times.mean(), model_accuracy_times.std() * 2))
+
+    print("\n\nK-fold cross validation (k=5). Processing times of folds in seconds: ", processing_times_of_folds)
+    print("Processing time of fold (seconds): %0.2f (+/- %0.2f)" % (processing_times_of_folds.mean(), processing_times_of_folds.std() * 2))
+
 
 def classification_report(y_pred, y_test):
-    # TODO: Do without use scikit-learn
     print('\n\nClassification report:')
     from sklearn.metrics import classification_report
     print(classification_report(y_test, y_pred))
 
 
 def classification_metrics(y_pred, y_test):
-    # TODO: Do without use scikit-learn
     print("\n\n>>> Classification metrics:")
     print("\n> Accuracy score:", accuracy_score(y_test, y_pred))
     from sklearn.metrics import roc_auc_score

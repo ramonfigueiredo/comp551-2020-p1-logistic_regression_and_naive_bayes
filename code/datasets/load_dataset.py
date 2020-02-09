@@ -1,9 +1,11 @@
 import os
-from utils.datasets_enum import Datasets
+
 import numpy as np
 import pandas as pd
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+
+from utils.datasets_enum import Datasets
 
 
 def get_dataset(dataset):
@@ -60,7 +62,7 @@ def load_ionosphere():
 #   ADULT DATASET
 # -------------------------
 # - Number of Instances: 48842  (train=32561, test=16281)
-# TODO: Duplicate or conflicting instances : 6
+# - Duplicate or conflicting instances : 6
 # - Number of Attributes: 14 plus the class attribute
 # - Attribute Information:
 #    -- Attributes 0, 2, 4, 10, 11, 12 are continuous
@@ -173,7 +175,7 @@ def open_adult_test_data():
 # - Attribute Information:
 #    -- All attributes are continuous
 #    -- Output attribute is a score between 0 and 10 - must be converted to a binary class
-# TODO: several of the attributes may be correlated, thus it makes sense to apply some sort of feature selection.
+# - several of the attributes may be correlated, thus it makes sense to apply some sort of feature selection.
 #
 def load_wine_quality():
     path = os.path.join(os.getcwd(), 'datasets/data/wine-quality/winequality-red.csv')
