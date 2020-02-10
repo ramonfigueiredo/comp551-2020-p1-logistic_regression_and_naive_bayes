@@ -72,15 +72,15 @@ def histogramfory(y):
     f = plt.figure()
     # sns.distplot(y, kde=False, rug=True ,bins=10);
 
-    plt.title('Signals')
-    plt.ylabel('Number of Signals')
+    plt.title('Wine')
+    plt.ylabel('Number of Wine')
     # plt.bar(width)
     plt.xticks([0,1], ['Bad', 'Good' ])
     bins = [-0.5 ,  0.5 ,1.5]
     plt.hist(y,bins=bins, alpha=1, facecolor='g', rwidth=1)
 
     plt.show()
-    f.savefig("GOOD,BADSignals.pdf", bbox_inches='tight')
+    f.savefig("Wine.png", bbox_inches='tight')
 
 
 # Draws the scatterplot for two features in the index Xindex and yxindex
@@ -141,7 +141,7 @@ def scatterPlotwithY(X, Xindex, yx, yxindex, y):
     # f.savefig("fo5.pdf", bbox_inches='tight')
 
 
-X, y = get_dataset(Datasets.IONOSPHERE)
+X, y = get_dataset(Datasets.WINE_QUALITY)
 # histogramfeature(X.astype(float), 1)
 # histogramfory(y.astype(int))
 #
