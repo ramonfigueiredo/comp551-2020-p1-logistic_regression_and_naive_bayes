@@ -154,7 +154,7 @@ The mini-project is out of 100 points, and the evaluation breakdown is as follow
 ```sh
 cd <folder_name>/
 
-virtualenv venv
+virtualenv venv -p python3
 
 source venv/bin/activate
 
