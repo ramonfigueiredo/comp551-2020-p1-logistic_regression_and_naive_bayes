@@ -8,7 +8,7 @@ def scatterPlot(X, Xindex, yx, yxindex):
     ax1.scatter(X[:, Xindex], yx[:, yxindex], c='r', marker='s', label='first')
     plt.legend(loc='upper left');
     plt.show()
-    f.savefig("fo5.pdf", bbox_inches='tight')
+    # f.savefig("fo5.pdf", bbox_inches='tight')
 
 
 # Draws scatterplot for two features by seperating them compared to y values being 0 or 1.

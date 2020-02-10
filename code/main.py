@@ -8,14 +8,10 @@ from linear_model.logistic_regression import LogisticRegression
 from linear_model.naive_bayes import GaussianNaiveBayes
 from metrics.accuracy_score import evaluate_acc
 from model_selection.k_fold_cross_validation import cross_validation
-from model_selection.train_test_split import split_dataset
+from model_selection.train_test_split import train_test_split
 from preprocessing.standard_scaler import feature_scaling
 from utils.datasets_enum import Datasets
 from utils.ml_classifiers_enum import Classifier
-from plotting.heatmap_plotting import heatmap_plotting
-from plotting.histogram_plotting import histogramfory,histogramfeature
-from plotting.scattergraph_plotting import scatterPlotwithY,scatterPlot
-
 
 
 def run_classifier(classifier_name, dataset_name):
@@ -28,7 +24,7 @@ def run_classifier(classifier_name, dataset_name):
         print("\nX:", X)
         print("\ny:", y)
 
-        X_train, X_test, y_train, y_test = split_dataset(X, y, 0.8)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, 0.8)
         print_data(X_test, X_train, y_test, y_train)
 
     print("\n\nFeature scaling:")
@@ -149,14 +145,6 @@ if __name__ == '__main__':
     start = time.time()
 
     print('\n\n\n==========================')
-    print(Classifier.LOGISTIC_REGRESSION_SKLEARN.name)
-    print('==========================')
-    run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.IONOSPHERE)
-    run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.ADULT)
-    run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.WINE_QUALITY)
-    run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.BREAST_CANCER_DIAGNOSIS)
-
-    print('\n\n\n==========================')
     print(Classifier.LOGISTIC_REGRESSION.name)
     print('==========================')
     run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.IONOSPHERE)
@@ -165,12 +153,12 @@ if __name__ == '__main__':
     run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.BREAST_CANCER_DIAGNOSIS)
 
     print('\n\n\n==========================')
-    print(Classifier.NAIVE_BAYES_SKLEARN.name)
+    print(Classifier.LOGISTIC_REGRESSION_SKLEARN.name)
     print('==========================')
-    run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.IONOSPHERE)
-    run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.ADULT)
-    run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.WINE_QUALITY)
-    run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.BREAST_CANCER_DIAGNOSIS)
+    run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.IONOSPHERE)
+    run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.ADULT)
+    run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.WINE_QUALITY)
+    run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.BREAST_CANCER_DIAGNOSIS)
 
     print('\n\n\n==========================')
     print(Classifier.NAIVE_BAYES.name)
@@ -179,6 +167,14 @@ if __name__ == '__main__':
     run_classifier(Classifier.NAIVE_BAYES, Datasets.ADULT)
     run_classifier(Classifier.NAIVE_BAYES, Datasets.WINE_QUALITY)
     run_classifier(Classifier.NAIVE_BAYES, Datasets.BREAST_CANCER_DIAGNOSIS)
+
+    print('\n\n\n==========================')
+    print(Classifier.NAIVE_BAYES_SKLEARN.name)
+    print('==========================')
+    run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.IONOSPHERE)
+    run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.ADULT)
+    run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.WINE_QUALITY)
+    run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.BREAST_CANCER_DIAGNOSIS)
 
     print('\n\nDONE!')
     print('It took', time.time() - start, 'seconds.')

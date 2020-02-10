@@ -1,26 +1,21 @@
 import numpy as np
 
 
-def split_dataset(datasetX, datasetY, trainRatio):
-    # Split using scikit-learn
-    # Splitting the dataset into the Training set and Test set
-    # from sklearn.model_selection import train_test_split
-    # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0)
-    # return X_test, X_train, y_test, y_train
+def train_test_split(X, y, train_size):
 
-    lengthDataset = len(datasetX)
-    lengthTrain = int(lengthDataset * trainRatio)
+    length_dataset = len(X)
+    length_train = int(length_dataset * train_size)
 
-    # Shuffle dataset x and y in the same way .
-    combine = np.arange(datasetX.shape[0])
+    # Shuffle dataset x and y in the same way
+    combine = np.arange(X.shape[0])
     np.random.shuffle(combine)
-    temp_X = datasetX[combine]
-    temp_y = datasetY[combine]
+    temp_X = X[combine]
+    temp_y = y[combine]
 
     # Split as training and test
-    X_train = temp_X[:lengthTrain, :]
-    X_test = temp_X[lengthTrain:, :]
-    y_train = temp_y[:lengthTrain]
-    y_test = temp_y[lengthTrain:]
+    X_train = temp_X[:length_train, :]
+    X_test = temp_X[length_train:, :]
+    y_train = temp_y[:length_train]
+    y_test = temp_y[length_train:]
 
     return X_train, X_test, y_train, y_test

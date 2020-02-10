@@ -8,7 +8,7 @@ def histogramfeature(X, index):
     plt.xlabel('Size')
     plt.hist(X[:, index], alpha=1, facecolor='g')
     plt.show()
-    f.savefig("fo3.pdf", bbox_inches='tight')
+    # f.savefig("fo3.pdf", bbox_inches='tight')
 
 
 # Draws histogram for y
@@ -16,4 +16,4 @@ def histogramfory(y):
     f = plt.figure()
     plt.hist(y, alpha=1, facecolor='g')
     plt.show()
-    f.savefig("fo4.pdf", bbox_inches='tight')
+    # f.savefig("fo4.pdf", bbox_inches='tight')
