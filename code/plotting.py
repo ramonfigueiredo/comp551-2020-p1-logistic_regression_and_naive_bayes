@@ -1,19 +1,16 @@
 import matplotlib.pyplot as plt
 
 import seaborn as sns
-import plotly.express as px
-import numpy as np
 
 # settings for seaborn plotting style
 sns.set(color_codes=True)
 # settings for seaborn plot sizes
 sns.set(rc={'figure.figsize': (5, 5)})
 
-from datasets.load_dataset import get_dataset, Datasets
-from datasets.load_dataset import open_adult_training_data, Datasets
-from datasets.load_dataset import load_adult
-from linear_model.logistic_regression import LogisticRegression
-from linear_model.naive_bayes import GaussianNaiveBayes
+from datasets.load_dataset import get_dataset
+from datasets.load_dataset import Datasets
+
+
 # df = pd.read_csv("datasets/data/breast-cancer-wisconsin/breast-cancer-wisconsin.data")
 
 
@@ -80,7 +77,7 @@ def histogramfory(y):
     plt.hist(y,bins=bins, alpha=1, facecolor='g', rwidth=1)
 
     plt.show()
-    f.savefig("Wine.png", bbox_inches='tight')
+    # f.savefig("Wine.png", bbox_inches='tight')
 
 
 # Draws the scatterplot for two features in the index Xindex and yxindex
@@ -90,7 +87,7 @@ def scatterPlot(X, Xindex, yx, yxindex):
     ax1.scatter(X[:, Xindex], yx[:, yxindex], c='r', marker='s', label='first')
     plt.legend(loc='upper left');
     plt.show()
-    f.savefig("fo5.pdf", bbox_inches='tight')
+    # f.savefig("fo5.pdf", bbox_inches='tight')
 
 
 # Draws scatterplot for two features by seperating them compared to y values being 0 or 1.
@@ -122,14 +119,14 @@ def scatterPlotwithY(X, Xindex, yx, yxindex, y):
             listnegative1.append(X[i, Xindex])
             listnegative2.append(yx[i, yxindex])
     # return listpositive, listnegative
-    f = plt.figure()
+    # f = plt.figure()
     ax1 = f.add_subplot(111)
     ax1.scatter(listpositivex1, listpositivex2, c='r', marker='s', label='Good')
     ax1.scatter(listnegative1, listnegative2, c='b', marker='s', label='Bad')
 
     plt.legend(loc='upper left');
     plt.show()
-    f.savefig("fo6.pdf", bbox_inches='tight')
+    # f.savefig("fo6.pdf", bbox_inches='tight')
 
     #
     #
@@ -141,7 +138,7 @@ def scatterPlotwithY(X, Xindex, yx, yxindex, y):
     # f.savefig("fo5.pdf", bbox_inches='tight')
 
 
-X, y = get_dataset(Datasets.WINE_QUALITY)
+X, y = get_dataset(Datasets.IONOSPHERE)
 # histogramfeature(X.astype(float), 1)
 # histogramfory(y.astype(int))
 #
@@ -253,6 +250,10 @@ listtemp = [0.5970, 0.5029,0.6311,0.6154, 0.5866,0.5459,
 #
 # for i in range(10):
 #     histogramfeature(X,i)
+# histogramfory(y)
+
+
+histogramfeature(X, 1)
 histogramfory(y)
-
-
+scatterPlot(X, 1, X, 3)
+scatterPlotwithY(X, 1, X, 3, y)
