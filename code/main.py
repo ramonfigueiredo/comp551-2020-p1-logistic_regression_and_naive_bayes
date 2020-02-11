@@ -272,9 +272,9 @@ if __name__ == '__main__':
         print(Classifier.NAIVE_BAYES.name)
         print('==========================')
         run_classifier(Classifier.NAIVE_BAYES, Datasets.IONOSPHERE, options.training_set_size)
-        # run_classifier(Classifier.NAIVE_BAYES, Datasets.ADULT, options.training_set_size)
-        # run_classifier(Classifier.NAIVE_BAYES, Datasets.WINE_QUALITY, options.training_set_size)
-        # run_classifier(Classifier.NAIVE_BAYES, Datasets.BREAST_CANCER_DIAGNOSIS, options.training_set_size)
+        run_classifier(Classifier.NAIVE_BAYES, Datasets.ADULT, options.training_set_size)
+        run_classifier(Classifier.NAIVE_BAYES, Datasets.WINE_QUALITY, options.training_set_size)
+        run_classifier(Classifier.NAIVE_BAYES, Datasets.BREAST_CANCER_DIAGNOSIS, options.training_set_size)
 
     if options.plot_cost_vs_iterations:
         cost_vs_iterations_plotting(options.learning_rates_list)
