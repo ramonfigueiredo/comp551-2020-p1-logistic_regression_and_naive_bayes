@@ -71,6 +71,9 @@ def load_ionosphere(dataset_name):
     label_encoder = LabelEncoder()
     y = label_encoder.fit_transform(y)
 
+    X = np.delete(X, 0, 1)
+    X = np.delete(X, 1, 1)
+
     return X, y
 
 
@@ -117,6 +120,7 @@ def preprocess_adult_dataset(X, y):
         12 hours-per-week: continuous.
         OHE >13 native-country: United-States, Cambodia, England, Puerto-Rico, Canada, Germany, Outlying-US(Guam-USVI-etc), India, Japan, Greece, South, China, Cuba, Iran, Honduras, Philippines, Italy, Poland, Jamaica, Vietnam, Mexico, Portugal, Ireland, France, Dominican-Republic, Laos, Ecuador, Taiwan, Haiti, Columbia, Hungary, Guatemala, Nicaragua, Scotland, Thailand, Yugoslavia, El-Salvador, Trinadad&Tobago, Peru, Hong, Holand-Netherlands.
         '''
+
     label_encoder_workclass = LabelEncoder()
     X[:, 1] = label_encoder_workclass.fit_transform(X[:, 1])
     label_encoder_education = LabelEncoder()
@@ -151,6 +155,10 @@ def preprocess_adult_dataset(X, y):
         remainder='passthrough'  # Leave the rest of the columns untouched
     )
     X = np.array(ct.fit_transform(X), dtype=np.float)
+
+    X = np.delete(X, 10, 1)
+    X = np.delete(X, 11, 1)
+
     label_encoder_Y = LabelEncoder()
     y = label_encoder_Y.fit_transform(y)
     return X, y
@@ -215,6 +223,8 @@ def load_breast_cancer_diagnosis(dataset_name):
 
     # Replacing '?' values with the most frequent value (mode).
     X, y = load_dataset(dataset_name, path, header=None, remove_question_mark=True)
+
+    X = np.delete(X, 0, 1)
 
     y[y == 2] = 0
     y[y == 4] = 1
