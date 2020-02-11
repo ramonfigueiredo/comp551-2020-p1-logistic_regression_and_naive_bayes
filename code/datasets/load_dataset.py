@@ -21,7 +21,7 @@ def get_dataset(dataset_name):
     else:
         raise Exception("Dataset does not exist")
 
-    print('\n\nLoad dataset: {}'.format(dataset_name))
+    print('\n\nLoaded dataset: {}'.format(dataset_name))
 
     print("\nX:", X)
     print("\ny:", y)
