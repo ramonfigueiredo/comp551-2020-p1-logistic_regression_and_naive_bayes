@@ -41,7 +41,7 @@ def run_classifier(classifier_name, dataset_name):
     classifier.fit(X_train, y_train)
 
     # k-fold cross validation
-    if not(classifier_name == Classifier.LOGISTIC_REGRESSION) and not(classifier_name == Classifier.NAIVE_BAYES):
+    if not (classifier_name == Classifier.LOGISTIC_REGRESSION) and not (classifier_name == Classifier.NAIVE_BAYES):
         k_fold_cross_validation(X_train, classifier, y_train, k=5)
 
     # Predict the labels
@@ -100,10 +100,12 @@ def k_fold_cross_validation(X, classifier, y, k):
     print("Predict time (seconds): %0.2f (+/- %0.2f)" % (predict_times.mean(), predict_times.std() * 2))
 
     print("\n\nK-fold cross validation (k=5). Model accuracy calculation times in seconds: ", model_accuracy_times)
-    print("Model accuracy calculation time (seconds): %0.2f (+/- %0.2f)" % (model_accuracy_times.mean(), model_accuracy_times.std() * 2))
+    print("Model accuracy calculation time (seconds): %0.2f (+/- %0.2f)" % (
+    model_accuracy_times.mean(), model_accuracy_times.std() * 2))
 
     print("\n\nK-fold cross validation (k=5). Processing times of folds in seconds: ", processing_times_of_folds)
-    print("Processing time of fold (seconds): %0.2f (+/- %0.2f)" % (processing_times_of_folds.mean(), processing_times_of_folds.std() * 2))
+    print("Processing time of fold (seconds): %0.2f (+/- %0.2f)" % (
+    processing_times_of_folds.mean(), processing_times_of_folds.std() * 2))
 
 
 def classification_report(y_pred, y_test):
@@ -135,65 +137,92 @@ def classification_metrics(y_pred, y_test):
     print("> F1 score (average=None):", f1_score(y_test, y_pred, average=None))
 
 
+def run_classifier_given_dataset(classifier):
+    print('\n\n\n==========================')
+    print(classifier.name)
+    print('==========================')
+    if options.dataset.upper() == Datasets.IONOSPHERE.name or options.dataset.lower() == 'i':
+        run_classifier(classifier, Datasets.IONOSPHERE)
+    elif options.dataset.upper() == Datasets.ADULT.name or options.dataset.lower() == 'a':
+        run_classifier(classifier, Datasets.ADULT)
+    elif options.dataset.upper() == Datasets.WINE_QUALITY.name or options.dataset.lower() == 'wq':
+        run_classifier(classifier, Datasets.WINE_QUALITY)
+    elif options.dataset.upper() == Datasets.BREAST_CANCER_DIAGNOSIS.name or options.dataset.lower() == 'bcd':
+        run_classifier(classifier, Datasets.BREAST_CANCER_DIAGNOSIS)
+
+
 if __name__ == '__main__':
     start = time.time()
 
-    parser = argparse.ArgumentParser(description='MiniProject 1: Logistic Regression and Naive Bayes',
+    parser = argparse.ArgumentParser(description='MiniProject 1: Logistic Regression and Naive Bayes. Authors: Ramon Figueiredo Pessoa, Rafael Gomes Braga, Ege Odaci',
                                      epilog='COMP 551 (001/002), Applied Machine Learning, Winter 2020, McGill University.')
 
-    parser.add_argument('-classifier', action='store', dest='classifier',
-                        help='Classifier that will be run (Options: all, logistic_regression, logistic_regression_sklearn, naive_bayes, naive_bayes_sklearn).',
+    parser.add_argument('-c', '--classifier', action='store', dest='classifier',
+                        help='Classifier used '
+                             '(Options: all, '
+                             'logistic_regression_sklearn OR lrskl, '
+                             'logistic_regression OR lr, '
+                             'naive_bayes_sklearn OR nbskl'
+                             'naive_bayes OR nb).',
                         default='all')
 
-    parser.add_argument('-dataset', action='store', dest='dataset',
-                        help='Database used (Options: all, ionosphere, adult, wine_quality, breast_cancer_diagnosis).',
+    parser.add_argument('-d', '--dataset', action='store', dest='dataset',
+                        help='Database used '
+                             '(Options: all, '
+                             'ionosphere OR i '
+                             'adult OR a '
+                             'wine_quality OR wq'
+                             'breast_cancer_diagnosis OR bcd).',
                         default='all')
 
-    parser.add_argument('--version', action='version', version='%(prog)s 1.0')
+    parser.add_argument('-v', '--version', action='version', version='%(prog)s 1.0')
 
     options = parser.parse_args()
 
-    print('classifier =', options.classifier.upper())
-    print('dataset =', options.dataset.upper())
+    print(parser.description, '\nRunning with options: ')
+    print('\tclassifier =', options.classifier.upper())
+    print('\tdataset =', options.dataset.upper())
 
-
-    if options.classifier.upper() == Classifier.LOGISTIC_REGRESSION_SKLEARN.name:
+    if options.classifier.upper() == Classifier.LOGISTIC_REGRESSION_SKLEARN.name or options.classifier.lower() == 'lrskl':
+        run_classifier_given_dataset(Classifier.LOGISTIC_REGRESSION_SKLEARN)
+    elif options.classifier.upper() == Classifier.LOGISTIC_REGRESSION.name or options.classifier.lower() == 'lr':
+        run_classifier_given_dataset(Classifier.LOGISTIC_REGRESSION)
+    elif options.classifier.upper() == Classifier.NAIVE_BAYES_SKLEARN.name or options.classifier.lower() == 'nbskl':
+        run_classifier_given_dataset(Classifier.NAIVE_BAYES_SKLEARN)
+    elif options.classifier.upper() == Classifier.NAIVE_BAYES.name or options.classifier.lower() == 'nb':
+        run_classifier_given_dataset(Classifier.NAIVE_BAYES)
+    else:
         print('\n\n\n==========================')
         print(Classifier.LOGISTIC_REGRESSION_SKLEARN.name)
         print('==========================')
-        if options.dataset.upper() == Datasets.IONOSPHERE.name:
-            run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.IONOSPHERE)
-    else:
         run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.IONOSPHERE)
         run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.ADULT)
         run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.WINE_QUALITY)
         run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.BREAST_CANCER_DIAGNOSIS)
 
-    exit(1)
+        print('\n\n\n==========================')
+        print(Classifier.LOGISTIC_REGRESSION.name)
+        print('==========================')
+        run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.IONOSPHERE)
+        run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.ADULT)
+        run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.WINE_QUALITY)
+        run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.BREAST_CANCER_DIAGNOSIS)
 
-    print('\n\n\n==========================')
-    print(Classifier.LOGISTIC_REGRESSION.name)
-    print('==========================')
-    run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.IONOSPHERE)
-    run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.ADULT)
-    run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.WINE_QUALITY)
-    run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.BREAST_CANCER_DIAGNOSIS)
+        print('\n\n\n==========================')
+        print(Classifier.NAIVE_BAYES_SKLEARN.name)
+        print('==========================')
+        run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.IONOSPHERE)
+        run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.ADULT)
+        run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.WINE_QUALITY)
+        run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.BREAST_CANCER_DIAGNOSIS)
 
-    print('\n\n\n==========================')
-    print(Classifier.NAIVE_BAYES_SKLEARN.name)
-    print('==========================')
-    run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.IONOSPHERE)
-    run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.ADULT)
-    run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.WINE_QUALITY)
-    run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.BREAST_CANCER_DIAGNOSIS)
-
-    print('\n\n\n==========================')
-    print(Classifier.NAIVE_BAYES.name)
-    print('==========================')
-    run_classifier(Classifier.NAIVE_BAYES, Datasets.IONOSPHERE)
-    run_classifier(Classifier.NAIVE_BAYES, Datasets.ADULT)
-    run_classifier(Classifier.NAIVE_BAYES, Datasets.WINE_QUALITY)
-    run_classifier(Classifier.NAIVE_BAYES, Datasets.BREAST_CANCER_DIAGNOSIS)
+        print('\n\n\n==========================')
+        print(Classifier.NAIVE_BAYES.name)
+        print('==========================')
+        run_classifier(Classifier.NAIVE_BAYES, Datasets.IONOSPHERE)
+        run_classifier(Classifier.NAIVE_BAYES, Datasets.ADULT)
+        run_classifier(Classifier.NAIVE_BAYES, Datasets.WINE_QUALITY)
+        run_classifier(Classifier.NAIVE_BAYES, Datasets.BREAST_CANCER_DIAGNOSIS)
 
     print('\n\nDONE!')
     print('It took', time.time() - start, 'seconds.')
