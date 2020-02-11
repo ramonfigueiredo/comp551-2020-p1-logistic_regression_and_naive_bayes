@@ -15,17 +15,10 @@ from utils.ml_classifiers_enum import Classifier
 
 
 def run_classifier(classifier_name, dataset_name):
-    print('\n\nDataset: {}'.format(dataset_name))
-    if dataset_name == Datasets.ADULT:
-        X_train, X_test, y_train, y_test = load_adult(dataset_name.name, load_test_data=True)
-        print_data(X_test, X_train, y_test, y_train)
-    else:
-        X, y = get_dataset(dataset_name)
-        print("\nX:", X)
-        print("\ny:", y)
+    X, y = get_dataset(dataset_name)
 
-        X_train, X_test, y_train, y_test = train_test_split(X, y, 0.8)
-        print_data(X_test, X_train, y_test, y_train)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, 0.8)
+    print_data(X_test, X_train, y_test, y_train)
 
     print("\n\nFeature scaling:")
     X_train, X_test = feature_scaling(X_train, X_test)
@@ -122,8 +115,8 @@ def classification_metrics(y_pred, y_test):
     print("\n\n>>> Classification metrics:")
     print("\n> Accuracy score:", evaluate_acc(y_test, y_pred))
     from sklearn.metrics import roc_auc_score
-    print("\n> Area Under the Receiver Operating Characteristic Curve (ROC AUC) = ROC AUC Score:",
-          roc_auc_score(y_test, y_pred))
+    # print("\n> Area Under the Receiver Operating Characteristic Curve (ROC AUC) = ROC AUC Score:",
+    #       roc_auc_score(y_test, y_pred))
     from sklearn.metrics import precision_score
     print("\n> Precision score (average='macro'):", precision_score(y_test, y_pred, average='macro'))
     print("> Precision score (average='micro'):", precision_score(y_test, y_pred, average='micro'))
@@ -144,13 +137,11 @@ def classification_metrics(y_pred, y_test):
 if __name__ == '__main__':
     start = time.time()
 
-    print('\n\n\n==========================')
-    print(Classifier.LOGISTIC_REGRESSION.name)
-    print('==========================')
-    run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.IONOSPHERE)
-    run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.ADULT)
-    run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.WINE_QUALITY)
-    run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.BREAST_CANCER_DIAGNOSIS)
+    # Load the datasets
+    # X_ionosphere, y_ionosphere = get_dataset(Datasets.IONOSPHERE)
+    # X_adult, y_adult = get_dataset(Datasets.ADULT)
+    # X_wine, y_wine = get_dataset(Datasets.WINE_QUALITY)
+    # X_cancer, y_cancer = get_dataset(Datasets.BREAST_CANCER_DIAGNOSIS)
 
     print('\n\n\n==========================')
     print(Classifier.LOGISTIC_REGRESSION_SKLEARN.name)
@@ -161,12 +152,12 @@ if __name__ == '__main__':
     run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.BREAST_CANCER_DIAGNOSIS)
 
     print('\n\n\n==========================')
-    print(Classifier.NAIVE_BAYES.name)
+    print(Classifier.LOGISTIC_REGRESSION.name)
     print('==========================')
-    run_classifier(Classifier.NAIVE_BAYES, Datasets.IONOSPHERE)
-    run_classifier(Classifier.NAIVE_BAYES, Datasets.ADULT)
-    run_classifier(Classifier.NAIVE_BAYES, Datasets.WINE_QUALITY)
-    run_classifier(Classifier.NAIVE_BAYES, Datasets.BREAST_CANCER_DIAGNOSIS)
+    run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.IONOSPHERE)
+    run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.ADULT)
+    run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.WINE_QUALITY)
+    run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.BREAST_CANCER_DIAGNOSIS)
 
     print('\n\n\n==========================')
     print(Classifier.NAIVE_BAYES_SKLEARN.name)
@@ -175,6 +166,14 @@ if __name__ == '__main__':
     run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.ADULT)
     run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.WINE_QUALITY)
     run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.BREAST_CANCER_DIAGNOSIS)
+
+    print('\n\n\n==========================')
+    print(Classifier.NAIVE_BAYES.name)
+    print('==========================')
+    run_classifier(Classifier.NAIVE_BAYES, Datasets.IONOSPHERE)
+    run_classifier(Classifier.NAIVE_BAYES, Datasets.ADULT)
+    run_classifier(Classifier.NAIVE_BAYES, Datasets.WINE_QUALITY)
+    run_classifier(Classifier.NAIVE_BAYES, Datasets.BREAST_CANCER_DIAGNOSIS)
 
     print('\n\nDONE!')
     print('It took', time.time() - start, 'seconds.')

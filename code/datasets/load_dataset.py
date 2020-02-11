@@ -11,15 +11,25 @@ from utils.datasets_enum import Datasets
 
 def get_dataset(dataset_name):
     if dataset_name == Datasets.IONOSPHERE:
-        return load_ionosphere(dataset_name.name)
+        X, y = load_ionosphere(dataset_name.name)
     elif dataset_name == Datasets.ADULT:
-        return load_adult(dataset_name.name)
+        X, y = load_adult(dataset_name.name)
     elif dataset_name == Datasets.WINE_QUALITY:
-        return load_wine_quality(dataset_name.name)
+        X, y = load_wine_quality(dataset_name.name)
     elif dataset_name == Datasets.BREAST_CANCER_DIAGNOSIS:
-        return load_breast_cancer_diagnosis(dataset_name.name)
+        X, y = load_breast_cancer_diagnosis(dataset_name.name)
     else:
         raise Exception("Dataset does not exist")
+
+    print('\n\nLoad dataset: {}'.format(dataset_name))
+
+    print("\nX:", X)
+    print("\ny:", y)
+
+    print('\nX shape: ', X.shape)
+    print('y shape: ', y.shape)
+
+    return X, y
 
 
 def load_dataset(dataset_name, path, header='infer', sep=',', remove_question_mark=False, x_col_indices=slice(-1), y_col_indices=-1):
@@ -35,9 +45,9 @@ def load_dataset(dataset_name, path, header='infer', sep=',', remove_question_ma
     y = dataset.iloc[:, y_col_indices].values
 
     plt_path = os.path.join(os.getcwd(), 'plotting/plots/heatmaps/', dataset_name + '_dataset_features_correlation.png')
-    heatmap_plotting(dataset.iloc[:, x_col_indices], print_correlation_matrix=True,
-                     plot_heatmap_values=False, show_plotting=False, save_plotting=False,
-                     plotting_path=plt_path)
+    # heatmap_plotting(dataset.iloc[:, x_col_indices], print_correlation_matrix=True,
+    #                  plot_heatmap_values=False, show_plotting=False, save_plotting=False,
+    #                  plotting_path=plt_path)
 
     return X, y
 
@@ -76,23 +86,20 @@ def load_ionosphere(dataset_name):
 #    -- Attribute 14 (output) is either ">50K" or "<=50K" (categorical)
 # - 3620 rows have missing values, that were replaced by '?'
 #
-def load_adult(dataset_name, load_test_data=False):
+def load_adult(dataset_name):
 
-    X, y = open_adult_training_data(dataset_name)
+    X_train, y_train = open_adult_training_data(dataset_name)
+    X_test, y_test = open_adult_test_data(dataset_name)
 
-    if load_test_data:
-        X_train, y_train = get_adult_training_and_test_sets(X, y)
+    X = np.concatenate((X_train, X_test), axis=0)
+    y = np.concatenate((y_train, y_test), axis=0)
 
-        X, y = open_adult_test_data(dataset_name)
+    X, y = preprocess_adult_dataset(X, y)
 
-        X_test, y_test = get_adult_training_and_test_sets(X, y)
-
-        return X_train, X_test, y_train, y_test
-    else:
-        return X, y
+    return X, y
 
 
-def get_adult_training_and_test_sets(X, y):
+def preprocess_adult_dataset(X, y):
     # Apply One Hot Encoder
     '''
         0 age: continuous.
