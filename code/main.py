@@ -18,7 +18,7 @@ import argparse
 def run_classifier(classifier_name, dataset_name):
     X, y = get_dataset(dataset_name)
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, 0.95)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, 0.8)
     print_data(X_test, X_train, y_test, y_train)
 
     print("\n\nFeature scaling:")
