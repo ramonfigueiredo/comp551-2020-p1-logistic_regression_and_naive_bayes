@@ -280,7 +280,17 @@ if __name__ == '__main__':
         cost_vs_iterations_plotting(options.learning_rates_list)
 
     if options.plot_heatmap:
-        heatmap_plotting()
+        print('heatmap_plotting(plot_heatmap_values=True, load_dataset_with_extra_pre_processing=True)')
+        heatmap_plotting(plot_heatmap_values=True, load_dataset_with_extra_pre_processing=True, save_plotting=True, plotting_path='plotting/plots/heatmaps/')
+
+        print('heatmap_plotting(plot_heatmap_values=True, load_dataset_with_extra_pre_processing=False)')
+        heatmap_plotting(plot_heatmap_values=True, load_dataset_with_extra_pre_processing=False, save_plotting=True, plotting_path='plotting/plots/heatmaps/')
+
+        print('heatmap_plotting(plot_heatmap_values=False, load_dataset_with_extra_pre_processing=True)')
+        heatmap_plotting(plot_heatmap_values=False, load_dataset_with_extra_pre_processing=True, save_plotting=True, plotting_path='plotting/plots/heatmaps/')
+
+        print('heatmap_plotting(plot_heatmap_values=False, load_dataset_with_extra_pre_processing=False)')
+        heatmap_plotting(plot_heatmap_values=False, load_dataset_with_extra_pre_processing=False, save_plotting=True, plotting_path='plotting/plots/heatmaps/')
 
     print('\n\nDONE!')
 

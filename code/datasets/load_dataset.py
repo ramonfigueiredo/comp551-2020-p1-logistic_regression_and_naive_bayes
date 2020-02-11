@@ -84,7 +84,7 @@ def load_ionosphere():
 #    -- Attribute 14 (output) is either ">50K" or "<=50K" (categorical)
 # - 3620 rows have missing values, that were replaced by '?'
 #
-def load_adult():
+def load_adult(run_one_hot_encoder=True):
 
     X_train, y_train = open_adult_training_data()
     X_test, y_test = open_adult_test_data()
@@ -92,12 +92,12 @@ def load_adult():
     X = np.concatenate((X_train, X_test), axis=0)
     y = np.concatenate((y_train, y_test), axis=0)
 
-    X, y = preprocess_adult_dataset(X, y)
+    X, y = preprocess_adult_dataset(X, y, run_one_hot_encoder)
 
     return X, y
 
 
-def preprocess_adult_dataset(X, y):
+def preprocess_adult_dataset(X, y, run_one_hot_encoder=True):
     # Apply One Hot Encoder
     '''
         0 age: continuous.
@@ -132,24 +132,26 @@ def preprocess_adult_dataset(X, y):
     X[:, 9] = label_encoder_sex.fit_transform(X[:, 9])
     label_encoder_native_country = LabelEncoder()
     X[:, 13] = label_encoder_native_country.fit_transform(X[:, 13])
-    ct = ColumnTransformer(
-        [('one_hot_encoder', OneHotEncoder(categories='auto'), [1, 3])],
-        # The column numbers to be transformed
-        remainder='passthrough'  # Leave the rest of the columns untouched
-    )
-    X = np.array(ct.fit_transform(X), dtype=np.float)
-    ct = ColumnTransformer(
-        [('one_hot_encoder', OneHotEncoder(categories='auto'), [5, 6, 7, 8, 9])],
-        # The column numbers to be transformed
-        remainder='passthrough'  # Leave the rest of the columns untouched
-    )
-    X = np.array(ct.fit_transform(X), dtype=np.float)
-    ct = ColumnTransformer(
-        [('one_hot_encoder', OneHotEncoder(categories='auto'), [13])],
-        # The column numbers to be transformed
-        remainder='passthrough'  # Leave the rest of the columns untouched
-    )
-    X = np.array(ct.fit_transform(X), dtype=np.float)
+
+    if run_one_hot_encoder:
+        ct = ColumnTransformer(
+            [('one_hot_encoder', OneHotEncoder(categories='auto'), [1, 3])],
+            # The column numbers to be transformed
+            remainder='passthrough'  # Leave the rest of the columns untouched
+        )
+        X = np.array(ct.fit_transform(X), dtype=np.float)
+        ct = ColumnTransformer(
+            [('one_hot_encoder', OneHotEncoder(categories='auto'), [5, 6, 7, 8, 9])],
+            # The column numbers to be transformed
+            remainder='passthrough'  # Leave the rest of the columns untouched
+        )
+        X = np.array(ct.fit_transform(X), dtype=np.float)
+        ct = ColumnTransformer(
+            [('one_hot_encoder', OneHotEncoder(categories='auto'), [13])],
+            # The column numbers to be transformed
+            remainder='passthrough'  # Leave the rest of the columns untouched
+        )
+        X = np.array(ct.fit_transform(X), dtype=np.float)
 
     logging.info("Data pre-processing: => Removing features in position 10 and 11 of Adult dataset. "
           "More than 90% percent of the values are the same. They are outliers.")
