@@ -1,3 +1,4 @@
+import time
 import matplotlib.pyplot as plt
 from datasets.load_dataset import get_dataset
 from linear_model.logistic_regression import LogisticRegression
@@ -6,6 +7,7 @@ from preprocessing.standard_scaler import feature_scaling
 from utils.datasets_enum import Datasets
 
 if __name__ == '__main__':
+    start = time.time()
 
     # Dataset list
     datasets = [Datasets.IONOSPHERE, Datasets.ADULT, Datasets.WINE_QUALITY, Datasets.BREAST_CANCER_DIAGNOSIS]
@@ -37,3 +39,6 @@ if __name__ == '__main__':
         plt.ylabel('Cost')
         plt.xlabel('Iterations')
         plt.show()
+
+    print('\n\nDONE!')
+    print('It took', time.time() - start, 'seconds.')
