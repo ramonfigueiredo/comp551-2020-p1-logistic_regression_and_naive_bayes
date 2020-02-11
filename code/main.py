@@ -15,10 +15,10 @@ from utils.ml_classifiers_enum import Classifier
 import argparse
 
 
-def run_classifier(classifier_name, dataset_name):
+def run_classifier(classifier_name, dataset_name, training_set_size):
     X, y = get_dataset(dataset_name)
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, 0.8)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, training_set_size)
     print_data(X_test, X_train, y_test, y_train)
 
     print("\n\nFeature scaling:")
@@ -137,18 +137,18 @@ def classification_metrics(y_pred, y_test):
     print("> F1 score (average=None):", f1_score(y_test, y_pred, average=None))
 
 
-def run_classifier_given_dataset(classifier):
+def run_classifier_given_dataset(classifier, training_set_size):
     print('\n\n\n==========================')
     print(classifier.name)
     print('==========================')
     if options.dataset.upper() == Datasets.IONOSPHERE.name or options.dataset.lower() == 'i':
-        run_classifier(classifier, Datasets.IONOSPHERE)
+        run_classifier(classifier, Datasets.IONOSPHERE, training_set_size)
     elif options.dataset.upper() == Datasets.ADULT.name or options.dataset.lower() == 'a':
-        run_classifier(classifier, Datasets.ADULT)
+        run_classifier(classifier, Datasets.ADULT, training_set_size)
     elif options.dataset.upper() == Datasets.WINE_QUALITY.name or options.dataset.lower() == 'wq':
-        run_classifier(classifier, Datasets.WINE_QUALITY)
+        run_classifier(classifier, Datasets.WINE_QUALITY, training_set_size)
     elif options.dataset.upper() == Datasets.BREAST_CANCER_DIAGNOSIS.name or options.dataset.lower() == 'bcd':
-        run_classifier(classifier, Datasets.BREAST_CANCER_DIAGNOSIS)
+        run_classifier(classifier, Datasets.BREAST_CANCER_DIAGNOSIS, training_set_size)
 
 
 if __name__ == '__main__':
@@ -166,6 +166,11 @@ if __name__ == '__main__':
                              'naive_bayes OR nb).',
                         default='all')
 
+    parser.add_argument('-tsize', '--train_size', action='store', dest='training_set_size',
+                        help='Training set size (percentage). Should be between 0.0 and 1.0 and represent the proportion of the dataset to include in the training split',
+                        type=float,
+                        default=0.8)
+
     parser.add_argument('-d', '--dataset', action='store', dest='dataset',
                         help='Database used '
                              '(Options: all, '
@@ -180,49 +185,50 @@ if __name__ == '__main__':
     options = parser.parse_args()
 
     print(parser.description, '\nRunning with options: ')
-    print('\tclassifier =', options.classifier.upper())
-    print('\tdataset =', options.dataset.upper())
+    print('\tClassifier =', options.classifier.upper())
+    print('\tTraining set size =', options.training_set_size)
+    print('\tDataset =', options.dataset.upper())
 
     if options.classifier.upper() == Classifier.LOGISTIC_REGRESSION_SKLEARN.name or options.classifier.lower() == 'lrskl':
-        run_classifier_given_dataset(Classifier.LOGISTIC_REGRESSION_SKLEARN)
+        run_classifier_given_dataset(Classifier.LOGISTIC_REGRESSION_SKLEARN, options.training_set_size)
     elif options.classifier.upper() == Classifier.LOGISTIC_REGRESSION.name or options.classifier.lower() == 'lr':
-        run_classifier_given_dataset(Classifier.LOGISTIC_REGRESSION)
+        run_classifier_given_dataset(Classifier.LOGISTIC_REGRESSION, options.training_set_size)
     elif options.classifier.upper() == Classifier.NAIVE_BAYES_SKLEARN.name or options.classifier.lower() == 'nbskl':
-        run_classifier_given_dataset(Classifier.NAIVE_BAYES_SKLEARN)
+        run_classifier_given_dataset(Classifier.NAIVE_BAYES_SKLEARN, options.training_set_size)
     elif options.classifier.upper() == Classifier.NAIVE_BAYES.name or options.classifier.lower() == 'nb':
-        run_classifier_given_dataset(Classifier.NAIVE_BAYES)
+        run_classifier_given_dataset(Classifier.NAIVE_BAYES, options.training_set_size)
     else:
         print('\n\n\n==========================')
         print(Classifier.LOGISTIC_REGRESSION_SKLEARN.name)
         print('==========================')
-        run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.IONOSPHERE)
-        run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.ADULT)
-        run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.WINE_QUALITY)
-        run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.BREAST_CANCER_DIAGNOSIS)
+        run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.IONOSPHERE, options.training_set_size)
+        run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.ADULT, options.training_set_size)
+        run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.WINE_QUALITY, options.training_set_size)
+        run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.BREAST_CANCER_DIAGNOSIS, options.training_set_size)
 
         print('\n\n\n==========================')
         print(Classifier.LOGISTIC_REGRESSION.name)
         print('==========================')
-        run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.IONOSPHERE)
-        run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.ADULT)
-        run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.WINE_QUALITY)
-        run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.BREAST_CANCER_DIAGNOSIS)
+        run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.IONOSPHERE, options.training_set_size)
+        run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.ADULT, options.training_set_size)
+        run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.WINE_QUALITY, options.training_set_size)
+        run_classifier(Classifier.LOGISTIC_REGRESSION, Datasets.BREAST_CANCER_DIAGNOSIS, options.training_set_size)
 
         print('\n\n\n==========================')
         print(Classifier.NAIVE_BAYES_SKLEARN.name)
         print('==========================')
-        run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.IONOSPHERE)
-        run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.ADULT)
-        run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.WINE_QUALITY)
-        run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.BREAST_CANCER_DIAGNOSIS)
+        run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.IONOSPHERE, options.training_set_size)
+        run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.ADULT, options.training_set_size)
+        run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.WINE_QUALITY, options.training_set_size)
+        run_classifier(Classifier.NAIVE_BAYES_SKLEARN, Datasets.BREAST_CANCER_DIAGNOSIS, options.training_set_size)
 
         print('\n\n\n==========================')
         print(Classifier.NAIVE_BAYES.name)
         print('==========================')
-        run_classifier(Classifier.NAIVE_BAYES, Datasets.IONOSPHERE)
-        run_classifier(Classifier.NAIVE_BAYES, Datasets.ADULT)
-        run_classifier(Classifier.NAIVE_BAYES, Datasets.WINE_QUALITY)
-        run_classifier(Classifier.NAIVE_BAYES, Datasets.BREAST_CANCER_DIAGNOSIS)
+        run_classifier(Classifier.NAIVE_BAYES, Datasets.IONOSPHERE, options.training_set_size)
+        run_classifier(Classifier.NAIVE_BAYES, Datasets.ADULT, options.training_set_size)
+        run_classifier(Classifier.NAIVE_BAYES, Datasets.WINE_QUALITY, options.training_set_size)
+        run_classifier(Classifier.NAIVE_BAYES, Datasets.BREAST_CANCER_DIAGNOSIS, options.training_set_size)
 
     print('\n\nDONE!')
     print('It took', time.time() - start, 'seconds.')
