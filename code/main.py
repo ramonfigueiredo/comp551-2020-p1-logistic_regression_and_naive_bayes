@@ -272,10 +272,10 @@ if __name__ == '__main__':
     if options.plot_cost_vs_iterations:
         plot_cost_vs_iterations(options.learning_rates_list)
 
+    print('\n\nDONE!')
+
     msg = "Program finished. It took {} seconds".format(time.time() - start)
     if options.save_logs_in_file:
         logging.info(msg)
     else:
         print(msg)
-
-    print('\n\nDONE!')
