@@ -12,6 +12,7 @@ from model_selection.train_test_split import train_test_split
 from preprocessing.standard_scaler import feature_scaling
 from utils.datasets_enum import Datasets
 from utils.ml_classifiers_enum import Classifier
+import argparse
 
 
 def run_classifier(classifier_name, dataset_name):
@@ -137,19 +138,38 @@ def classification_metrics(y_pred, y_test):
 if __name__ == '__main__':
     start = time.time()
 
-    # Load the datasets
-    # X_ionosphere, y_ionosphere = get_dataset(Datasets.IONOSPHERE)
-    # X_adult, y_adult = get_dataset(Datasets.ADULT)
-    # X_wine, y_wine = get_dataset(Datasets.WINE_QUALITY)
-    # X_cancer, y_cancer = get_dataset(Datasets.BREAST_CANCER_DIAGNOSIS)
+    parser = argparse.ArgumentParser(description='MiniProject 1: Logistic Regression and Naive Bayes',
+                                     epilog='COMP 551 (001/002), Applied Machine Learning, Winter 2020, McGill University.')
 
-    print('\n\n\n==========================')
-    print(Classifier.LOGISTIC_REGRESSION_SKLEARN.name)
-    print('==========================')
-    run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.IONOSPHERE)
-    run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.ADULT)
-    run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.WINE_QUALITY)
-    run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.BREAST_CANCER_DIAGNOSIS)
+    parser.add_argument('-classifier', action='store', dest='classifier',
+                        help='Classifier that will be run (Options: all, logistic_regression, logistic_regression_sklearn, naive_bayes, naive_bayes_sklearn).',
+                        default='all')
+
+    parser.add_argument('-dataset', action='store', dest='dataset',
+                        help='Database used (Options: all, ionosphere, adult, wine_quality, breast_cancer_diagnosis).',
+                        default='all')
+
+    parser.add_argument('--version', action='version', version='%(prog)s 1.0')
+
+    options = parser.parse_args()
+
+    print('classifier =', options.classifier.upper())
+    print('dataset =', options.dataset.upper())
+
+
+    if options.classifier.upper() == Classifier.LOGISTIC_REGRESSION_SKLEARN.name:
+        print('\n\n\n==========================')
+        print(Classifier.LOGISTIC_REGRESSION_SKLEARN.name)
+        print('==========================')
+        if options.dataset.upper() == Datasets.IONOSPHERE.name:
+            run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.IONOSPHERE)
+    else:
+        run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.IONOSPHERE)
+        run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.ADULT)
+        run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.WINE_QUALITY)
+        run_classifier(Classifier.LOGISTIC_REGRESSION_SKLEARN, Datasets.BREAST_CANCER_DIAGNOSIS)
+
+    exit(1)
 
     print('\n\n\n==========================')
     print(Classifier.LOGISTIC_REGRESSION.name)
