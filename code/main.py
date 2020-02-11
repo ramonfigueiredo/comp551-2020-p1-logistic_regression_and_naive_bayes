@@ -171,7 +171,7 @@ if __name__ == '__main__':
     parser.add_argument('-tsize', '--train_size', action='store', dest='training_set_size',
                         help='Training set size (percentage). Should be between 0.0 and 1.0 and represent the proportion of the dataset to include in the training split',
                         type=float,
-                        default=0.95)
+                        default=0.8)
 
     parser.add_argument('-d', '--dataset', action='store', dest='dataset',
                         help='Database used '
