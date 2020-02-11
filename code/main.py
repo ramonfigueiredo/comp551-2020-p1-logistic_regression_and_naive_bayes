@@ -187,6 +187,12 @@ if __name__ == '__main__':
                              'and plot the accuracy on train/validation set as a function of iterations of gradient '
                              'descent')
 
+    parser.add_argument('-lr', '--learning_rates_list', action='append', dest='learning_rates_list',
+                        default=[], # if [] will use ['lr = .1', 'lr = .5', 'lr = 1']
+                        help='Learning rates list used to plot cost versus iterations',
+                        type=float
+                        )
+
     parser.add_argument('-v', '--version', action='version', version='%(prog)s 1.0')
 
     options = parser.parse_args()
@@ -196,6 +202,7 @@ if __name__ == '__main__':
     print('\tTraining set size =', options.training_set_size)
     print('\tDataset =', options.dataset.upper())
     print('\tPlot cost vs iterations =', options.plot_cost_vs_iterations)
+    print('\tLearning rates list =', options.learning_rates_list)
 
     if options.classifier.upper() == Classifier.LOGISTIC_REGRESSION_SKLEARN.name or options.classifier.lower() == 'lrskl':
         run_classifier_given_dataset(Classifier.LOGISTIC_REGRESSION_SKLEARN, options.training_set_size)
@@ -239,7 +246,7 @@ if __name__ == '__main__':
         run_classifier(Classifier.NAIVE_BAYES, Datasets.BREAST_CANCER_DIAGNOSIS, options.training_set_size)
 
     if options.plot_cost_vs_iterations:
-        plot_cost_vs_iterations()
+        plot_cost_vs_iterations(options.learning_rates_list)
 
     print('\n\nDONE!')
     print('It took', time.time() - start, 'seconds.')
