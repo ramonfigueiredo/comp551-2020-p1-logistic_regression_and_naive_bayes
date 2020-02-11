@@ -252,8 +252,32 @@ listtemp = [0.5970, 0.5029,0.6311,0.6154, 0.5866,0.5459,
 #     histogramfeature(X,i)
 # histogramfory(y)
 
+#
+# histogramfeature(X, 1)
+# histogramfory(y)
+# scatterPlot(X, 1, X, 3)
+# scatterPlotwithY(X, 1, X, 3, y)
 
-histogramfeature(X, 1)
-histogramfory(y)
-scatterPlot(X, 1, X, 3)
-scatterPlotwithY(X, 1, X, 3, y)
+trainSize= [50,55,60,65,70,75,80,85,90,95]
+ionosphereLR=[89.77,92.40,88.65,90.24,91.50,87.50,90.14,84.90,94.44,94.44]
+ionosphereNB=[39.77,34.81,33.30,34.95,36.79,40.90,39.43,41.50,36.11,27.77]
+adultLR=[43.40,43.21,43.82,43.39,43.96,43.97,44.04,43.44,44.55,42.13]
+adultrNB=[26.06,27.63,26.00,25.61,25.48,25.21,24.91,25.98,25.31,25.55]
+wineLR=[55.50,55.69,53.43,53.10,56.87,53.75,54.37,53.75,55.00,56.25]
+wineNB=[93.87,93.88,94.53,95.00,93.33,95.25,93.43,93.33,90.62,93.75]
+cancerLR=[98.24,98.05,97.81,96.25,94.63,96.49,98.54,96.11,98.55,97.15]
+cancerNB=[95.90,96.10,98.17,96.66,96.09,95.90,98.54,98.05,95.65,97.14]
+def printAccuracyComparison(X1,X2,size):
+    f = plt.figure()
+    plt.plot(size,X1,label='NB')
+    plt.ylabel('Accuracy (%)')
+    plt.xlabel('Train size (%)')
+    plt.title('Cancer Accuracy Comparison')
+    plt.plot(size,X2,color='r', label='LR')
+    plt.legend(loc='upper left');
+    plt.show()
+    f.savefig("Cancer.pdf", bbox_inches='tight')
+    f.savefig("Cancer.png", bbox_inches='tight')
+printAccuracyComparison(cancerNB,cancerLR,trainSize)
+
+
