@@ -155,8 +155,14 @@ def preprocess_adult_dataset(X, y):
           "More than 90% percent of the values are the same. They are outliers.")
     X = np.delete(X, [10, 11], axis=1)
 
-    label_encoder_Y = LabelEncoder()
-    y = label_encoder_Y.fit_transform(y)
+    # Changing the last column to binary
+    for i in range(len(y)):
+        y[i] = y[i].replace(" ", "")
+        y[i] = y[i].replace(".", "")
+    y[y == "<=50K"] = 0
+    y[y == ">50K"] = 1
+    y = y.astype(int)
+
     return X, y
 
 
