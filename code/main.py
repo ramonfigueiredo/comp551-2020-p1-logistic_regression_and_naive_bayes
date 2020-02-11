@@ -202,7 +202,11 @@ if __name__ == '__main__':
     print('\tTraining set size =', options.training_set_size)
     print('\tDataset =', options.dataset.upper())
     print('\tPlot cost vs iterations =', options.plot_cost_vs_iterations)
-    print('\tLearning rates list =', options.learning_rates_list)
+    if options.plot_cost_vs_iterations:
+        if options.learning_rates_list == []:
+            print('\tLearning rates list =', [.1, .5, 1])
+        else:
+            print('\tLearning rates list =', options.learning_rates_list)
 
     if options.classifier.upper() == Classifier.LOGISTIC_REGRESSION_SKLEARN.name or options.classifier.lower() == 'lrskl':
         run_classifier_given_dataset(Classifier.LOGISTIC_REGRESSION_SKLEARN, options.training_set_size)
