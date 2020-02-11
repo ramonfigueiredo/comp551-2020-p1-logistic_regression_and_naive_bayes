@@ -267,6 +267,18 @@ wineLR=[55.50,55.69,53.43,53.10,56.87,53.75,54.37,53.75,55.00,56.25]
 wineNB=[93.87,93.88,94.53,95.00,93.33,95.25,93.43,93.33,90.62,93.75]
 cancerLR=[98.24,98.05,97.81,96.25,94.63,96.49,98.54,96.11,98.55,97.15]
 cancerNB=[95.90,96.10,98.17,96.66,96.09,95.90,98.54,98.05,95.65,97.14]
+
+
+
+
+ionosphereLR2=[82.38,88.60,82.97,83.73,78.30,82.95,77.46,77.35,75.00,88.88]
+ionosphereNB2=[82.38,86.70,81.56,86.99,77.35,73.86,78.87,88.67,80.55,83.33]
+adultLR2=[43.35,43.08,43.22,42.79,42.84,43.76,44.79,44.07,43.97,44.29]
+adultrNB2=[25.80,26.04,25.35,25.44,25.27,26.11,24.86,26.34,25.44,25.90]
+wineLR2=[55.62,53.88,55.78,56.60,53.75,52.75,50.93,56.67,55.62,56.25]
+wineNB2=[93.37,92.63,93.90,94.10,92.91,93.25,94.68,94.16,89.37,90.00]
+cancerLR2=[97.95,96.75,97.08,97.91,97.07,97.66,97.81,99.02,91.30,94.28]
+cancerNB2=[95.90,96.75,95.98,96.25,96.09,97.66,97.08,94.17,97.10,97.14]
 def printAccuracyComparison(X1,X2,size):
     f = plt.figure()
     plt.plot(size,X1,label='NB')
@@ -276,8 +288,8 @@ def printAccuracyComparison(X1,X2,size):
     plt.plot(size,X2,color='r', label='LR')
     plt.legend(loc='upper left');
     plt.show()
-    f.savefig("Cancer.pdf", bbox_inches='tight')
-    f.savefig("Cancer.png", bbox_inches='tight')
-printAccuracyComparison(cancerNB,cancerLR,trainSize)
+    f.savefig("CancerNew.pdf", bbox_inches='tight')
+    f.savefig("CancerNew.png", bbox_inches='tight')
+printAccuracyComparison(cancerNB2,cancerLR2,trainSize)
 
 
