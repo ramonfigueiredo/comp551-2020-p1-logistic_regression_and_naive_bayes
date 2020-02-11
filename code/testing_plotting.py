@@ -122,14 +122,14 @@ def scatterPlotwithY(X, Xindex, yx, yxindex, y):
     f = plt.figure()
     ax1 = f.add_subplot(111)
     plt.title('Ionosphere Features ')
-    plt.xlabel(' Feature 18 ')
+    plt.xlabel(' Feature 16 ')
     plt.ylabel('Feature 10')
-    ax1.scatter(listpositivex1, listpositivex2, c='r', marker='s', label='Malignant')
-    ax1.scatter(listnegative1, listnegative2, c='b', marker='s', label='Benign ')
+    ax1.scatter(listpositivex1, listpositivex2, c='r', marker='s', label='High Income')
+    ax1.scatter(listnegative1, listnegative2, c='b', marker='s', label='Low Income ')
 
     plt.legend(loc='upper left');
     plt.show()
-    f.savefig("IonosphereBadFeature(18,10).png", bbox_inches='tight')
+    f.savefig("AdultGoodFeature(16,10).png", bbox_inches='tight')
     #
     #
     # ax1.scatter(X[:, Xindex], yx[:, yxindex], y, c='r', marker='s', label='first')
@@ -140,7 +140,7 @@ def scatterPlotwithY(X, Xindex, yx, yxindex, y):
     # f.savefig("fo5.pdf", bbox_inches='tight')
 
 
-X, y = get_dataset(Datasets.IONOSPHERE)
+X, y = get_dataset(Datasets.ADULT)
 # histogramfeature(X.astype(float), 1)
 # histogramfory(y.astype(int))
 #
@@ -297,6 +297,6 @@ def printAccuracyComparison(X1,X2,size):
 
 # 14,12 0.8256
 
-scatterPlotwithY(X,16,X,8,y)
+scatterPlotwithY(X,12,X,4,y)
 
 
