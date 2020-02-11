@@ -7,7 +7,7 @@ sns.set(color_codes=True)
 # settings for seaborn plot sizes
 sns.set(rc={'figure.figsize': (5, 5)})
 
-from datasets.load_dataset import get_dataset
+from datasets.load_dataset import get_dataset, load_adult
 from datasets.load_dataset import Datasets
 
 
@@ -121,7 +121,7 @@ def scatterPlotwithY(X, Xindex, yx, yxindex, y):
     # return listpositive, listnegative
     f = plt.figure()
     ax1 = f.add_subplot(111)
-    plt.title('Ionosphere Features ')
+    plt.title('Adult Features ')
     plt.xlabel(' Feature 16 ')
     plt.ylabel('Feature 10')
     ax1.scatter(listpositivex1, listpositivex2, c='r', marker='s', label='High Income')
@@ -140,7 +140,7 @@ def scatterPlotwithY(X, Xindex, yx, yxindex, y):
     # f.savefig("fo5.pdf", bbox_inches='tight')
 
 
-X, y = get_dataset(Datasets.ADULT)
+X, y = load_adult()
 # histogramfeature(X.astype(float), 1)
 # histogramfory(y.astype(int))
 #
