@@ -12,10 +12,11 @@ from linear_model.naive_bayes import GaussianNaiveBayes
 from metrics.accuracy_score import evaluate_acc
 from model_selection.k_fold_cross_validation import cross_validation
 from model_selection.train_test_split import train_test_split
-from plotting.cost_vs_iterations import plot_cost_vs_iterations
+from plotting.cost_vs_iterations import cost_vs_iterations_plotting
 from preprocessing.standard_scaler import feature_scaling
 from utils.datasets_enum import Datasets
 from utils.ml_classifiers_enum import Classifier
+from plotting.heatmap_plotting import heatmap_plotting
 
 
 def run_classifier(classifier_name, dataset_name, training_set_size):
@@ -189,6 +190,10 @@ if __name__ == '__main__':
                              'and plot the accuracy on train/validation set as a function of iterations of gradient '
                              'descent')
 
+    parser.add_argument('-heatmap', '--plot_heatmap', action='store_true', default=False,
+                        dest='plot_heatmap',
+                        help='Plot heatmaps for all datasets. Show the correlations between the datasets features (X)')
+
     parser.add_argument('-lr', '--learning_rates_list', action='append', dest='learning_rates_list',
                         default=[], # if [] will use ['lr = .1', 'lr = .5', 'lr = 1']
                         help='Learning rates list used to plot cost versus iterations',
@@ -209,6 +214,8 @@ if __name__ == '__main__':
     print('\tDataset =', options.dataset.upper())
     print('\tSave logs in a file =', options.save_logs_in_file)
     print('\tPlot cost vs iterations =', options.plot_cost_vs_iterations)
+    print('\tPlot heatmaps for all datasets (feature correlations) =', options.plot_heatmap)
+
     if options.plot_cost_vs_iterations:
         if options.learning_rates_list == []:
             print('\tLearning rates list =', [.1, .5, 1])
@@ -270,7 +277,10 @@ if __name__ == '__main__':
         run_classifier(Classifier.NAIVE_BAYES, Datasets.BREAST_CANCER_DIAGNOSIS, options.training_set_size)
 
     if options.plot_cost_vs_iterations:
-        plot_cost_vs_iterations(options.learning_rates_list)
+        cost_vs_iterations_plotting(options.learning_rates_list)
+
+    if options.plot_heatmap:
+        heatmap_plotting()
 
     print('\n\nDONE!')
 
