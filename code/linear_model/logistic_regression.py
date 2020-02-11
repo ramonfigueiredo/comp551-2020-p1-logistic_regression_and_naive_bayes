@@ -2,12 +2,13 @@ import numpy as np
 
 
 class LogisticRegression:
-    def __init__(self, lr=.01, eps=1e-2, max_iter=10000, lambdaa=.1):
+    def __init__(self, lr=.1, eps=1e-2, max_iter=10000, lambdaa=.1):
         self.lr = lr
         self.eps = eps
         self.max_iter = max_iter
         self.lambdaa = lambdaa
         self.w = np.zeros(0)
+        self.cost_history = []
 
     # Logistic function (sigmoid)
     def logistic(self, z):
@@ -25,16 +26,15 @@ class LogisticRegression:
     def fit(self, X, y):
         N, D = X.shape
         self.w = np.zeros(D)
+        self.cost_history = []
+        self.cost_history.append(self.cost(X, y))
         g = np.inf
         i = 0
         while np.linalg.norm(g) > self.eps and i < self.max_iter:
             g = self.gradient(X, y)
             self.w = self.w - self.lr * g
+            self.cost_history.append(self.cost(X, y))
             i += 1
-
-        print("\n\nGradient descent finished.")
-        print("Gradient norm: ", np.linalg.norm(g))
-        print("Number of iterations: ", i)
 
     # Returns the model prediction over a set of data points
     def predict(self, x_test):
