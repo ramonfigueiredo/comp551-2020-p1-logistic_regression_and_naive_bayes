@@ -1,4 +1,6 @@
 import argparse
+import logging
+import os
 import time
 
 from sklearn.linear_model import LogisticRegression as LR_SkLearn
@@ -193,6 +195,10 @@ if __name__ == '__main__':
                         type=float
                         )
 
+    parser.add_argument('-save_logs', '--save_logs_in_file', action='store_true', default=False,
+                        dest='save_logs_in_file',
+                        help='Save logs in a file')
+
     parser.add_argument('-v', '--version', action='version', version='%(prog)s 1.0')
 
     options = parser.parse_args()
@@ -201,12 +207,26 @@ if __name__ == '__main__':
     print('\tClassifier =', options.classifier.upper())
     print('\tTraining set size =', options.training_set_size)
     print('\tDataset =', options.dataset.upper())
+    print('\tSave logs in a file =', options.save_logs_in_file)
     print('\tPlot cost vs iterations =', options.plot_cost_vs_iterations)
     if options.plot_cost_vs_iterations:
         if options.learning_rates_list == []:
             print('\tLearning rates list =', [.1, .5, 1])
         else:
             print('\tLearning rates list =', options.learning_rates_list)
+
+    if options.save_logs_in_file:
+        if not os.path.exists('logs'):
+            os.mkdir('logs')
+        logging.basicConfig(filename='logs/all.log', format='%(asctime)s - %(levelname)s - %(message)s',
+                            level=logging.INFO, datefmt='%m/%d/%Y %I:%M:%S %p')
+    else:
+        logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO,
+                            datefmt='%m/%d/%Y %I:%M:%S %p')
+
+    logging.info("Program started...")
+
+    start = time.time()
 
     if options.classifier.upper() == Classifier.LOGISTIC_REGRESSION_SKLEARN.name or options.classifier.lower() == 'lrskl':
         run_classifier_given_dataset(Classifier.LOGISTIC_REGRESSION_SKLEARN, options.training_set_size)
@@ -252,5 +272,10 @@ if __name__ == '__main__':
     if options.plot_cost_vs_iterations:
         plot_cost_vs_iterations(options.learning_rates_list)
 
+    msg = "Program finished. It took {} seconds".format(time.time() - start)
+    if options.save_logs_in_file:
+        logging.info(msg)
+    else:
+        print(msg)
+
     print('\n\nDONE!')
-    print('It took', time.time() - start, 'seconds.')
