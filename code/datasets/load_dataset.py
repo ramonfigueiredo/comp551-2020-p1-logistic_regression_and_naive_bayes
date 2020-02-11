@@ -1,3 +1,4 @@
+import logging
 import os
 
 import numpy as np
@@ -71,7 +72,7 @@ def load_ionosphere(dataset_name):
     label_encoder = LabelEncoder()
     y = label_encoder.fit_transform(y)
 
-    print("\nData pre-processing: => Removing feature in position 0 (almost always 1) and position 1 (always 0) of Ionosphere dataset. They are outliers.")
+    logging.info('Data pre-processing: => Removing feature in position 0 (almost always 1) and position 1 (always 0) of Ionosphere dataset. They are outliers.')
     X = np.delete(X, [0, 1], axis=1)
 
     return X, y
@@ -156,7 +157,7 @@ def preprocess_adult_dataset(X, y):
     )
     X = np.array(ct.fit_transform(X), dtype=np.float)
 
-    print("\nData pre-processing: => Removing features in position 10 and 11 of Adult dataset. "
+    logging.info("Data pre-processing: => Removing features in position 10 and 11 of Adult dataset. "
           "More than 90% percent of the values are the same. They are outliers.")
     X = np.delete(X, [10, 11], axis=1)
 
@@ -225,7 +226,7 @@ def load_breast_cancer_diagnosis(dataset_name):
     # Replacing '?' values with the most frequent value (mode).
     X, y = load_dataset(dataset_name, path, header=None, remove_question_mark=True)
 
-    print("\nData pre-processing: => Removing feature in position 0 of Breast Cancer Diagnosis dataset. It is a database ID and an outlier.")
+    logging.info("Data pre-processing: => Removing feature in position 0 of Breast Cancer Diagnosis dataset. It is a database ID and an outlier.")
     X = np.delete(X, 0, axis=1)
 
     y[y == 2] = 0
