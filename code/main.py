@@ -1,18 +1,19 @@
+import argparse
 import time
 
 from sklearn.linear_model import LogisticRegression as LR_SkLearn
 from sklearn.naive_bayes import GaussianNB as NB_SkLearn
 
-from datasets.load_dataset import get_dataset, load_adult
+from datasets.load_dataset import get_dataset
 from linear_model.logistic_regression import LogisticRegression
 from linear_model.naive_bayes import GaussianNaiveBayes
 from metrics.accuracy_score import evaluate_acc
 from model_selection.k_fold_cross_validation import cross_validation
 from model_selection.train_test_split import train_test_split
+from plotting.cost_vs_iterations import plot_cost_vs_iterations
 from preprocessing.standard_scaler import feature_scaling
 from utils.datasets_enum import Datasets
 from utils.ml_classifiers_enum import Classifier
-import argparse
 
 
 def run_classifier(classifier_name, dataset_name, training_set_size):
@@ -117,7 +118,6 @@ def classification_report(y_pred, y_test):
 def classification_metrics(y_pred, y_test):
     print("\n\n>>> Classification metrics:")
     print("\n> Accuracy score:", evaluate_acc(y_test, y_pred))
-    from sklearn.metrics import roc_auc_score
     # print("\n> Area Under the Receiver Operating Characteristic Curve (ROC AUC) = ROC AUC Score:",
     #       roc_auc_score(y_test, y_pred))
     from sklearn.metrics import precision_score
@@ -180,6 +180,13 @@ if __name__ == '__main__':
                              'breast_cancer_diagnosis OR bcd).',
                         default='all')
 
+    parser.add_argument('-plot_cost', '--plot_cost_vs_iterations', action='store_true', default=False,
+                        dest='plot_cost_vs_iterations',
+                        help='Plot different learning rates for gradient descent applied to logistic regression. '
+                             'Use a threshold for change in the value of the cost function as termination criteria, '
+                             'and plot the accuracy on train/validation set as a function of iterations of gradient '
+                             'descent')
+
     parser.add_argument('-v', '--version', action='version', version='%(prog)s 1.0')
 
     options = parser.parse_args()
@@ -188,6 +195,7 @@ if __name__ == '__main__':
     print('\tClassifier =', options.classifier.upper())
     print('\tTraining set size =', options.training_set_size)
     print('\tDataset =', options.dataset.upper())
+    print('\tPlot cost vs iterations =', options.plot_cost_vs_iterations)
 
     if options.classifier.upper() == Classifier.LOGISTIC_REGRESSION_SKLEARN.name or options.classifier.lower() == 'lrskl':
         run_classifier_given_dataset(Classifier.LOGISTIC_REGRESSION_SKLEARN, options.training_set_size)
@@ -229,6 +237,9 @@ if __name__ == '__main__':
         run_classifier(Classifier.NAIVE_BAYES, Datasets.ADULT, options.training_set_size)
         run_classifier(Classifier.NAIVE_BAYES, Datasets.WINE_QUALITY, options.training_set_size)
         run_classifier(Classifier.NAIVE_BAYES, Datasets.BREAST_CANCER_DIAGNOSIS, options.training_set_size)
+
+    if options.plot_cost_vs_iterations:
+        plot_cost_vs_iterations()
 
     print('\n\nDONE!')
     print('It took', time.time() - start, 'seconds.')

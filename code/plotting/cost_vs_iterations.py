@@ -6,7 +6,8 @@ from model_selection.train_test_split import train_test_split
 from preprocessing.standard_scaler import feature_scaling
 from utils.datasets_enum import Datasets
 
-if __name__ == '__main__':
+
+def plot_cost_vs_iterations():
     start = time.time()
 
     # Dataset list
