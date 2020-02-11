@@ -30,11 +30,19 @@ def heatmap_plotting(print_correlation_matrix=True, plot_heatmap_values=True, sh
                 X_np, y_np = load_adult(run_one_hot_encoder=True)
 
             X = pd.DataFrame(data=X_np.astype(float))
+            if load_dataset_with_extra_pre_processing:
+                if dataset_name == Datasets.ADULT:
+                    X.columns = ['age', 'workclass', 'fnlwgt', 'education', 'education-num', 'marital-status',
+                                       'occupation', 'relationship', 'race', 'sex',
+                                       'hours-per-week', 'native-country']
 
         if dataset_name == Datasets.WINE_QUALITY:
             X_np, y_np = load_wine_quality()
 
             X = pd.DataFrame(data=X_np)
+
+            X.columns = ['fixed acidity', 'volatile acidity', 'citric acid', 'residual sugar', 'chlorides',
+                         'free sulfur dioxide', 'total sulfur dioxide', 'density', 'pH', 'sulphates', 'alcohol']
 
         if dataset_name == Datasets.BREAST_CANCER_DIAGNOSIS:
             path = os.path.join(os.getcwd(), 'datasets/data/breast-cancer-wisconsin/breast-cancer-wisconsin.data')
@@ -44,6 +52,11 @@ def heatmap_plotting(print_correlation_matrix=True, plot_heatmap_values=True, sh
             else: # load all dataset columns
                 X_np, y_np = load_dataset(path, header=None, remove_question_mark=True)
             X = pd.DataFrame(data=X_np.astype(float))
+
+            if load_dataset_with_extra_pre_processing:
+                X.columns = ['Clump Thickness', 'Uniformity of Cell Size', 'Uniformity of Cell Shape', 'Marginal Adhesion', 'Single Epithelial Cell Size', 'Bare Nuclei', 'Bland Chromatin', 'Normal Nucleoli', 'Mitoses']
+            else: # load all dataset columns
+                X.columns = ['Sample code number', 'Clump Thickness', 'Uniformity of Cell Size', 'Uniformity of Cell Shape', 'Marginal Adhesion', 'Single Epithelial Cell Size', 'Bare Nuclei', 'Bland Chromatin', 'Normal Nucleoli', 'Mitoses']
 
         sns.set(style="white")
 
@@ -58,6 +71,7 @@ def heatmap_plotting(print_correlation_matrix=True, plot_heatmap_values=True, sh
         heatmap_plot = sns.heatmap(corr, xticklabels=True, yticklabels=True, annot=plot_heatmap_values, cmap=cmap,
                                    vmax=.3, center=0, square=True, linewidths=.5, cbar_kws={"shrink": .5})
         ax = plt.axes()
+
         file_name = dataset_name.name
         if plot_heatmap_values:
             file_name = file_name + ' with values, '
@@ -68,7 +82,10 @@ def heatmap_plotting(print_correlation_matrix=True, plot_heatmap_values=True, sh
         else:
             file_name = file_name + ' without extra pre-processing'
 
-        ax.set_title(dataset_name.name)
+        if dataset_name == Datasets.ADULT and not load_dataset_with_extra_pre_processing:
+            ax.set_title(dataset_name.name + ' using One-Hot-Enconder')
+        else:
+            ax.set_title(dataset_name.name)
 
         if show_plotting:
             plt.show()
