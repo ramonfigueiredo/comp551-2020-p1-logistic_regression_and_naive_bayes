@@ -7,7 +7,7 @@ from preprocessing.standard_scaler import feature_scaling
 from utils.datasets_enum import Datasets
 
 
-def plot_cost_vs_iterations(learning_rates_list):
+def cost_vs_iterations_plotting(learning_rates_list):
     start = time.time()
 
     if learning_rates_list == []:

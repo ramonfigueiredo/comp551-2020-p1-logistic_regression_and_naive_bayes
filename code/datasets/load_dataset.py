@@ -6,19 +6,18 @@ import pandas as pd
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 
-from plotting.heatmap_plotting import heatmap_plotting
 from utils.datasets_enum import Datasets
 
 
 def get_dataset(dataset_name):
     if dataset_name == Datasets.IONOSPHERE:
-        X, y = load_ionosphere(dataset_name.name)
+        X, y = load_ionosphere()
     elif dataset_name == Datasets.ADULT:
-        X, y = load_adult(dataset_name.name)
+        X, y = load_adult()
     elif dataset_name == Datasets.WINE_QUALITY:
-        X, y = load_wine_quality(dataset_name.name)
+        X, y = load_wine_quality()
     elif dataset_name == Datasets.BREAST_CANCER_DIAGNOSIS:
-        X, y = load_breast_cancer_diagnosis(dataset_name.name)
+        X, y = load_breast_cancer_diagnosis()
     else:
         raise Exception("Dataset does not exist")
 
@@ -33,7 +32,7 @@ def get_dataset(dataset_name):
     return X, y
 
 
-def load_dataset(dataset_name, path, header='infer', sep=',', remove_question_mark=False, x_col_indices=slice(-1), y_col_indices=-1):
+def load_dataset(path, header='infer', sep=',', remove_question_mark=False, x_col_indices=slice(-1), y_col_indices=-1):
     dataset = pd.read_csv(path, header=header, sep=sep)
     # dataset = genfromtxt(path, skip_header=header, delimiter=sep)
 
@@ -44,11 +43,6 @@ def load_dataset(dataset_name, path, header='infer', sep=',', remove_question_ma
 
     X = dataset.iloc[:, x_col_indices].values
     y = dataset.iloc[:, y_col_indices].values
-
-    plt_path = os.path.join(os.getcwd(), 'plotting/plots/heatmaps/', dataset_name + '_dataset_features_correlation.png')
-    # heatmap_plotting(dataset.iloc[:, x_col_indices], print_correlation_matrix=True,
-    #                  plot_heatmap_values=False, show_plotting=False, save_plotting=False,
-    #                  plotting_path=plt_path)
 
     return X, y
 
@@ -63,9 +57,9 @@ def load_dataset(dataset_name, path, header='infer', sep=',', remove_question_ma
 #    -- The 35th attribute is either "good" or "bad"
 # - Missing Values: None
 #
-def load_ionosphere(dataset_name):
+def load_ionosphere():
     path = os.path.join(os.getcwd(), 'datasets/data/ionosphere/ionosphere.data')
-    X, y = load_dataset(dataset_name, path, header=None)
+    X, y = load_dataset(path, header=None)
 
     # Only the last column is categorical, with 2 categories.
     # Using label encoder to change it to 0 or 1
@@ -90,10 +84,10 @@ def load_ionosphere(dataset_name):
 #    -- Attribute 14 (output) is either ">50K" or "<=50K" (categorical)
 # - 3620 rows have missing values, that were replaced by '?'
 #
-def load_adult(dataset_name):
+def load_adult():
 
-    X_train, y_train = open_adult_training_data(dataset_name)
-    X_test, y_test = open_adult_test_data(dataset_name)
+    X_train, y_train = open_adult_training_data()
+    X_test, y_test = open_adult_test_data()
 
     X = np.concatenate((X_train, X_test), axis=0)
     y = np.concatenate((y_train, y_test), axis=0)
@@ -166,7 +160,7 @@ def preprocess_adult_dataset(X, y):
     return X, y
 
 
-def open_adult_training_data(dataset_name):
+def open_adult_training_data():
     with open("datasets/data/adult/adult.data", "r") as f:
         lines = f.readlines()
     with open("datasets/data/adult/adult2.data", "w") as f:
@@ -174,11 +168,11 @@ def open_adult_training_data(dataset_name):
             if '?' not in line:
                 f.write(line)
     path = os.path.join(os.getcwd(), 'datasets/data/adult/adult2.data')
-    X, y = load_dataset(str(dataset_name + "_training"), path, header=None, remove_question_mark=False)
+    X, y = load_dataset(path, header=None, remove_question_mark=False)
     return X, y
 
 
-def open_adult_test_data(dataset_name):
+def open_adult_test_data():
     with open("datasets/data/adult/adult.test", "r") as f:
         lines = f.readlines()
     with open("datasets/data/adult/adult2.test", "w") as f:
@@ -186,7 +180,7 @@ def open_adult_test_data(dataset_name):
             if ('|1x3 Cross validator' not in line) and ('?' not in line):
                 f.write(line)
     path = os.path.join(os.getcwd(), 'datasets/data/adult/adult2.test')
-    X, y = load_dataset(str(dataset_name + "_test"), path, header=None, remove_question_mark=False)
+    X, y = load_dataset(path, header=None, remove_question_mark=False)
     return X, y
 
 
@@ -200,9 +194,9 @@ def open_adult_test_data(dataset_name):
 #    -- Output attribute is a score between 0 and 10 - must be converted to a binary class
 # - several of the attributes may be correlated, thus it makes sense to apply some sort of feature selection.
 #
-def load_wine_quality(dataset_name):
+def load_wine_quality():
     path = os.path.join(os.getcwd(), 'datasets/data/wine-quality/winequality-red.csv')
-    X, y = load_dataset(dataset_name, path, sep=';')
+    X, y = load_dataset(path, sep=';')
 
     y = (y >= 5).astype(int)
 
@@ -220,11 +214,11 @@ def load_wine_quality(dataset_name):
 #    -- Attribute 10 (class attribute) is 2 for benign, 4 for malignant
 #  - There are 16 instances in Groups 1 to 6 that contain a single missing attribute value, denoted by "?".
 #
-def load_breast_cancer_diagnosis(dataset_name):
+def load_breast_cancer_diagnosis():
     path = os.path.join(os.getcwd(), 'datasets/data/breast-cancer-wisconsin/breast-cancer-wisconsin.data')
 
     # Replacing '?' values with the most frequent value (mode).
-    X, y = load_dataset(dataset_name, path, header=None, remove_question_mark=True)
+    X, y = load_dataset(path, header=None, remove_question_mark=True)
 
     logging.info("Data pre-processing: => Removing feature in position 0 of Breast Cancer Diagnosis dataset. It is a database ID and an outlier.")
     X = np.delete(X, 0, axis=1)
