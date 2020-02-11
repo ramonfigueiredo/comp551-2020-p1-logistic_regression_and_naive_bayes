@@ -119,14 +119,17 @@ def scatterPlotwithY(X, Xindex, yx, yxindex, y):
             listnegative1.append(X[i, Xindex])
             listnegative2.append(yx[i, yxindex])
     # return listpositive, listnegative
-    # f = plt.figure()
+    f = plt.figure()
     ax1 = f.add_subplot(111)
+    plt.title('Ionosphere Features ')
+    plt.xlabel('Feature 14')
+    plt.ylabel('Feature 12')
     ax1.scatter(listpositivex1, listpositivex2, c='r', marker='s', label='Good')
     ax1.scatter(listnegative1, listnegative2, c='b', marker='s', label='Bad')
 
     plt.legend(loc='upper left');
     plt.show()
-    # f.savefig("fo6.pdf", bbox_inches='tight')
+    f.savefig("IonosphereScatterPlot(14,12).pdf", bbox_inches='tight')
 
     #
     #
@@ -290,6 +293,11 @@ def printAccuracyComparison(X1,X2,size):
     plt.show()
     f.savefig("CancerNew.pdf", bbox_inches='tight')
     f.savefig("CancerNew.png", bbox_inches='tight')
-printAccuracyComparison(cancerNB2,cancerLR2,trainSize)
+# printAccuracyComparison(cancerNB2,cancerLR2,trainSize)
+
+
+# 14,12 0.8256
+
+scatterPlotwithY(X,14,X,12,y)
 
 
