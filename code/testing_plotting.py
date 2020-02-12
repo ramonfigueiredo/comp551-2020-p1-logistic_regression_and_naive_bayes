@@ -299,6 +299,8 @@ def printAccuracyComparison(X1,X2,size):
     plt.show()
     f.savefig("AdultNew3.pdf", bbox_inches='tight')
     f.savefig("AdultNew3.png", bbox_inches='tight')
+
+
 printAccuracyComparison(adultNB4,adultLR4,trainSize)
 
 
