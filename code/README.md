@@ -25,7 +25,7 @@ python main.py
 deactivate
 ```
 
-For more help you can type python main.py -h and get the arguments to run specific methods on specific datasets. 
+For more help you can type python ```main.py -h``` and get the arguments to run specific methods on specific datasets. 
 
 ```
 usage: main.py [-h] [-c CLASSIFIER] [-tsize TRAINING_SET_SIZE] [-d DATASET]
