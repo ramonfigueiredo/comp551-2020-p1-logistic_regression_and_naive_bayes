@@ -10,7 +10,9 @@
 ```sh
 cd <folder_name>/
 
-virtualenv venv -p python3
+virtualenv venv -p python3 or python3 -m venv env  if you are using Mac
+
+
 
 source venv/bin/activate
 
