@@ -25,19 +25,6 @@ class BernoulliNaiveBayes:
         return posterior  # posterior class probability
 
 
-class CategoricalNaiveBayes:
-    def __init__(self):
-        pass
-
-    # Fit the model
-    def fit(self, X, y):
-        pass
-
-    # Returns the model prediction over a set of data points
-    def predict(self, x_test):
-        pass
-
-
 class GaussianNaiveBayes:
     def __init__(self):
         self.prior = np.zeros([2, 1])
