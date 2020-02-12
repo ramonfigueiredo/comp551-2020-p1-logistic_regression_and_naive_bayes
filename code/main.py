@@ -281,16 +281,16 @@ if __name__ == '__main__':
 
     if options.plot_heatmap:
         print('heatmap_plotting(plot_heatmap_values=True, load_dataset_with_extra_pre_processing=True)')
-        heatmap_plotting(plot_heatmap_values=True, load_dataset_with_extra_pre_processing=True, save_plotting=False, plotting_path='plotting/plots/heatmaps/')
+        heatmap_plotting(plot_heatmap_values=True, load_dataset_with_extra_pre_processing=True, save_plotting=False, plotting_path='plotting/plots/heatmaps/', save_csv_correlation_matrix=False)
 
         print('heatmap_plotting(plot_heatmap_values=True, load_dataset_with_extra_pre_processing=False)')
-        heatmap_plotting(plot_heatmap_values=True, load_dataset_with_extra_pre_processing=False, save_plotting=False, plotting_path='plotting/plots/heatmaps/')
+        heatmap_plotting(plot_heatmap_values=True, load_dataset_with_extra_pre_processing=False, save_plotting=False, plotting_path='plotting/plots/heatmaps/', save_csv_correlation_matrix=False)
 
         print('heatmap_plotting(plot_heatmap_values=False, load_dataset_with_extra_pre_processing=True)')
-        heatmap_plotting(plot_heatmap_values=False, load_dataset_with_extra_pre_processing=True, save_plotting=False, plotting_path='plotting/plots/heatmaps/')
+        heatmap_plotting(plot_heatmap_values=False, load_dataset_with_extra_pre_processing=True, save_plotting=False, plotting_path='plotting/plots/heatmaps/', save_csv_correlation_matrix=False)
 
         print('heatmap_plotting(plot_heatmap_values=False, load_dataset_with_extra_pre_processing=False)')
-        heatmap_plotting(plot_heatmap_values=False, load_dataset_with_extra_pre_processing=False, save_plotting=False, plotting_path='plotting/plots/heatmaps/')
+        heatmap_plotting(plot_heatmap_values=False, load_dataset_with_extra_pre_processing=False, save_plotting=False, plotting_path='plotting/plots/heatmaps/', save_csv_correlation_matrix=False)
 
     print('\n\nDONE!')
 
