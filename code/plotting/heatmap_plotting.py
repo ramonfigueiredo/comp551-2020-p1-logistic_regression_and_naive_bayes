@@ -10,7 +10,7 @@ from utils.datasets_enum import Datasets
 
 
 def heatmap_plotting(print_correlation_matrix=True, plot_heatmap_values=True, show_plotting=True, save_plotting=True,
-                     plotting_path='heatmap.png', load_dataset_with_extra_pre_processing=True):
+                     plotting_path='heatmap.png', load_dataset_with_extra_pre_processing=True, save_csv_correlation_matrix=False):
     # Dataset list
     datasets = [Datasets.IONOSPHERE, Datasets.ADULT, Datasets.WINE_QUALITY, Datasets.BREAST_CANCER_DIAGNOSIS]
 
@@ -81,6 +81,9 @@ def heatmap_plotting(print_correlation_matrix=True, plot_heatmap_values=True, sh
             file_name = file_name + ' with extra pre-processing'
         else:
             file_name = file_name + ' without extra pre-processing'
+
+        if save_csv_correlation_matrix:
+            corr.to_csv(os.path.join(plotting_path, file_name) + '.csv')
 
         if dataset_name == Datasets.ADULT and not load_dataset_with_extra_pre_processing:
             ax.set_title(dataset_name.name + ' using One-Hot-Enconder')
