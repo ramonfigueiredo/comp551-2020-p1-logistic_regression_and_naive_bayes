@@ -22,13 +22,12 @@ from plotting.heatmap_plotting import heatmap_plotting
 def run_classifier(classifier_name, dataset_name, training_set_size):
     X, y = get_dataset(dataset_name)
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, training_set_size)
-    print_data(X_test, X_train, y_test, y_train)
-
     print("\n\nFeature scaling:")
-    X_train, X_test = feature_scaling(X_train, X_test)
-    print("\nX_train:", X_train)
-    print("\nX_test:", X_test)
+    X = feature_scaling(X)
+    print("\nX:", X)
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, training_set_size, shuffle=True)
+    print_data(X_test, X_train, y_test, y_train)
 
     if classifier_name == Classifier.LOGISTIC_REGRESSION_SKLEARN:
         # How to fix non-convergence in LogisticRegressionCV

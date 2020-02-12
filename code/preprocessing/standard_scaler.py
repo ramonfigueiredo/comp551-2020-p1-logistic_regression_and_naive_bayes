@@ -21,7 +21,6 @@ def column_stdevs(dataset, means):
 
 
 def standardize_dataset(dataset):
-
     means = column_means(dataset)
     stdevs = column_stdevs(dataset, means)
 
@@ -35,9 +34,5 @@ def standardize_dataset(dataset):
     return dataset
 
 
-def feature_scaling(X_train, X_test):
-    X_train = standardize_dataset(X_train.astype(float))
-
-    X_test = standardize_dataset(X_test.astype(float))
-
-    return X_train, X_test
+def feature_scaling(dataset):
+    return standardize_dataset(dataset.astype(float))

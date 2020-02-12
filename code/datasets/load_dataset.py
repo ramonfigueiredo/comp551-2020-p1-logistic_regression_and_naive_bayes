@@ -34,7 +34,6 @@ def get_dataset(dataset_name):
 
 def load_dataset(path, header='infer', sep=',', remove_question_mark=False, x_col_indices=slice(-1), y_col_indices=-1):
     dataset = pd.read_csv(path, header=header, sep=sep)
-    # dataset = genfromtxt(path, skip_header=header, delimiter=sep)
 
     if remove_question_mark:
         # Delete all rows from a dataframe containing question marks (?)
