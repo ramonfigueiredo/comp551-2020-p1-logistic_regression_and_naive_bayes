@@ -44,8 +44,7 @@ def run_classifier(classifier_name, dataset_name, training_set_size):
     classifier.fit(X_train, y_train)
 
     # k-fold cross validation
-    if not (classifier_name == Classifier.LOGISTIC_REGRESSION) and not (classifier_name == Classifier.NAIVE_BAYES):
-        k_fold_cross_validation(X_train, classifier, y_train, k=5)
+    k_fold_cross_validation(X_train, classifier, y_train, k=5)
 
     # Predict the labels
     y_pred = classifier.predict(X_test)
