@@ -163,7 +163,7 @@ if __name__ == '__main__':
                              '(Options: all, '
                              'logistic_regression_sklearn OR lrskl, '
                              'logistic_regression OR lr, '
-                             'naive_bayes_sklearn OR nbskl'
+                             'naive_bayes_sklearn OR nbskl '
                              'naive_bayes OR nb).',
                         default='all')
 
@@ -186,17 +186,17 @@ if __name__ == '__main__':
                         help='Plot different learning rates for gradient descent applied to logistic regression. '
                              'Use a threshold for change in the value of the cost function as termination criteria, '
                              'and plot the accuracy on train/validation set as a function of iterations of gradient '
-                             'descent')
+                             'descent.')
 
     parser.add_argument('-lr', '--learning_rates_list', action='append', dest='learning_rates_list',
                         default=[], # if [] will use ['lr = .1', 'lr = .5', 'lr = 1']
-                        help='Learning rates list used to plot cost versus iterations',
+                        help='Learning rates list used to plot cost versus iterations. For example: python main --classifier logistic_regression --dataset adult -plot_cost -lr 0.001 -lr 0.01 -lr 0.05 -lr 1',
                         type=float
                         )
 
     parser.add_argument('-heatmap', '--plot_heatmap', action='store_true', default=False,
                         dest='plot_heatmap',
-                        help='Plot heatmaps for all datasets. Show the correlations between the datasets features (X)')
+                        help='Plot heatmaps for all datasets. Show the correlations between the datasets features (X). For example: python main.py --classifier naive_bayes --dataset wine_quality -heatmap')
 
     parser.add_argument('-save_logs', '--save_logs_in_file', action='store_true', default=False,
                         dest='save_logs_in_file',
