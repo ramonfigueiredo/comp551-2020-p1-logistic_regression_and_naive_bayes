@@ -129,7 +129,7 @@ def scatterPlotwithY(X, Xindex, yx, yxindex, y):
 
     plt.legend(loc='upper left');
     plt.show()
-    f.savefig("AdultGoodFeature(16,10).png", bbox_inches='tight')
+    # f.savefig("AdultGoodFeature(16,10).png", bbox_inches='tight')
     #
     #
     # ax1.scatter(X[:, Xindex], yx[:, yxindex], y, c='r', marker='s', label='first')
@@ -281,22 +281,29 @@ wineLR2=[55.62,53.88,55.78,56.60,53.75,52.75,50.93,56.67,55.62,56.25]
 wineNB2=[93.37,92.63,93.90,94.10,92.91,93.25,94.68,94.16,89.37,90.00]
 cancerLR2=[97.95,96.75,97.08,97.91,97.07,97.66,97.81,99.02,91.30,94.28]
 cancerNB2=[95.90,96.75,95.98,96.25,96.09,97.66,97.08,94.17,97.10,97.14]
+
+
+adultLR3=[43.19,44.32,43.36,44.12,43.52,43.42,43.81,43.80,45.74,42.88]
+adultNB3=[26.31,26.24,26.33,25.86,26.81,26.70,26.06,26.26,25.60,25.68]
+
+adultLR4=[72.02,71.88,71.78,72.32,71.50,71.60,72.28,72.53,72.60,69.93]
+adultNB4=[75.16,75.06,75.53,74.03,75.63,74.57,72.12,70.51,70.28,69.80]
 def printAccuracyComparison(X1,X2,size):
     f = plt.figure()
     plt.plot(size,X1,label='NB')
     plt.ylabel('Accuracy (%)')
     plt.xlabel('Train size (%)')
-    plt.title('Cancer Accuracy Comparison')
+    plt.title('Adult Accuracy Comparison')
     plt.plot(size,X2,color='r', label='LR')
     plt.legend(loc='upper left');
     plt.show()
-    f.savefig("CancerNew.pdf", bbox_inches='tight')
-    f.savefig("CancerNew.png", bbox_inches='tight')
-# printAccuracyComparison(cancerNB2,cancerLR2,trainSize)
+    f.savefig("AdultNew3.pdf", bbox_inches='tight')
+    f.savefig("AdultNew3.png", bbox_inches='tight')
+printAccuracyComparison(adultNB4,adultLR4,trainSize)
 
 
 # 14,12 0.8256
 
-scatterPlotwithY(X,12,X,4,y)
+# scatterPlotwithY(X,0,X,8,y)
 
 
