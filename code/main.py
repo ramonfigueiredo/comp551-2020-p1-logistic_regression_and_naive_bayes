@@ -188,15 +188,15 @@ if __name__ == '__main__':
                              'and plot the accuracy on train/validation set as a function of iterations of gradient '
                              'descent')
 
-    parser.add_argument('-heatmap', '--plot_heatmap', action='store_true', default=False,
-                        dest='plot_heatmap',
-                        help='Plot heatmaps for all datasets. Show the correlations between the datasets features (X)')
-
     parser.add_argument('-lr', '--learning_rates_list', action='append', dest='learning_rates_list',
                         default=[], # if [] will use ['lr = .1', 'lr = .5', 'lr = 1']
                         help='Learning rates list used to plot cost versus iterations',
                         type=float
                         )
+
+    parser.add_argument('-heatmap', '--plot_heatmap', action='store_true', default=False,
+                        dest='plot_heatmap',
+                        help='Plot heatmaps for all datasets. Show the correlations between the datasets features (X)')
 
     parser.add_argument('-save_logs', '--save_logs_in_file', action='store_true', default=False,
                         dest='save_logs_in_file',
