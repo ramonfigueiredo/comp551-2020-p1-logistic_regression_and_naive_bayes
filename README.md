@@ -15,6 +15,8 @@ MiniProject 1: COMP 551 (001/002), Applied Machine Learning, Winter 2020, McGill
 
 [Assignment description (PDF)](https://github.com/ramonfigueiredopessoa/comp551-2020-p1-logistic_regression_and_naive_bayes/blob/master/assignment/p1.pdf)
 
+[Final report (PDF) (COMP P2 Winter 2020)](https://github.com/ramonfigueiredopessoa/comp551-2020-p1-logistic_regression_and_naive_bayes/blob/master/report/20200211_comp551_RRE_project1.pdf) 
+
 # Preamble
 
 * This mini-project is **due on February 11th at 11:59pm**. Late work will be automatically subject to a 20% penalty, and can be submitted up to 5 days after the deadline. No submissions will accepted after this 5 day period.
