@@ -13,9 +13,9 @@ MiniProject 1: COMP 551 (001/002), Applied Machine Learning, Winter 2020, McGill
 8. [Final remarks](#final_remarks)
 9. [How to run the Python program](#how-to-run-the-python-program)
 
-[Assignment description (PDF)](https://github.com/ramonfigueiredopessoa/comp551-2020-p1-logistic_regression_and_naive_bayes/blob/master/assignment/p1.pdf)
+[Assignment description (PDF) (COMP551 P1 Winter 2020)](https://github.com/ramonfigueiredopessoa/comp551-2020-p1-logistic_regression_and_naive_bayes/blob/master/assignment/p1.pdf)
 
-[Final report (PDF) (COMP P2 Winter 2020)](https://github.com/ramonfigueiredopessoa/comp551-2020-p1-logistic_regression_and_naive_bayes/blob/master/report/20200211_comp551_RRE_project1.pdf) 
+[Final report (PDF) (COMP551 P1 Winter 2020)](https://github.com/ramonfigueiredopessoa/comp551-2020-p1-logistic_regression_and_naive_bayes/blob/master/report/20200211_comp551_RRE_project1.pdf) 
 
 # Preamble
 
